@@ -1,0 +1,15 @@
+{
+  "name": "vanilla",
+  "version": "0.0.0",
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
