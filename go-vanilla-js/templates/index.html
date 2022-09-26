@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>Footprint | Example</title>
+    <style>
+        html {
+            max-width: 70ch;
+            padding: 3em 1em;
+            margin: auto;
+            line-height: 1.75;
+            font-size: 1.25em;
+            font-family: sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 3em 0 1em;
+        }
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 2em;
+            color: #1d1d1d;
+        }
+
+        .footprint-button {
+            margin: auto;
+        }
+    </style>
+    <!-- Step 1. import footprint.js dependency -->
+    <script src="https://unpkg.com/@onefootprint/footprint-js"></script>
+
+    <!-- Step 2. implement -->
+    <script>
+        window.onFootprintCompleted = function (token) {   
+            console.log("got token", token);         
+            
+            // Step 3: handle the token by submitting it to the server
+            const form = document.createElement('form');
+            form.method = "post";
+            form.action = "/complete";
+
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = "validationToken";
+            hiddenField.value = token;
+            form.appendChild(hiddenField);
+            document.body.appendChild(form);
+
+            form.submit();
+        };
+    </script>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div style="text-align: center"> 
+        <h1>Footprint Demo</h1>
+        <p>Click the Footprint button to begin onboarding</p>
+    </div>
+    <!-- Step 3. set the publishable key -->
+    <div id="footprint-button" data-public-key="{{.PublishableKey}}"></div>
+</body>
+
+</html>

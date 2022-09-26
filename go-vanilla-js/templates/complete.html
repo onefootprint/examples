@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>Footprint Example | Completion </title>
+    <style>
+        html {
+            max-width: 70ch;
+            padding: 3em 1em;
+            margin: auto;
+            line-height: 1.75;
+            font-size: 1.25em;
+            font-family: sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 3em 0 1em;
+        }
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 2em;
+            color: #1d1d1d;
+        }
+
+        .footprint-button {
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div style="text-align: center"> 
+        <h1>Success!</h1>
+        <div style="text-align: left">
+            <p>Name: {{.FirstName}} {{.LastName}}</p>
+            <p>Date of Birth: {{.Dob}}</p>
+            <p>Last 4 SSN: {{.Ssn4}}</p>
+            <p>Status: {{.Status}}</p>    
+            <br/>
+            <p>FootprintToken: {{.FootprintUserId}}</p>
+            <p>Timestamp: {{.Timestamp}}</p>            
+        </div>
+    </div>
+
+</body>
+
+</html>
