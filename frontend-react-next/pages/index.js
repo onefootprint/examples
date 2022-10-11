@@ -18,7 +18,7 @@ const Home = () => {
           onCompleted={(validationToken) => {
             console.log("on completed", validationToken);
           }}
-          onUserCanceled={() => {
+          onCanceled={() => {
             console.log("user canceled!");
           }}
         />

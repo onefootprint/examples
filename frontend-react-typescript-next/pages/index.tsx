@@ -19,7 +19,7 @@ const Home: NextPage = () => {
           onCompleted={(validationToken: string) => {
             console.log("on completed", validationToken);
           }}
-          onUserCanceled={() => {
+          onCanceled={() => {
             console.log("user canceled!");
           }}
         />
