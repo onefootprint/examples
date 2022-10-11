@@ -1,4 +1,6 @@
 import "./App.css";
+import "@onefootprint/footprint-js/dist/style.css";
+
 import { FootprintButton } from "@onefootprint/footprint-react";
 
 function App() {
