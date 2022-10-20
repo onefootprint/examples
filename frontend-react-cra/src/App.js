@@ -12,7 +12,7 @@ function App() {
           console.log("on completed", validationToken);
         }}
         onCanceled={() => {
-          console.log("user canceled!");
+          console.log("canceled");
         }}
       />
     </main>
