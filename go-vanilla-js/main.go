@@ -84,7 +84,7 @@ func postTokenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var validationResponse ValidateResponse
-	err := footprintApiRequest("POST", "users/validate", &ValidateRequest{validationToken}, &validationResponse)
+	err := footprintApiRequest("POST", "onboarding/session/validate", &ValidateRequest{validationToken}, &validationResponse)
 	if err != nil {
 		ErrorPage(err, w)
 		return
@@ -110,7 +110,7 @@ func postTokenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var decryptResponse DecryptResponse
-	err = footprintApiRequest("POST", fmt.Sprintf("users/%s/identity/decrypt", validationResponse.FootprintUserId), &decryptRequest, &decryptResponse)
+	err = footprintApiRequest("POST", fmt.Sprintf("users/%s/vault/identity/decrypt", validationResponse.FootprintUserId), &decryptRequest, &decryptResponse)
 	if err != nil {
 		ErrorPage(err, w)
 		return
