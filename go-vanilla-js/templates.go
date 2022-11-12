@@ -16,13 +16,14 @@ func StartOnboardingPage(page Index, w http.ResponseWriter) {
 }
 
 type Complete struct {
-	FootprintUserId string
-	Status          string
-	Timestamp       string
-	FirstName       string
-	LastName        string
-	Dob             string
-	Ssn4            string
+	FootprintUserId      string
+	Status               string
+	RequiresManualReview bool
+	Timestamp            string
+	FirstName            string
+	LastName             string
+	Dob                  string
+	Ssn4                 string
 }
 
 func CompletePage(page Complete, w http.ResponseWriter) {
