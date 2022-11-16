@@ -1,4 +1,4 @@
-import "@onefootprint/footprint-js/dist/style.css";
+import "@onefootprint/footprint-js/dist/footprint-js.css";
 
 import type { NextPage } from "next";
 import Head from "next/head";

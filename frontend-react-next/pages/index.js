@@ -1,4 +1,4 @@
-import "@onefootprint/footprint-js/dist/style.css";
+import "@onefootprint/footprint-js/dist/footprint-js.css";
 
 import Head from "next/head";
 import styles from "../styles/Home.module.css";

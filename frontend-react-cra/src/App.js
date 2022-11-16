@@ -1,5 +1,5 @@
 import "./App.css";
-import "@onefootprint/footprint-js/dist/style.css";
+import "@onefootprint/footprint-js/dist/footprint-js.css";
 
 import { FootprintButton } from "@onefootprint/footprint-react";
 
