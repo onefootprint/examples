@@ -28,13 +28,12 @@ export default {
           inputErrorFocusElevation: 'box-shadow: 0 0 0 2px #d6e0ff;',
           inputHoverBorderColor: '#ADC2FF',
           hintColor: '#696f8c',
-        }
+        },
       };
-
       footprint.show({
         appearance,
         publicKey,
-       })
+      });
     }
   }
 }
