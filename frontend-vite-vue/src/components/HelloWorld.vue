@@ -9,7 +9,7 @@ export default {
   },
   methods: {
     handleOpen() {
-      footprint.show({
+      footprint.open({
         publicKey: 'ob_test_WNgSBRR7uxoT8JRDBBflgw',
       });
     }

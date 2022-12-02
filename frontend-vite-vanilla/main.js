@@ -31,7 +31,7 @@ button.addEventListener('click', () => {
       hintColor: '#696f8c',
     }
   };
-  footprint.show({
+  footprint.open({
     appearance,
     publicKey,
   });
