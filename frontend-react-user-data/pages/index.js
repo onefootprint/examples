@@ -18,7 +18,7 @@ const Home = () => {
         <FootprintButton
           publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
           userData={{
-            email: "jane.doe@acme.com"
+            'id.email': "jane.doe@acme.com"
           }}
           onCompleted={(validationToken) => {
             console.log("on completed", validationToken);
