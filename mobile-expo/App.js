@@ -7,7 +7,7 @@ export default function App() {
     footprint.open({
       publicKey: 'ob_test_ilBQgKtvrgQrQNV8U2rb7e',
       onCompleted: (validationToken) => {
-        console.log(validationToken);
+        alert(validationToken);
       },
       onCanceled: () => {
         console.log('canceled');
@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Button title="Open WebBrowser" onPress={handleButtonPress} />
+      <Button title="Verify with Footprint" onPress={handleButtonPress} />
     </View>
   );
 }
