@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import { Button, View, StyleSheet } from 'react-native';
-import footprint from '@onefootprint/footprint-expo'
+import React from 'react';
+import {Button, View, StyleSheet} from 'react-native';
+import footprint from '@onefootprint/footprint-react-native';
 
 export default function App() {
   const handleButtonPress = async () => {
     footprint.open({
       publicKey: 'ob_test_ilBQgKtvrgQrQNV8U2rb7e',
-      onCompleted: (validationToken) => {
-        alert(validationToken);
+      onCompleted: (validationToken: string) => {
+        console.log(validationToken);
       },
       onCanceled: () => {
         console.log('canceled');
       },
       userData: {
         'id.email': 'jane.doe@acme.com',
-        'id.phone_number': '+12674614927',
       },
       appearance,
     });
@@ -78,5 +77,5 @@ const appearance = {
     button: {
       transition: 'all .2s linear',
     },
-  }
-}
+  },
+};
