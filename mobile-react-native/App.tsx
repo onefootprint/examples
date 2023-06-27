@@ -16,6 +16,9 @@ export default function App() {
         'id.email': 'jane.doe@acme.com',
       },
       appearance,
+      options: {
+        showCompletionPage: false,
+      },
     });
   };
 
