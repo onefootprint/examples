@@ -51,3 +51,19 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.form {
+  width: 500px;
+  height: 500px;
+}
+
+iframe {
+  border: 0;
+}

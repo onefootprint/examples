@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@onefootprint/footprint-components-js": "^0.1.0",
+    "@onefootprint/footprint-components-react": "^1.0.0",
     "@onefootprint/footprint-js": "^2.1.1",
     "@onefootprint/footprint-react": "^4.0.1",
     "@testing-library/jest-dom": "^5.16.5",

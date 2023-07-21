@@ -3,6 +3,7 @@ import "@onefootprint/footprint-js/dist/footprint-js.css";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { FootprintButton } from "@onefootprint/footprint-react";
+import { FootprintSecureForm } from "@onefootprint/footprint-components-react";
 
 const Home = () => {
   return (
@@ -15,15 +16,24 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <FootprintButton
-          publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
-          onCompleted={(validationToken) => {
-            console.log("on completed", validationToken);
-          }}
-          onCanceled={() => {
-            console.log("onCanceled");
-          }}
-        />
+        <div style={styles.container}>
+          <FootprintButton
+            publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
+            onCompleted={(validationToken) => {
+              console.log("on completed", validationToken);
+            }}
+            onCanceled={() => {
+              console.log("user canceled!");
+            }}
+          />
+          <div style={styles.form}>
+            <FootprintSecureForm 
+              authToken='tok_XYZ'
+              cardAlias='primary'
+              variant='card'
+            />
+          </div>
+        </div>
       </main>
     </div>
   );

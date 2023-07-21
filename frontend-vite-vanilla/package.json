@@ -12,6 +12,7 @@
     "vite": "^3.2.7"
   },
   "dependencies": {
+    "@onefootprint/footprint-components-js": "^0.1.0",
     "@onefootprint/footprint-js": "^2.1.1"
   }
 }

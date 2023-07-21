@@ -9,7 +9,23 @@
       rel="stylesheet"
       href="https://unpkg.com/@onefootprint/footprint-js@latest/dist/footprint-js.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@onefootprint/footprint-components-js@latest/dist/footprint-components-js.css"
+    />
     <script>
+      window.footprintComponentsCallbacks = {
+        onSave: function () {
+          // TODO: Decrypt or proxy the saved data from your backend
+        },
+        onCancel: function () {
+          // TODO:
+        },
+        onClose: function () {
+          // TODO:
+        },
+      };
+
       window.onFootprintCompleted = function (token) {
         // TODO: Post the token to your server
         console.log(token);
@@ -35,9 +51,18 @@
         id="footprint-button"
         data-public-key="ob_test_WNgSBRR7uxoT8JRDBBflgw"
       ></div>
+      <div
+        id="footprint-component"
+        data-kind="secure-form"
+        data-props='{"cardAlias":"primary","authToken":"tok_joXzzB0kIVW0fMCB7RWPAHWt8itWdFWpit", variant: 'card'}'
+      ></div>
     </main>
     <script
       src="https://unpkg.com/@onefootprint/footprint-js@latest/dist/footprint-js.umd.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/@onefootprint/footprint-components-js@latest/dist/footprint-components-js.umd.js"
       crossorigin
     ></script>
   </body>
