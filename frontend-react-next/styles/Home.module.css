@@ -4,3 +4,15 @@
   justify-content: center;
   height: 100vh;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.form {
+  width: 500px;
+  height: 500px;
+}
