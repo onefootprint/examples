@@ -22,6 +22,7 @@ export default {
         console.log("closed");
       }
     });
+    component.render();
   },
   methods: {
     handleOpen() {
@@ -38,8 +39,8 @@ export default {
 <template>
   <div class="card">
     <div class="container">
-      <button id="my-button"></div>
-      <div id="my-form"></div>
+      <button id="my-button">Launch Verify</button>
+      <div id="my-form" class="form"></div>
     </div>
   </div>
 </template>
