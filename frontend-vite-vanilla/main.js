@@ -1,6 +1,4 @@
-import footprintComponent from '@onefootprint/footprint-components-js';
 import footprint from '@onefootprint/footprint-js';
-import '@onefootprint/footprint-components-js/dist/footprint-components-js.css';
 import '@onefootprint/footprint-js/dist/footprint-js.css';
 
 import './style.css'
@@ -33,21 +31,21 @@ button.addEventListener('click', () => {
       hintColor: '#696f8c',
     }
   };
-  footprint.open({
+  const component = footprint.init({
+    kind: 'verify',
+    variant: 'drawer',
     appearance,
     publicKey,
   });
+  component.render();
 });
 
 const formButton = document.getElementById('form-button');
 formButton.addEventListener('click', () => {
-  footprintComponent.render({
-    kind: 'secure-form',
-    containerId: 'footprint-secure-form',
-    props: {
-      authToken: 'tok_joXzzB0kIVW0fMCB7RWPAHWt8itWdFWpit',
-      cardAlias: 'primary',
-      variant: 'modal',
-    },
+  const component = footprint.init({
+    kind: 'form',
+    variant: 'modal',
+    appearance,
+    authToken: 'tok_joXzzB0kIVW0fMCB7RWPAHWt8itWdFWpit',
   });
 });

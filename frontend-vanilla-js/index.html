@@ -9,29 +9,16 @@
       rel="stylesheet"
       href="https://unpkg.com/@onefootprint/footprint-js@latest/dist/footprint-js.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@onefootprint/footprint-components-js@latest/dist/footprint-components-js.css"
-    />
     <script>
-      window.footprintComponentsCallbacks = {
-        onSave: function () {
-          // TODO: Decrypt or proxy the saved data from your backend
-        },
+      window.footprintCallbacks = {
         onCancel: function () {
           // TODO:
+          console.log('cancel');
         },
         onClose: function () {
           // TODO:
+          console.log('close');
         },
-      };
-
-      window.onFootprintCompleted = function (token) {
-        // TODO: Post the token to your server
-        console.log(token);
-      };
-      window.onFootprintCanceled = function (token) {
-        console.log("canceled");
       };
     </script>
     <style>
@@ -42,27 +29,23 @@
         justify-content: center;
         height: 100vh;
       }
+
+      iframe {
+        border: 0;
+      }
     </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <main>
       <div
-        id="footprint-button"
-        data-public-key="ob_test_WNgSBRR7uxoT8JRDBBflgw"
-      ></div>
-      <div
-        id="footprint-component"
-        data-kind="secure-form"
-        data-props='{"cardAlias":"primary","authToken":"tok_joXzzB0kIVW0fMCB7RWPAHWt8itWdFWpit", variant: 'card'}'
+        data-footprint
+        data-kind="verify-button"
+        data-props='{"publicKey": "ob_test_WNgSBRR7uxoT8JRDBBflgw"}'
       ></div>
     </main>
     <script
       src="https://unpkg.com/@onefootprint/footprint-js@latest/dist/footprint-js.umd.js"
-      crossorigin
-    ></script>
-    <script
-      src="https://unpkg.com/@onefootprint/footprint-components-js@latest/dist/footprint-components-js.umd.js"
       crossorigin
     ></script>
   </body>
