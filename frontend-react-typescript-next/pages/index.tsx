@@ -2,12 +2,13 @@ import "@onefootprint/footprint-js/dist/footprint-js.css";
 
 import type { NextPage } from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import { FootprintVerifyButton } from "@onefootprint/footprint-react";
+
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,7 +29,7 @@ const Home: NextPage = () => {
           />
         </div>
       </main>
-    </div>
+    </>
   );
 };
 
