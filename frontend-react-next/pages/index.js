@@ -1,41 +1,34 @@
 import "@onefootprint/footprint-js/dist/footprint-js.css";
 
 import Head from "next/head";
+import { FootprintVerifyButton } from "@onefootprint/footprint-react";
+
 import styles from "../styles/Home.module.css";
-import { FootprintButton } from "@onefootprint/footprint-react";
-import { FootprintSecureForm } from "@onefootprint/footprint-components-react";
 
 const Home = () => {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <title>Footprint | React + Next.js</title>
+        <title>Footprint | React + Typescript + Next.js</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div style={styles.container}>
-          <FootprintButton
+        <div className={styles.container}>
+          <FootprintVerifyButton
             publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
-            onCompleted={(validationToken) => {
+            onComplete={(validationToken) => {
               console.log("on completed", validationToken);
             }}
-            onCanceled={() => {
+            onCancel={() => {
               console.log("user canceled!");
             }}
           />
-          <div style={styles.form}>
-            <FootprintSecureForm 
-              authToken='tok_XYZ'
-              cardAlias='primary'
-              variant='card'
-            />
-          </div>
         </div>
       </main>
-    </div>
+    </>
   );
 };
 
