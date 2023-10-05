@@ -1,26 +1,26 @@
 <script>
-import footprint from '@onefootprint/footprint-js';
-
+import footprint from "@onefootprint/footprint-js";
 
 export default {
   mounted() {
-    const button = document.getElementById('verify-button');
-    button.addEventListener('click', this.handleOpen);
+    const button = document.getElementById("verify-button");
+    button.addEventListener("click", this.handleOpen);
   },
   methods: {
     handleOpen() {
-      const publicKey = 'ob_test_WNgSBRR7uxoT8JRDBBflgw';
+      const publicKey = "ob_test_WNgSBRR7uxoT8JRDBBflgw";
       const component = footprint.init({
-        kind: 'verify',
+        kind: "verify",
         publicKey,
+        l10n: { locale: "en-US" },
         onComplete: (validationToken) => {
-          console.log(validationToken)
+          console.log(validationToken);
         },
       });
       component.render();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <template>
@@ -28,4 +28,3 @@ export default {
     <button id="verify-button" type="button">Verify with Footprint</button>
   </main>
 </template>
-

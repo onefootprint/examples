@@ -17,8 +17,9 @@ const Home = () => {
       <main className={styles.main}>
         <FootprintVerifyButton
           publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
+          l10n={{ locale: "en-US" }}
           userData={{
-            'id.email': "jane.doe@acme.com"
+            "id.email": "jane.doe@acme.com",
           }}
           onComplete={(validationToken) => {
             console.log("on completed", validationToken);

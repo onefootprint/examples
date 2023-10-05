@@ -19,6 +19,7 @@ export default function App() {
       options: {
         showCompletionPage: false,
       },
+      l10n: { locale: "en-US" }
     });
   };
 
