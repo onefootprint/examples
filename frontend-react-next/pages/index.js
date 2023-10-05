@@ -19,6 +19,7 @@ const Home = () => {
         <div className={styles.container}>
           <FootprintVerifyButton
             publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
+            l10n={{ locale: "en-US" }}
             onComplete={(validationToken) => {
               console.log("on completed", validationToken);
             }}
