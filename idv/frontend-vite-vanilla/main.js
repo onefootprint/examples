@@ -31,13 +31,26 @@ const appearance = {
   },
 };
 
-const button = document.getElementById("verify-button");
-button.addEventListener("click", () => {
+const verifyButton = document.getElementById("verify-button");
+verifyButton.addEventListener("click", () => {
   const component = footprint.init({
     kind: "verify",
     publicKey,
     appearance,
     l10n: { locale: "en-US" },
+    onComplete: (validationToken) => {
+      console.log(validationToken);
+    },
+  });
+  component.render();
+});
+
+const authButton = document.getElementById("auth-button");
+authButton.addEventListener("click", () => {
+  const component = footprint.init({
+    kind: "auth",
+    publicKey,
+    appearance,
     onComplete: (validationToken) => {
       console.log(validationToken);
     },

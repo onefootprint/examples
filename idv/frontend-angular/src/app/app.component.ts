@@ -12,6 +12,12 @@ export class AppComponent {
     const component = footprint.init({
       kind: FootprintComponentKind.Verify,
       authToken: 'tok_1232132',
+      variant: 'modal',
+      l10n: { locale: 'en-US' },
+      options: {
+        showCompletionPage: true,
+        showLogo: true
+      },
       onComplete: (validationToken: string) => {
         console.log('onComplete ', validationToken)
       },

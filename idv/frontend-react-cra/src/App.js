@@ -1,5 +1,5 @@
 import "@onefootprint/footprint-js/dist/footprint-js.css";
-import { FootprintVerifyButton } from "@onefootprint/footprint-react";
+import { FootprintAuthButton, FootprintVerifyButton } from "@onefootprint/footprint-react";
 
 import "./App.css";
 
@@ -15,6 +15,17 @@ function App() {
         onCancel={() => {
           console.log("user canceled!");
         }}
+      />
+      
+      <FootprintAuthButton
+        publicKey="ob_test_askljdhaskjd"
+        dialogVariant="modal"
+        label="Auth with Footprint (modal)"
+        onCancel={() => console.log('cancel')}
+        onClose={() => console.log('close')}
+        onComplete={(validationToken) =>
+          console.log('complete ', validationToken)
+        }
       />
     </main>
   );

@@ -2,7 +2,7 @@ import "@onefootprint/footprint-js/dist/footprint-js.css";
 
 import type { NextPage } from "next";
 import Head from "next/head";
-import { FootprintVerifyButton } from "@onefootprint/footprint-react";
+import { FootprintAuthButton, FootprintVerifyButton } from "@onefootprint/footprint-react";
 
 import styles from "../styles/Home.module.css";
 
@@ -21,12 +21,23 @@ const Home: NextPage = () => {
           <FootprintVerifyButton
             publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
             l10n={{ locale: "en-US" }}
-            onComplete={(validationToken) => {
+            onComplete={(validationToken: string) => {
               console.log("on completed", validationToken);
             }}
             onCancel={() => {
               console.log("user canceled!");
             }}
+          />
+
+          <FootprintAuthButton
+            publicKey="ob_test_askljdhaskjd"
+            dialogVariant="modal"
+            label="Auth with Footprint (modal)"
+            onCancel={() => console.log('cancel')}
+            onClose={() => console.log('close')}
+            onComplete={(validationToken: string) =>
+              console.log('complete ', validationToken)
+            }
           />
         </div>
       </main>
