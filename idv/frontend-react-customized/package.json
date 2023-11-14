@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@onefootprint/footprint-js": "^3.7.1",
-    "@onefootprint/footprint-react": "5.4.0",
+    "@onefootprint/footprint-js": "^3.8.0",
+    "@onefootprint/footprint-react": "^6.1.0",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
