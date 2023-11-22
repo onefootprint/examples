@@ -1529,10 +1529,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
-"@onefootprint/footprint-react-native@^1.4.0":
-  "integrity" "sha512-itKznac5bYTt5LS8buHL3wNF1SS3QKWRtgWetF5rLssjrSuWQ+MUYpECw+Pr9UlVOTYh8VYqKHOxSit6VwikKw=="
-  "resolved" "https://registry.npmjs.org/@onefootprint/footprint-react-native/-/footprint-react-native-1.4.0.tgz"
-  "version" "1.4.0"
+"@onefootprint/footprint-react-native@^1.5.0":
+  "integrity" "sha512-zmKVFngYqckdZ1XgW8EJKow17vZ78SrgxcU7guNo8foH/IrpvZz/oiAUOjIRObO0xYwuX46qdl9JBcdjJT3g0w=="
+  "resolved" "https://registry.npmjs.org/@onefootprint/footprint-react-native/-/footprint-react-native-1.5.0.tgz"
+  "version" "1.5.0"
   dependencies:
     "csstype" "^3.1.2"
     "query-string" "^8.1.0"
