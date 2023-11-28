@@ -1,7 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Connects to data-controller="verify"
 export default class extends Controller {
   connect() {
-    this.element.textContent = "Hello World!"
+  }
+
+  handleClick() {
+    console.log("Verify controller clicked");
   }
 }
