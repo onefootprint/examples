@@ -1,5 +1,5 @@
 class VerifyController < ApplicationController
   def index
-    puts "hey"
+    puts "Using verify_contoller.rb"
   end
 end
