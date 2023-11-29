@@ -1,0 +1,10 @@
+{
+  "name": "frontend-rails",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@onefootprint/footprint-js": "^3.8.0",
+    "stimulus": "^3.2.2"
+  }
+}
