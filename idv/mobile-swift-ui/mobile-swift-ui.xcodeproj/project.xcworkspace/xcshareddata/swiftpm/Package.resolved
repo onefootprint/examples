@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "footprint-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onefootprint/footprint-swift",
+      "state" : {
+        "revision" : "13c149d7b2f664f144744a2eb4cc8808d6d97d46",
+        "version" : "0.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}
