@@ -5,6 +5,7 @@ import footprint from "@onefootprint/footprint-expo";
 export default function App() {
   const handleButtonPress = async () => {
     footprint.open({
+      scheme: 'footprint', // This has to match the expo scheme you set in the app.json file 
       publicKey: "ob_test_ilBQgKtvrgQrQNV8U2rb7e",
       onCompleted: (validationToken) => {
         alert(validationToken);
