@@ -9,15 +9,17 @@ jobs:
         runs-on: ubuntu-latest
         defaults:
           run:
-            shell: bash
             working-directory: ./scripts
         steps:
-        - uses: actions/checkout@v1
-        - run: ./check-dependencies
-          env:
-              DEPENDENCIES_TOKEN: ${{ secrets.DEPENDENCIES_TOKEN }}
-        - uses: actions/setup-node@v1
-        - run: ./check-dependencies
+
+        - name: Check out the repository to the runner
+          uses: actions/checkout@v1 
+        - name: Setup node
+          uses: actions/setup-node@v1
+        - name: Make the script file executable
+          run: chmod +x check-dependencies.sh
+        - name: Run dependencies script
+          run: ./check-dependencies.sh
           env:
               DEPENDENCIES_TOKEN: ${{ secrets.DEPENDENCIES_TOKEN }}
               DEPENDENCIES_USER: fnd # required due to personal access token
