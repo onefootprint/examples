@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, View, StyleSheet } from "react-native";
 import footprint from "@onefootprint/footprint-expo";
 
@@ -7,15 +7,18 @@ export default function App() {
     footprint.open({
       scheme: 'footprint', // This has to match the expo scheme you set in the app.json file 
       publicKey: "ob_test_ilBQgKtvrgQrQNV8U2rb7e",
-      onCompleted: (validationToken) => {
+      onComplete: (validationToken) => {
         alert(validationToken);
       },
-      onCanceled: () => {
+      onCancel: () => {
         console.log("canceled");
+      },
+      onError: (error) => {
+        console.error(error)
       },
       userData: {
         "id.email": "jane.doe@acme.com",
-        "id.phone_number": "+12674614927",
+        "id.phone_number": "+15555550100",
       },
       appearance,
       l10n: { locale: "en-US" },
