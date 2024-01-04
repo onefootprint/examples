@@ -10,8 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven ( url = "https://jitpack.io" )
     }
 }
 
-rootProject.name = "FootprintSdkVerificationExample"
+rootProject.name = "FootprintSdkExample"
 include(":app")
