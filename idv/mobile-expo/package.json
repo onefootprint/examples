@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@onefootprint/footprint-expo": "^1.6.1",
+    "@onefootprint/footprint-expo": "^1.6.3",
     "expo": "~49.0.6",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
