@@ -1680,10 +1680,10 @@
     "mkdirp" "^1.0.4"
     "rimraf" "^3.0.2"
 
-"@onefootprint/footprint-expo@^1.6.3":
-  "integrity" "sha512-URJQQCvDT7vXGmj/Oi9Oeey/AdjPpoz7M8PTMgE9oRjlmZAS+d+U2AEo2K8yHLRgLZBYC8FgQwT3JLOath1l8w=="
-  "resolved" "https://registry.npmjs.org/@onefootprint/footprint-expo/-/footprint-expo-1.6.3.tgz"
-  "version" "1.6.3"
+"@onefootprint/footprint-expo@^1.6.4":
+  "integrity" "sha512-B1P9UYSUS7DKQFspHDUX++j1/gBJnvbF08JndMGrst2GUHt5O8L4mRqbzI1mqIHdNb8NyvcOPLQL91giUE6qRg=="
+  "resolved" "https://registry.npmjs.org/@onefootprint/footprint-expo/-/footprint-expo-1.6.4.tgz"
+  "version" "1.6.4"
   dependencies:
     "csstype" "^3.1.2"
     "expo-linking" "^5.0.2"
