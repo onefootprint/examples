@@ -6,11 +6,14 @@ export default function App() {
   const handleButtonPress = async () => {
     footprint.open({
       publicKey: 'ob_test_ilBQgKtvrgQrQNV8U2rb7e',
-      onCompleted: (validationToken: string) => {
+      onComplete: (validationToken: string) => {
         console.log(validationToken);
       },
-      onCanceled: () => {
+      onCancel: () => {
         console.log('canceled');
+      },
+      onError: (error: string) => {
+        console.error(error);
       },
       userData: {
         'id.email': 'jane.doe@acme.com',
