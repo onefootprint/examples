@@ -19,7 +19,7 @@ export default function App() {
       options: {
         showCompletionPage: false,
       },
-      l10n: { locale: "en-US" }
+      l10n: {locale: 'en-US'},
     });
   };
 
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
 });
 
 const appearance = {
-  fontSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap',
+  fontSrc:
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap',
   variables: {
     fontFamily: '"Inter"',
     linkColor: '#101010',
