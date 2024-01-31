@@ -1,0 +1,51 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_inappwebview (0.0.1):
+    - Flutter
+    - flutter_inappwebview/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview/Core (0.0.1):
+    - Flutter
+    - OrderedSet (~> 5.0)
+  - footprint_flutter (0.0.1):
+    - Flutter
+  - integration_test (0.0.1):
+    - Flutter
+  - OrderedSet (5.0.0)
+  - uni_links (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
+  - footprint_flutter (from `.symlinks/plugins/footprint_flutter/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - uni_links (from `.symlinks/plugins/uni_links/ios`)
+
+SPEC REPOS:
+  trunk:
+    - OrderedSet
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_inappwebview:
+    :path: ".symlinks/plugins/flutter_inappwebview/ios"
+  footprint_flutter:
+    :path: ".symlinks/plugins/footprint_flutter/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  uni_links:
+    :path: ".symlinks/plugins/uni_links/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_inappwebview: 3d32228f1304635e7c028b0d4252937730bbc6cf
+  footprint_flutter: 4b83ea6d06084a894da91c4515676cb964e92219
+  integration_test: 13825b8a9334a850581300559b8839134b124670
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.14.2
