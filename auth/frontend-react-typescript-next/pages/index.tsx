@@ -7,12 +7,25 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  const handleClick = () => {
+  const handleSignInClick = () => {
     const fp = footprint.init({
       kind: FootprintComponentKind.Auth,
       publicKey: 'pb_test_ecsBv8tMC1qUXVX1Yya7jG',
       onComplete: (validationToken: string) => {
         console.log('validationToken', validationToken);
+      },
+    });
+    fp.render();
+  }
+  
+  const handleUpdateAuthMethodsClick = () => {
+    const fp = footprint.init({
+      kind: FootprintComponentKind.Auth,
+      variant: 'modal',
+      authToken: 'tok_123',
+      updateLoginMethods: true,
+      onComplete: () => {
+        console.log('onComplete');
       },
     });
     fp.render();
@@ -29,7 +42,8 @@ const Home: NextPage = () => {
       </Head>
       <main className={styles.main}>
         <div className={styles.container}>
-          <button type="button" onClick={handleClick}>Sign in with Footprint</button>
+          <button type="button" onClick={handleSignInClick}>Sign in with Footprint</button>
+          <button type="button" onClick={handleUpdateAuthMethodsClick}>Update Authentication methods with Footprint</button>
         </div>
       </main>
     </>
