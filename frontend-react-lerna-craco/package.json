@@ -1,0 +1,48 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build && rollup -c",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@onefootprint/footprint-js": "^3.1.2",
+    "@onefootprint/footprint-react": "^5.1.2",
+    "@types/node": "^20.5.1",
+    "postcss": "^8.4.28",
+    "postcss-load-config": "^4.0.1",
+    "postcss-preset-env": "^9.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "rollup": "^3.28.0",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "lerna": "^7.1.5"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
