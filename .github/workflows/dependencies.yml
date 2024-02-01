@@ -1,0 +1,25 @@
+name: dependencies
+
+on:
+  schedule:
+    - cron: "0 5 * * 1" # every Monday at 5 AM
+
+jobs:
+    check:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: ./scripts
+        steps:
+
+        - name: Check out the repository to the runner
+          uses: actions/checkout@v1 
+        - name: Setup node
+          uses: actions/setup-node@v1
+        - name: Make the script file executable
+          run: chmod +x check-dependencies.sh
+        - name: Run dependencies script
+          run: ./check-dependencies.sh
+          env:
+              DEPENDENCIES_TOKEN: ${{ secrets.DEPENDENCIES_TOKEN }}
+              DEPENDENCIES_USER: fnd # required due to personal access token
