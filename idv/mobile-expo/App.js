@@ -8,14 +8,7 @@ export default function App() {
       scheme: "footprint", // This has to match the expo scheme you set in the app.json file
       publicKey: "ob_test_ilBQgKtvrgQrQNV8U2rb7e",
       onComplete: (validationToken) => {
-        // TODO: User has finished the flow. This validation token can be used to see the fp_id
-        // of the user, the auth method they used to log in, and their KYC status
-        console.log(validationToken);
-      },
-      onAuth: (validationToken) => {
-        // User has authenticated. Optionally, this validation token can be used to see the fp_id
-        // of the authenticated user and the auth method they used to log in
-        console.log(validationToken);
+        alert(validationToken);
       },
       onCancel: () => {
         console.log("canceled");

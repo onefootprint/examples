@@ -13,13 +13,15 @@ export class AppComponent {
       kind: FootprintComponentKind.Verify,
       authToken: 'tok_1232132',
       onComplete: (validationToken: string) => {
-        // TODO: User has finished the flow. This validation token can be used to see the fp_id
+        // TODO: User has finished the flow. This validation token can be used to fetch the fp_id
         // of the user, the auth method they used to log in, and their KYC status
+        // check: https://docs.onefootprint.com/sdks/javascript#available-components-verify-component-integration-available-props
         console.log('onComplete ', validationToken);
       },
       onAuth: (validationToken: string) => {
-        // User has authenticated. Optionally, this validation token can be used to see the fp_id
+        // User has authenticated. Optionally, this validation token can be used to fetch the fp_id
         // of the authenticated user and the auth method they used to log in
+        // check: https://docs.onefootprint.com/sdks/javascript#available-components-verify-component-integration-available-props
         console.log(validationToken);
       },
       onCancel: () => {
