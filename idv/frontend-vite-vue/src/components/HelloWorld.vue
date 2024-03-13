@@ -14,6 +14,13 @@ export default {
         publicKey,
         l10n: { locale: "en-US" },
         onComplete: (validationToken) => {
+          // TODO: User has finished the flow. This validation token can be used to see the fp_id
+          // of the user, the auth method they used to log in, and their KYC status
+          console.log(validationToken);
+        },
+        onAuth: (validationToken) => {
+          // User has authenticated. Optionally, this validation token can be used to see the fp_id
+          // of the authenticated user and the auth method they used to log in
           console.log(validationToken);
         },
       });

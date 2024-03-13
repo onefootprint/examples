@@ -5,16 +5,23 @@ import footprint from "@onefootprint/footprint-expo";
 export default function App() {
   const handleButtonPress = async () => {
     footprint.open({
-      scheme: 'footprint', // This has to match the expo scheme you set in the app.json file 
+      scheme: "footprint", // This has to match the expo scheme you set in the app.json file
       publicKey: "ob_test_ilBQgKtvrgQrQNV8U2rb7e",
       onComplete: (validationToken) => {
-        alert(validationToken);
+        // TODO: User has finished the flow. This validation token can be used to see the fp_id
+        // of the user, the auth method they used to log in, and their KYC status
+        console.log(validationToken);
+      },
+      onAuth: (validationToken) => {
+        // User has authenticated. Optionally, this validation token can be used to see the fp_id
+        // of the authenticated user and the auth method they used to log in
+        console.log(validationToken);
       },
       onCancel: () => {
         console.log("canceled");
       },
       onError: (error) => {
-        console.error(error)
+        console.error(error);
       },
       userData: {
         "id.email": "jane.doe@acme.com",
