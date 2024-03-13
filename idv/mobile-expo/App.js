@@ -5,7 +5,7 @@ import footprint from "@onefootprint/footprint-expo";
 export default function App() {
   const handleButtonPress = async () => {
     footprint.open({
-      scheme: 'footprint', // This has to match the expo scheme you set in the app.json file 
+      scheme: "footprint", // This has to match the expo scheme you set in the app.json file
       publicKey: "ob_test_ilBQgKtvrgQrQNV8U2rb7e",
       onComplete: (validationToken) => {
         alert(validationToken);
@@ -14,7 +14,7 @@ export default function App() {
         console.log("canceled");
       },
       onError: (error) => {
-        console.error(error)
+        console.error(error);
       },
       userData: {
         "id.email": "jane.doe@acme.com",
