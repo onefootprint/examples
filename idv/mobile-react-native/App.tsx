@@ -5,7 +5,7 @@ import footprint from '@onefootprint/footprint-react-native';
 export default function App() {
   const handleButtonPress = async () => {
     footprint.open({
-      publicKey: 'ob_test_ilBQgKtvrgQrQNV8U2rb7e',
+      publicKey: 'pb_test_9SghrIquMN8DzURRdaIZTS',
       onComplete: (validationToken: string) => {
         console.log(validationToken);
       },
@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Button title="Verify with Footprint" onPress={handleButtonPress} />
+      <Button title="Verify with Footprintt" onPress={handleButtonPress} />
     </View>
   );
 }
