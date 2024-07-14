@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Expo",
-    "slug": "Expo",
+    "name": "mobile-expo-typescript",
+    "slug": "mobile-expo-typescript",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.onefootprint.ockycexpo"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,6 +23,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4b0545d7-37c0-48f6-984b-1ec26cd3540f"
+      }
     }
   }
 }

@@ -4,8 +4,8 @@ import footprint from '@onefootprint/footprint-react-native';
 
 export default function App() {
   const handleButtonPress = async () => {
-    footprint.open({
-      publicKey: 'pb_test_9SghrIquMN8DzURRdaIZTS',
+    const component = footprint.init({
+      publicKey: 'pb_test_LRfe5D3dZnWSf5vOGSeCFk',
       onComplete: (validationToken: string) => {
         console.log(validationToken);
       },
@@ -15,15 +15,24 @@ export default function App() {
       onError: (error: string) => {
         console.error(error);
       },
-      userData: {
+      bootstrapData: {
         'id.email': 'jane.doe@acme.com',
-      },
-      appearance,
-      options: {
-        showCompletionPage: false,
-      },
-      l10n: {locale: 'en-US'},
+        'id.first_name': 'Jane',
+        'id.middle_name': 'Samantha',
+        'id.last_name': 'Doe',
+        'id.dob': '01/01/2001',
+        'id.ssn9': '123456789',
+        'id.ssn4': '1234',
+        'id.nationality': 'US',
+        'id.address_line1': '123 Apple St.',
+        'id.address_line2': 'APT 123',
+        'id.city': 'Boston',
+        'id.state': 'MA',
+        'id.country': 'US',
+        'id.zip': '02117',
+      }
     });
+    component.render();
   };
 
   return (

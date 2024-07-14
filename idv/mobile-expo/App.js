@@ -4,8 +4,7 @@ import footprint from "@onefootprint/footprint-expo";
 
 export default function App() {
   const handleButtonPress = async () => {
-    footprint.open({
-      scheme: 'footprint', // This has to match the expo scheme you set in the app.json file 
+    const component = footprint.init({
       publicKey: "ob_test_ilBQgKtvrgQrQNV8U2rb7e",
       onComplete: (validationToken) => {
         alert(validationToken);
@@ -16,13 +15,14 @@ export default function App() {
       onError: (error) => {
         console.error(error)
       },
-      userData: {
+      bootstrapData: {
         "id.email": "jane.doe@acme.com",
         "id.phone_number": "+15555550100",
       },
       appearance,
       l10n: { locale: "en-US" },
     });
+    component.render();
   };
 
   return (
@@ -86,3 +86,4 @@ const appearance = {
     },
   },
 };
+
