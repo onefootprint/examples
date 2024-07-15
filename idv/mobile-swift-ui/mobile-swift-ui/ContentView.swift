@@ -33,7 +33,6 @@ struct ContentView: View {
                 )
                 
                 let appearance = FootprintAppearance(
-                    theme: .light,
                     rules: FootprintAppearanceRules(button: ["transition": "all .2s linear"]),
                     variables: FootprintAppearanceVariables(borderRadius: "10px", buttonPrimaryBg: "#0C6948")
                 )
