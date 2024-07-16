@@ -1,12 +1,22 @@
 import "@onefootprint/footprint-js/dist/footprint-js.css";
-
+import footprint from "@onefootprint/footprint-js";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { FootprintVerifyButton } from "@onefootprint/footprint-react";
 
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const handleOpen = () => {
+    const component = footprint.init({
+      kind: 'verify',
+      publicKey: 'pb_test_7UYZNPCf6lK5vBojKnwGRT',
+      onComplete: (validationToken: string) => {
+        console.log(validationToken);
+      },
+    });
+    component.render();
+  }
+
   return (
     <>
       <Head>
@@ -18,16 +28,7 @@ const Home: NextPage = () => {
       </Head>
       <main className={styles.main}>
         <div className={styles.container}>
-          <FootprintVerifyButton
-            publicKey="ob_test_WNgSBRR7uxoT8JRDBBflgw"
-            l10n={{ locale: "en-US" }}
-            onComplete={(validationToken) => {
-              console.log("on completed", validationToken);
-            }}
-            onCancel={() => {
-              console.log("user canceled!");
-            }}
-          />
+          <button type="button" onClick={handleOpen}>Verify</button>
         </div>
       </main>
     </>

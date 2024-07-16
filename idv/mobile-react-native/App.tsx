@@ -1,46 +1,324 @@
-import React from 'react';
-import {Button, View, StyleSheet} from 'react-native';
-import footprint from '@onefootprint/footprint-react-native';
+import { Fp, useFootprint } from '@onefootprint/footprint-react-native';
+import React, { useState } from 'react';
+import {View, StyleSheet, Text, Button} from 'react-native';
 
 export default function App() {
-  const handleButtonPress = async () => {
-    const component = footprint.init({
-      publicKey: 'pb_test_LRfe5D3dZnWSf5vOGSeCFk',
-      onComplete: (validationToken: string) => {
-        console.log(validationToken);
+  const [step, setStep] = useState('identify');
+
+  return (
+    <Fp.Provider publicKey="pb_test_5K5NEGAAgB5bqBkfPMlqL1">
+      {step === 'identify' && <Identify onDone={() => setStep('kyc')} />}
+    </Fp.Provider>
+  );
+}
+
+const Identify = ({ onDone }: { onDone: () => void }) => {
+  const fp = useFootprint();
+
+  const handleSubmit = (formValues: Di) => {
+    console.log('Submitting', formValues);
+    fp.launchIdentify(
+      {
+        email: formValues['id.email'],
+        phoneNumber: formValues['id.phone_number'],
       },
-      onCancel: () => {
-        console.log('canceled');
-      },
-      onError: (error: string) => {
-        console.error(error);
-      },
-      bootstrapData: {
-        'id.email': 'jane.doe@acme.com',
-        'id.first_name': 'Jane',
-        'id.middle_name': 'Samantha',
-        'id.last_name': 'Doe',
-        'id.dob': '01/01/2001',
-        'id.ssn9': '123456789',
-        'id.ssn4': '1234',
-        'id.nationality': 'US',
-        'id.address_line1': '123 Apple St.',
-        'id.address_line2': 'APT 123',
-        'id.city': 'Boston',
-        'id.state': 'MA',
-        'id.country': 'US',
-        'id.zip': '02117',
-      }
-    });
-    component.render();
+      {onAuthenticated: onDone},
+    );
   };
 
   return (
     <View style={styles.container}>
-      <Button title="Verify with Footprintt" onPress={handleButtonPress} />
+      <View
+        style={{
+          marginBottom: 20,
+          alignItems: 'center',
+        }}>
+        <Text>Footprint Auth Demo</Text>
+        <Text>Enter your email and phone number</Text>
+      </View>
+      <Fp.Form onSubmit={handleSubmit}>
+        {({handleSubmit, setValue, errors}) => {
+          console.log('form errors', errors);
+          return (
+            <View>
+              <Fp.Field name="id.email">
+                {({error}) => {
+                  return (
+                    <>
+                      <Text style={{marginBottom: 10}} nativeID="labelUsername">
+                        Email
+                      </Text>
+                      <Fp.Input
+                        placeholder="Email"
+                        style={error ? styles.textInputError : styles.textInput}
+                        aria-labelledby="labelUsername"
+                        accessibilityLabelledBy="labelUsername"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      <Fp.FieldErrors />
+                    </>
+                  );
+                }}
+              </Fp.Field>
+              <Fp.Field name="id.phone_number">
+                {({error}) => (
+                  <>
+                    <Fp.Input
+                      placeholder="Phone"
+                      style={error ? styles.textInputError : styles.textInput}
+                    />
+                    <Fp.FieldErrors />
+                  </>
+                )}
+              </Fp.Field>
+              <Button
+                title="Submit"
+                onPress={() => {
+                  handleSubmit();
+                }}
+              />
+            </View>
+          );
+        }}
+      </Fp.Form>
     </View>
   );
-}
+};
+
+const KycDemo = () => {
+  const fp = useFootprint();
+  const [validationToken, setValidationToken] = React.useState<string | null>(
+    null,
+  );
+  const [step, setStep] = React.useState(0);
+
+  const steps = [
+    <BasicInformation key={0} onDone={() => setStep(1)} />,
+    <AddressInformation
+      key={1}
+      onDone={() => {
+        fp.handoff({
+          onComplete: validationToken => {
+            setValidationToken(validationToken);
+          },
+        });
+      }}
+    />,
+  ];
+
+  if (validationToken) {
+    return (
+      <View style={styles.container}>
+        <Text>Validation Token: {validationToken}</Text>
+      </View>
+    );
+  }
+
+  return <View style={styles.container}>{steps[step]}</View>;
+};
+
+const BasicInformation = ({onDone}: {onDone: () => void}) => {
+  const fp = useFootprint();
+
+  const handleSubmit = data => {
+    console.log('Submitting', data);
+    fp.save(data, {
+      onSuccess: () => {
+        onDone();
+      },
+      onError: error => {
+        console.log('Error', error);
+      },
+    });
+  };
+
+  return (
+    <Fp.Form onSubmit={handleSubmit}>
+      {({handleSubmit}) => (
+        <View>
+          <Fp.Field name="id.first_name">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>First Name</Text>
+                <Fp.Input
+                  placeholder="First Name"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.middle_name">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>Middle Name</Text>
+                <Fp.Input
+                  placeholder="Middle Name"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.last_name">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>Last Name</Text>
+                <Fp.Input
+                  placeholder="Last Name"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.dob">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>Date of Birth</Text>
+                <Fp.Input
+                  placeholder="Date of Birth"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.ssn4">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>SSN</Text>
+                <Fp.Input
+                  placeholder="SSN"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.ssn9">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>SSN</Text>
+                <Fp.Input
+                  placeholder="SSN"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Button
+            title="Submit"
+            onPress={() => {
+              handleSubmit();
+            }}
+          />
+        </View>
+      )}
+    </Fp.Form>
+  );
+};
+
+const AddressInformation = ({onDone}: {onDone: () => void}) => {
+  const fp = useFootprint();
+
+  const handleSubmit = data => {
+    fp.save(data, {
+      onSuccess: () => {
+        onDone();
+      },
+    });
+  };
+
+  return (
+    <Fp.Form onSubmit={handleSubmit}>
+      {({handleSubmit}) => (
+        <View>
+          <Fp.Field name="id.address_line1">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>Address line 1</Text>
+                <Fp.Input
+                  placeholder="Address Line 1"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.address_line2">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>Address line 2</Text>
+                <Fp.Input
+                  placeholder="Address Line 2"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.country">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>Country</Text>
+                <Fp.Input
+                  placeholder="Country"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.city">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>City</Text>
+                <Fp.Input
+                  placeholder="City"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.state">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>State</Text>
+                <Fp.Input
+                  placeholder="State"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Fp.Field name="id.zip">
+            {({error}) => (
+              <>
+                <Text style={{marginBottom: 10}}>Zip</Text>
+                <Fp.Input
+                  placeholder="Zip"
+                  style={error ? styles.textInputError : styles.textInput}
+                />
+                <Fp.FieldErrors />
+              </>
+            )}
+          </Fp.Field>
+          <Button
+            title="Submit"
+            onPress={() => {
+              handleSubmit();
+            }}
+          />
+        </View>
+      )}
+    </Fp.Form>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -49,50 +327,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  textInput: {
+    marginBottom: 10,
+    padding: 10,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: 200,
+    borderRadius: 15,
+  },
+  textInputError: {
+    marginBottom: 10,
+    padding: 10,
+    borderColor: 'red',
+    borderWidth: 1,
+    width: 200,
+    borderRadius: 15,
+  },
 });
-
-const appearance = {
-  fontSrc:
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap',
-  variables: {
-    fontFamily: '"Inter"',
-    linkColor: '#101010',
-    colorError: '#E33D19',
-
-    buttonPrimaryBg: '#315E4C',
-    buttonPrimaryHoverBg: '#46866c',
-    buttonPrimaryColor: '#FFF',
-    buttonBorderRadius: '70px',
-
-    linkButtonColor: '#315E4C',
-
-    labelColor: '#101010',
-    labelFont: '600 15px/18px "Inter"',
-
-    inputBorderRadius: '8px',
-    inputBorderWidth: '1px',
-    inputFont: '500 15px/21.42px "Inter"',
-    inputHeight: '50px',
-    inputPlaceholderColor: '#B5B5B5',
-    inputColor: '#101010',
-    inputBg: '#FFFFFF',
-    inputBorderColor: '#B5B5B5',
-    inputHoverBorderColor: '#707070',
-    inputFocusBorderColor: '#707070',
-    inputFocusElevation: 'none',
-    inputErrorFocusElevation: 'none',
-    hintColor: '#101010',
-    hintFont: '400 13px/20px "Inter"',
-
-    dropdownBorderColor: '#B5B5B5',
-    dropdownBorderRadius: '8px',
-    dropdownElevation: 'unset',
-    dropdownBg: '#FFF',
-    dropdownHoverBg: '#F9F9F9',
-  },
-  rules: {
-    button: {
-      transition: 'all .2s linear',
-    },
-  },
-};
