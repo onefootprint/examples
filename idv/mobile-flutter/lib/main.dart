@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:footprint_flutter/footprint_flutter.dart';
+import 'package:footprint_flutter_example/widgets/onboarding_components/onboarding_components.dart';
+import 'package:footprint_flutter_example/widgets/verification/verification.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,31 +14,55 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void handlePress(BuildContext context) {
-    var config = FootprintConfiguration(
-      onCancel: () => print("onCancel"),
-      onComplete: (String token) => print("onComplete $token"),
-      publicKey: "pb_test_RcDHxZgJO9q3vY72d7ZLXu",
-      redirectUrl: "com.footprint.fluttersdk://example",
-    );
-
-    footprint.init(config, context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Builder(
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Footprint Flutter Demo'),
-        ),
-        body: Center(
-          child: ElevatedButton(
-              child: const Text('Verify with Footprint'),
-              onPressed: () => {handlePress(context)}),
+      home: Builder(
+        builder: (_context) => Scaffold(
+          appBar: AppBar(
+            title: const Text('Footprint Flutter Demo'),
+          ),
+          body: Container(
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size.fromWidth(300),
+                    padding: const EdgeInsets.all(12),
+                  ),
+                  onPressed: () {
+                    Navigator.of(_context).push(
+                      MaterialPageRoute(
+                        builder: (_context) => const Verification(),
+                      ),
+                    );
+                  },
+                  child: const Text("Footprint Verification"),
+                ),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size.fromWidth(300),
+                      padding: const EdgeInsets.all(12),
+                    ),
+                    onPressed: () {
+                      Navigator.of(_context).push(
+                        MaterialPageRoute(
+                          builder: (_context) => const OnboardingComponents(),
+                        ),
+                      );
+                    },
+                    child: const Text("Footprint Onboarding Components")),
+              ],
+            ),
+          ),
         ),
       ),
-    ));
+    );
   }
 }
