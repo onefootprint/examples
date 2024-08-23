@@ -6,7 +6,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Button("Verify") {
-                let userData = FootprintUserData(
+                let bootstrapData = FootprintBootstrapData(
                     email: "example@gmail.com",
                     phoneNumber: "+15555550100",
                     firstName: "Piip",
@@ -40,7 +40,7 @@ struct ContentView: View {
                 let config = FootprintConfiguration(
                     publicKey: "pb_test_RcDHxZgJO9q3vY72d7ZLXu",
                     scheme: "footprintapp-callback",
-                    userData: userData,
+                    bootstrapData: bootstrapData,
                     options: options,
                     l10n: FootprintL10n(locale: .esMX),
                     appearance: appearance,
