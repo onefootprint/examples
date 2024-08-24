@@ -33,7 +33,7 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "dependencies": {
-      "@onefootprint/footprint-js": "^3.8.0"
+      "@onefootprint/footprint-js": "^3.13.0"
     }
   }
 

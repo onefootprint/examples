@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@onefootprint/footprint-js": "^3.12.1",
+    "@onefootprint/footprint-js": "^3.13.0",
     "vue": "^3.2.41"
   },
   "devDependencies": {

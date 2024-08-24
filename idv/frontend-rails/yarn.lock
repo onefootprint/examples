@@ -12,17 +12,17 @@
   resolved "https://registry.npmjs.org/@hotwired/stimulus/-/stimulus-3.2.2.tgz"
   integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
 
-"@onefootprint/footprint-js@^3.8.0":
-  version "3.8.0"
-  resolved "https://registry.npmjs.org/@onefootprint/footprint-js/-/footprint-js-3.8.0.tgz"
-  integrity sha512-VtHufCWOBnj2rNzXX+6Y4RAcGtkv6c5CQGiGkx/niW/jnwOfSskq/UlkeV81V4NsGaQ4x0Atq3EER3e9T4T4hQ==
+"@onefootprint/footprint-js@^3.13.0":
+  version "3.13.0"
+  resolved "https://registry.npmjs.org/@onefootprint/footprint-js/-/footprint-js-3.13.0.tgz"
+  integrity sha512-iEz5P2LA1L4JME0zYZ5FJw2FB0XjMuO4UaobKtJTr6sYN6pNbaEOymdX2n6atvA6EICel27PAGsH8SSfu+Ymhg==
   dependencies:
-    "@onefootprint/postmate" "2.1.0"
+    "@onefootprint/postmate" "2.1.2"
 
-"@onefootprint/postmate@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/@onefootprint/postmate/-/postmate-2.1.0.tgz"
-  integrity sha512-XMofyVGx424NaAWbW5Np/yjQZo2eX4/r4Y2F4ON/Y5O7nt69g3WaO95SBBjrWNLNNZgLeUb/DjKg00DUV72NSw==
+"@onefootprint/postmate@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/@onefootprint/postmate/-/postmate-2.1.2.tgz"
+  integrity sha512-R/N7AvZNIFrZQzvOuHbwzfLev5MMb1QtxK+dOfbVl7fZPb7spFfJmCS5pAQAse4bZByX2IEAdesfvoT0NCCgGQ==
 
 stimulus@^3.2.2:
   version "3.2.2"
