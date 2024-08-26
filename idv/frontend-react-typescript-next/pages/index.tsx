@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   const handleOpen = () => {
     const component = footprint.init({
       kind: 'verify',
-      publicKey: 'pb_test_7UYZNPCf6lK5vBojKnwGRT',
+      authToken: 'replace_me',
       onComplete: (validationToken: string) => {
         console.log(validationToken);
       },
