@@ -27,25 +27,10 @@ class Verification extends StatelessWidget {
         visaExpirationDate: "05/12/2024",
         businessAddressLine1: "1 Main St",
         businessAddressLine2: "Apt 10",
-        businessBeneficialOwners: [
-          BusinessBeneficialOwners(
-              boEmail: "example@gmail.com",
-              boFirstName: "Piip",
-              boLastName: "Foot",
-              boPhoneNumber: "+15555550100",
-              boOwnershipStack: 50),
-          BusinessBeneficialOwners(
-              boEmail: "example@test.com",
-              boFirstName: "Jon",
-              boLastName: "Doe",
-              boPhoneNumber: "+15555550100",
-              boOwnershipStack: 25)
-        ],
         businessCity: "San Francisco",
         businessCorporationType: "llc",
         businessCountry: "US",
         businessDba: "Test",
-        businessFormationDate: "2010-01-01",
         businessName: "Acme",
         businessPhoneNumber: "+15555550100",
         businessState: "CA",
