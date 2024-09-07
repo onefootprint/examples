@@ -29,6 +29,10 @@ class _KybState extends State<Kyb> {
         body: FootprintProvider(
           publicKey: "pb_test_1FIzAas6ISQtjIWLs7reK8",
           redirectUrl: "com.footprint.fluttersdk://example",
+          sandboxId: "sandbox1FIzAas6ISQtjIWLs7reK8",
+          sandboxOutcome: SandboxOutcome(
+            overallOutcome: OverallOutcome.pass,
+          ),
           child: Container(
             // center child
             alignment: Alignment.center,
@@ -168,70 +172,170 @@ InputDecoration inputDecoration(String hintText, {String? errorText}) {
       errorText: errorText);
 }
 
-class Identify extends StatelessWidget {
+class Identify extends StatefulWidget {
   const Identify({super.key, required this.handleAuthenticated});
 
   final void Function() handleAuthenticated;
 
-  void handleComplete(BuildContext context, FootprintBootstrapData formData) {
-    footprintUtils(context).launchIdentify(
-        email: formData.email,
-        phoneNumber: formData.phoneNumber,
-        onAuthenticated: () {
-          handleAuthenticated();
-        },
-        onError: (err) {
-          print("onError $err");
-        },
-        onCancel: () {
-          print("onCancel");
+  @override
+  State<Identify> createState() => _IdentifyState();
+}
+
+class _IdentifyState extends State<Identify> {
+  bool isChallengeCreated = false;
+  ChallengeKind? challengeKind;
+  FootprintAuthMethods? authMethod;
+  var requiresAuth;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      footprintUtils(context).requiresAuth().then((response) {
+        setState(() {
+          authMethod = response.authMethod;
         });
+
+        if (response.requiresAuth == false) {
+          widget.handleAuthenticated();
+        } else {
+          setState(() {
+            requiresAuth = response.requiresAuth;
+          });
+        }
+      });
+    });
+  }
+
+  void handleChallengeCreated(ChallengeKind challengeKind) {
+    setState(() {
+      this.challengeKind = challengeKind;
+      isChallengeCreated = true;
+    });
+  }
+
+  void handleVerfied() {
+    widget.handleAuthenticated();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FootprintForm(
-      createForm: (handleSubmit, props) {
-        return Container(
-          padding: const EdgeInsets.fromLTRB(48, 20, 48, 20),
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              Text("Identification",
-                  style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 16),
-              FootprintField(
-                name: "id.email",
-                createField: ({error}) {
-                  return FootprintTextInput(
-                    labelText: "Email",
-                    decoration:
-                        inputDecoration("Email", errorText: error?.message),
+    if (requiresAuth == null || !footprintUtils(context).isReadyForAuth) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (authMethod == FootprintAuthMethods.authToken) {
+      return FootprintOtp(
+        buildOtp: (otpUtils) {
+          if (!isChallengeCreated) {
+            otpUtils.createAuthTokenBasedChallenge().then((challengeKind) {
+              handleChallengeCreated(challengeKind);
+            }).catchError(
+              (_) {
+                footprintUtils(context).launchIdentify(
+                  onAuthenticated: widget
+                      .handleAuthenticated, // Don't pass email and phone number - it's going to use auth token
+                );
+              },
+              test: (err) => err is InlineOtpNotSupportedException,
+            );
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return Container(
+            padding: const EdgeInsets.fromLTRB(48, 20, 48, 20),
+            child: TextField(
+              decoration: inputDecoration(
+                "Enter OTP from ${challengeKind == ChallengeKind.sms ? 'SMS' : 'Email'}",
+              ),
+              onSubmitted: (value) {
+                otpUtils.verifyOtpChallenge(verificationCode: value).then((_) {
+                  handleVerfied();
+                });
+              },
+            ),
+          );
+        },
+      );
+    }
+
+    return FootprintOtp(
+      buildOtp: (otpUtils) {
+        if (!isChallengeCreated) {
+          return FootprintForm(
+            createForm: (handleSubmit, props) {
+              return Container(
+                padding: const EdgeInsets.fromLTRB(48, 20, 48, 20),
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Text("Identification",
+                        style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: 16),
+                    FootprintField(
+                      name: "id.email",
+                      createField: ({error}) {
+                        return FootprintTextInput(
+                          labelText: "Email",
+                          decoration: inputDecoration("Email",
+                              errorText: error?.message),
+                        );
+                      },
+                      // NOTE: Alternatively, you can use the `child` property to pass in a widget (example below for phone number)
+                    ),
+                    const SizedBox(height: 12),
+                    FootprintField(
+                      name: "id.phone_number",
+                      child: FootprintTextInput(
+                        labelText: "Phone Number",
+                        decoration: inputDecoration("Phone Number"),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: () {
+                        handleSubmit();
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ],
+                ),
+              );
+            },
+            onSubmit: (formData) {
+              otpUtils
+                  .createEmailPhoneBasedChallenge(
+                email: formData.email ?? '',
+                phoneNumber: formData.phoneNumber ?? "",
+              )
+                  .then((challegeKind) {
+                handleChallengeCreated(challegeKind);
+              }).catchError(
+                (_) {
+                  footprintUtils(context).launchIdentify(
+                    email: formData.email,
+                    phoneNumber: formData.phoneNumber,
+                    onAuthenticated: widget.handleAuthenticated,
                   );
                 },
-                // NOTE: Alternatively, you can use the `child` property to pass in a widget (example below for phone number)
-              ),
-              const SizedBox(height: 12),
-              FootprintField(
-                name: "id.phone_number",
-                child: FootprintTextInput(
-                  labelText: "Phone Number",
-                  decoration: inputDecoration("Phone Number"),
-                ),
-              ),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: () {
-                  handleSubmit();
-                },
-                child: const Text('Submit'),
-              ),
-            ],
+                test: (err) => err is InlineOtpNotSupportedException,
+              );
+            },
+          );
+        }
+        return Container(
+          padding: const EdgeInsets.fromLTRB(48, 20, 48, 20),
+          child: TextField(
+            decoration: inputDecoration(
+              "Enter OTP from ${challengeKind == ChallengeKind.sms ? 'SMS' : 'Email'}",
+            ),
+            onSubmitted: (value) {
+              otpUtils.verifyOtpChallenge(verificationCode: value).then((_) {
+                handleVerfied();
+              });
+            },
           ),
         );
-      },
-      onSubmit: (formData) {
-        handleComplete(context, formData);
       },
     );
   }
@@ -242,7 +346,7 @@ class BusinessInfo extends StatelessWidget {
 
   final void Function() onCompleted;
 
-  void handleComplete(BuildContext context, FootprintBootstrapData formData) {
+  void handleComplete(BuildContext context, FormData formData) {
     footprintUtils(context)
         .save(
       formData,
@@ -343,7 +447,7 @@ class BusinessAddressData extends StatelessWidget {
 
   final void Function() onCompleted;
 
-  void handleComplete(BuildContext context, FootprintBootstrapData formData) {
+  void handleComplete(BuildContext context, FormData formData) {
     footprintUtils(context)
         .save(
       formData,
@@ -444,7 +548,7 @@ class BeneficialOwners extends StatelessWidget {
 
   final void Function() onCompleted;
 
-  void handleComplete(BuildContext context, FootprintBootstrapData formData) {
+  void handleComplete(BuildContext context, FormData formData) {
     footprintUtils(context)
         .save(
       formData,
@@ -545,7 +649,7 @@ class PersonalBasicData extends StatelessWidget {
 
   final void Function() onCompleted;
 
-  void handleComplete(BuildContext context, FootprintBootstrapData formData) {
+  void handleComplete(BuildContext context, FormData formData) {
     footprintUtils(context)
         .save(
       formData,
@@ -630,7 +734,7 @@ class PersonalAddressData extends StatelessWidget {
 
   final void Function() onCompleted;
 
-  void handleComplete(BuildContext context, FootprintBootstrapData formData) {
+  void handleComplete(BuildContext context, FormData formData) {
     footprintUtils(context)
         .save(
       formData,
@@ -731,7 +835,7 @@ class Ssn extends StatelessWidget {
 
   final void Function(String token) onCompleted;
 
-  void handleComplete(BuildContext context, FootprintBootstrapData formData) {
+  void handleComplete(BuildContext context, FormData formData) {
     var utilMethods = footprintUtils(context);
     utilMethods
         .save(
