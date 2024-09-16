@@ -8,11 +8,9 @@ import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
   const handleOpen = () => {
     const component = footprint.init({
-      kind: 'verify',
-      publicKey: 'pb_test_5OJt1d7gDASCzgv7pZpLuB',
-      onComplete: (validationToken: string) => {
-        console.log(validationToken);
-      },
+      kind: 'form',
+      authToken: 'cttok_pEnAgRWBcheoHKfM47cLiBd0KSwV4aDh6H',
+      onComplete: console.log,
     });
     component.render();
   }
