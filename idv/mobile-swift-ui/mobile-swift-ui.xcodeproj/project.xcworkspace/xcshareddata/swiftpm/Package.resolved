@@ -1,15 +1,14 @@
 {
-  "originHash" : "7d3275339be9c268bfee2041ac91d3ff14ea05f44f3eacc99405c583d2c3c860",
   "pins" : [
     {
       "identity" : "footprint-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onefootprint/footprint-swift",
+      "location" : "https://github.com/onefootprint/footprint-swift.git",
       "state" : {
-        "revision" : "b9851d62c4192592e8a711b60125fc24cc4cb5b2",
-        "version" : "1.0.5"
+        "revision" : "416e02200c2ebbd0563db9912cfcc133c2b0dc19",
+        "version" : "1.0.9"
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }

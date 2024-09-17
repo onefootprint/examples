@@ -11,7 +11,7 @@
 		565B65642B1E17560072925A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B65632B1E17560072925A /* ContentView.swift */; };
 		565B65662B1E17570072925A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565B65652B1E17570072925A /* Assets.xcassets */; };
 		565B65692B1E17570072925A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565B65682B1E17570072925A /* Preview Assets.xcassets */; };
-		565B65712B1E17730072925A /* FootprintSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 565B65702B1E17730072925A /* FootprintSwift */; };
+		78D5ADE82C79474F0098F2A4 /* FootprintSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78D5ADE72C79474F0098F2A4 /* FootprintSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				565B65712B1E17730072925A /* FootprintSwift in Frameworks */,
+				78D5ADE82C79474F0098F2A4 /* FootprintSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +86,7 @@
 			);
 			name = "mobile-swift-ui";
 			packageProductDependencies = (
-				565B65702B1E17730072925A /* FootprintSwift */,
+				78D5ADE72C79474F0098F2A4 /* FootprintSwift */,
 			);
 			productName = "mobile-swift-ui";
 			productReference = 565B655E2B1E17560072925A /* mobile-swift-ui.app */;
@@ -117,7 +117,7 @@
 			);
 			mainGroup = 565B65552B1E17560072925A;
 			packageReferences = (
-				565B656F2B1E17730072925A /* XCRemoteSwiftPackageReference "footprint-swift" */,
+				78D5ADE62C79474F0098F2A4 /* XCRemoteSwiftPackageReference "footprint-swift" */,
 			);
 			productRefGroup = 565B655F2B1E17560072925A /* Products */;
 			projectDirPath = "";
@@ -354,20 +354,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		565B656F2B1E17730072925A /* XCRemoteSwiftPackageReference "footprint-swift" */ = {
+		78D5ADE62C79474F0098F2A4 /* XCRemoteSwiftPackageReference "footprint-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onefootprint/footprint-swift";
+			repositoryURL = "https://github.com/onefootprint/footprint-swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.9;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		565B65702B1E17730072925A /* FootprintSwift */ = {
+		78D5ADE72C79474F0098F2A4 /* FootprintSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 565B656F2B1E17730072925A /* XCRemoteSwiftPackageReference "footprint-swift" */;
+			package = 78D5ADE62C79474F0098F2A4 /* XCRemoteSwiftPackageReference "footprint-swift" */;
 			productName = FootprintSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
