@@ -173,3 +173,16 @@ a {
   color: rgb(255, 255, 255);
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(200, 200, 200, 0.1) 0px -1px 1px inset, rgba(255, 255, 255, 0.2) 0px 1px 1px inset;
 }
+
+.fp-pin-input-container {
+  display: flex;
+  justify-content: center; 
+  gap: 8px;
+}
+
+.fp-pin-input {
+  width: 40px;
+  height: 44px;
+  padding: 0;
+  text-align: center;
+}
