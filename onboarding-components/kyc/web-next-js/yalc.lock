@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "packages": {
+    "@onefootprint/footprint-js": {
+      "signature": "e4ae295edf951831c96682c0a0e75447",
+      "file": true,
+      "replaced": "3.15.1"
+    },
+    "@onefootprint/footprint-react": {
+      "signature": "9cf9e2d4e2a6c967b108f2a7ff31d0a2",
+      "file": true,
+      "replaced": "7.5.0-beta.0"
+    }
+  }
+}

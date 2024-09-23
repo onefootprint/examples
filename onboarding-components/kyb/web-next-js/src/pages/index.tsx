@@ -18,6 +18,7 @@ const Demo = () => {
 	const isPersonalData = option === "personal-data";
 	const isSuccess = option === "success";
 
+
 	const handleIdentifyDone = () => {
 		setOption("business-data");
 	};
@@ -94,7 +95,7 @@ const BusinessData = ({ onDone }: { onDone: () => void }) => {
 
 	const handleSubmit = async (data: FormValues) => {
 		try {
-			await fp.save(data);
+			await fp.vault(data);
 			onDone();
 		} catch (e) {
 			console.log(e);
@@ -174,7 +175,7 @@ const PersonalData = ({
 
 	const handleSubmit = async (data: FormValues) => {
 		try {
-			await fp.save(data);
+			await fp.vault(data);
 			fp.handoff({
 				onComplete: onDone,
 			});
@@ -267,7 +268,7 @@ const BoData = ({ onDone }: { onDone: () => void }) => {
 
 	const handleSubmit = async (data: FormValues) => {
 		try {
-			await fp.save(data);
+			await fp.vault(data);
 			onDone();
 		} catch (e) {
 			console.log(e);

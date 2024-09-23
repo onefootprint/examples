@@ -1,0 +1,46 @@
+{
+  "name": "@onefootprint/footprint-react",
+  "private": false,
+  "type": "module",
+  "version": "7.4.0",
+  "main": "./dist/footprint-react.cjs",
+  "module": "./dist/footprint-react.js",
+  "unpkg": "./dist/footprint-react.js",
+  "types": "./dist/footprint-react.d.ts",
+  "style": "./dist/footprint-react.css",
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "lint:ci": "biome ci src",
+    "lint": "biome check src --fix --unsafe",
+    "dev": "tsup --watch",
+    "pretest:ci:bun": "cd ../footprint-js && bun run tsup",
+    "publish:local": "yarn && yarn build && yalc publish",
+    "test:ci:bun": "bun test --bail",
+    "test:watch": "bun test --watch",
+    "test": "bun test --bail",
+    "typecheck": "yarn tsc --noEmit"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "cleave.js": "https://github.com/3runo/cleave.js.git#8b5392cd87f19d200da68143f0ce81676b1733f9",
+    "csstype": "^3.1.2",
+    "i18next": "^23.10.1",
+    "lodash": "^4.17.21",
+    "react-hook-form": "^7.52.2"
+  },
+  "peerDependencies": {
+    "@onefootprint/footprint-js": ">=3.15.0",
+    "react": "17 - 18",
+    "react-dom": "17 - 18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "yalcSig": "9cf9e2d4e2a6c967b108f2a7ff31d0a2"
+}

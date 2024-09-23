@@ -1,5 +1,11 @@
 import "@onefootprint/footprint-js/dist/footprint-js.css";
-import { Fp, FormValues, useFootprint } from "@onefootprint/footprint-react";
+import {
+	Fp,
+	FormValues,
+	useFootprint,
+	InlineOtpNotSupported,
+	InlineProcessError,
+} from "@onefootprint/footprint-react";
 import React, { useState } from "react";
 import Image from "next/image";
 
@@ -9,7 +15,7 @@ import Title from "@/components/title";
 import Subtitle from "@/components/subtitle";
 import Divider from "@/components/divider";
 
-const publicKey = "pb_test_CbzkvaXKvOVdTn3YLokEP0";
+const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
 
 const Demo = () => {
 	const [option, setOption] = useState("identify");
@@ -27,7 +33,7 @@ const Demo = () => {
 
 	return (
 		<>
-			<Fp.Provider publicKey={publicKey}>
+			<Fp.Provider publicKey={publicKey} sandboxId="92378532323283578532">
 				<Header>Onboarding</Header>
 				{isIdentify && <Identify onDone={handleIdentifyDone} />}
 				{isBasicData && <BasicData onDone={handleBasicDataDone} />}
@@ -43,15 +49,26 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 	const [showOtp, setShowOtp] = useState(false);
 
 	const handleSubmitData = async (formValues: FormValues) => {
+		const email = formValues["id.email"];
+		const phoneNumber = formValues["id.phone_number"];
+
 		try {
 			setIsBusy(true);
+
 			await fp.createEmailPhoneBasedChallenge({
-				email: formValues["id.email"],
-				phoneNumber: formValues["id.phone_number"],
+				email,
+				phoneNumber,
 			});
 			setShowOtp(true);
 		} catch (error) {
-			console.log(error);
+			if (error instanceof InlineOtpNotSupported) {
+				await fp.launchIdentify(
+					{ email, phoneNumber },
+					{
+						onAuthenticated: onDone,
+					},
+				);
+			}
 		} finally {
 			setIsBusy(false);
 		}
@@ -60,7 +77,8 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 	const handleSubmitPin = async (verificationCode: string) => {
 		try {
 			setIsBusy(true);
-			await fp.verify({ verificationCode });
+			const res = await fp.verify({ verificationCode });
+			console.log(res);
 			onDone();
 		} catch (error) {
 			console.log(error);
@@ -131,15 +149,18 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 
 const BasicData = ({ onDone }: { onDone: () => void }) => {
 	const fp = useFootprint();
+	const { vaultData } = fp.data;
 
 	const handleSubmit = async (data: FormValues) => {
-		await fp.save(data);
-		fp.handoff({
-			onComplete: (validationToken) => {
-				console.log(validationToken);
-				onDone();
-			},
-		});
+		try {
+			await fp.vault(data);
+			const { validationToken } = await fp.process();
+			onDone();
+		} catch (error) {
+			if (error instanceof InlineProcessError) {
+				fp.handoff({ onComplete: (validationToken: string) => {} });
+			}
+		}
 	};
 
 	return (
@@ -148,7 +169,21 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 				<Title>Basic information</Title>
 				<Subtitle>Please provide some basic personal information</Subtitle>
 			</div>
-			<Fp.Form onSubmit={handleSubmit}>
+			<Fp.Form
+				onSubmit={handleSubmit}
+				defaultValues={{
+					"id.first_name": vaultData?.["id.first_name"],
+					"id.middle_name": vaultData?.["id.middle_name"],
+					"id.last_name": vaultData?.["id.last_name"],
+					"id.dob": vaultData?.["id.dob"],
+					"id.country": vaultData?.["id.country"] || "US",
+					"id.address_line1": vaultData?.["id.address_line1"],
+					"id.address_line2": vaultData?.["id.address_line2"],
+					"id.city": vaultData?.["id.city"],
+					"id.state": vaultData?.["id.state"],
+					"id.zip": vaultData?.["id.zip"],
+				}}
+			>
 				<div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
 					<Fp.Field name="id.first_name">
 						<Fp.Label>First name</Fp.Label>
