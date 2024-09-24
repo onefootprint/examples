@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"@onefootprint/footprint-js": "3.15.2",
-		"@onefootprint/footprint-react": "7.5.0",
+		"@onefootprint/footprint-react": "7.6.0",
 		"next": "14.2.3",
 		"react": "^18",
 		"react-dom": "^18"
