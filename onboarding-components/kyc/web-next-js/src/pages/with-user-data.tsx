@@ -15,7 +15,7 @@ import Title from "@/components/title";
 import Subtitle from "@/components/subtitle";
 import Divider from "@/components/divider";
 
-const publicKey = "ob_test_B4vg9W3gfMS1yi3CEgdjLa";
+const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
 
 const Demo = () => {
 	const [option, setOption] = useState("identify");
