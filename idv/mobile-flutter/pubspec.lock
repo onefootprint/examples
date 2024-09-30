@@ -113,10 +113,10 @@ packages:
     dependency: "direct main"
     description:
       name: footprint_flutter
-      sha256: "0bc1a00f759d6fea0acde179e11fa192ff1103d757e67f38b0b38a5f1e426d58"
+      sha256: "4f4a3e542a18aca870110e13641743fd88f8f45d3bbc686f96b0fea8ed85e702"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0-beta.2"
+    version: "2.0.0-beta.3"
   fuchsia_remote_debug_protocol:
     dependency: transitive
     description: flutter
