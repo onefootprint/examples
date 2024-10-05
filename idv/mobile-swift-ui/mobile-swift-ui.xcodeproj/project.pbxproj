@@ -11,7 +11,14 @@
 		565B65642B1E17560072925A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B65632B1E17560072925A /* ContentView.swift */; };
 		565B65662B1E17570072925A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565B65652B1E17570072925A /* Assets.xcassets */; };
 		565B65692B1E17570072925A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565B65682B1E17570072925A /* Preview Assets.xcassets */; };
-		78D5ADE82C79474F0098F2A4 /* FootprintSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78D5ADE72C79474F0098F2A4 /* FootprintSwift */; };
+		78013C6E2CB0BA0900F22E0A /* FootprintSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78013C6D2CB0BA0900F22E0A /* FootprintSwift */; };
+		78013C712CB0BA9900F22E0A /* CustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 78013C702CB0BA9900F22E0A /* CustomDump */; };
+		78013C742CB0BAA500F22E0A /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 78013C732CB0BAA500F22E0A /* Inject */; };
+		78013C7B2CB0BAB500F22E0A /* EmailAndPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C772CB0BAB500F22E0A /* EmailAndPhoneView.swift */; };
+		78013C7C2CB0BAB500F22E0A /* VerifyOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C792CB0BAB500F22E0A /* VerifyOTPView.swift */; };
+		78013C7D2CB0BAB500F22E0A /* AuthTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C752CB0BAB500F22E0A /* AuthTokenView.swift */; };
+		78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C782CB0BAB500F22E0A /* SuccessView.swift */; };
+		78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C762CB0BAB500F22E0A /* BasicInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +27,11 @@
 		565B65632B1E17560072925A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		565B65652B1E17570072925A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		565B65682B1E17570072925A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		78013C752CB0BAB500F22E0A /* AuthTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenView.swift; sourceTree = "<group>"; };
+		78013C762CB0BAB500F22E0A /* BasicInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoView.swift; sourceTree = "<group>"; };
+		78013C772CB0BAB500F22E0A /* EmailAndPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAndPhoneView.swift; sourceTree = "<group>"; };
+		78013C782CB0BAB500F22E0A /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
+		78013C792CB0BAB500F22E0A /* VerifyOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +39,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78D5ADE82C79474F0098F2A4 /* FootprintSwift in Frameworks */,
+				78013C6E2CB0BA0900F22E0A /* FootprintSwift in Frameworks */,
+				78013C712CB0BA9900F22E0A /* CustomDump in Frameworks */,
+				78013C742CB0BAA500F22E0A /* Inject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +71,7 @@
 				565B65632B1E17560072925A /* ContentView.swift */,
 				565B65652B1E17570072925A /* Assets.xcassets */,
 				565B65672B1E17570072925A /* Preview Content */,
+				78013C7A2CB0BAB500F22E0A /* OnboardingComponents */,
 			);
 			path = "mobile-swift-ui";
 			sourceTree = "<group>";
@@ -67,6 +82,18 @@
 				565B65682B1E17570072925A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		78013C7A2CB0BAB500F22E0A /* OnboardingComponents */ = {
+			isa = PBXGroup;
+			children = (
+				78013C752CB0BAB500F22E0A /* AuthTokenView.swift */,
+				78013C762CB0BAB500F22E0A /* BasicInfoView.swift */,
+				78013C772CB0BAB500F22E0A /* EmailAndPhoneView.swift */,
+				78013C782CB0BAB500F22E0A /* SuccessView.swift */,
+				78013C792CB0BAB500F22E0A /* VerifyOTPView.swift */,
+			);
+			path = OnboardingComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,7 +113,9 @@
 			);
 			name = "mobile-swift-ui";
 			packageProductDependencies = (
-				78D5ADE72C79474F0098F2A4 /* FootprintSwift */,
+				78013C6D2CB0BA0900F22E0A /* FootprintSwift */,
+				78013C702CB0BA9900F22E0A /* CustomDump */,
+				78013C732CB0BAA500F22E0A /* Inject */,
 			);
 			productName = "mobile-swift-ui";
 			productReference = 565B655E2B1E17560072925A /* mobile-swift-ui.app */;
@@ -117,7 +146,9 @@
 			);
 			mainGroup = 565B65552B1E17560072925A;
 			packageReferences = (
-				78D5ADE62C79474F0098F2A4 /* XCRemoteSwiftPackageReference "footprint-swift" */,
+				78013C6C2CB0BA0900F22E0A /* XCRemoteSwiftPackageReference "footprint-swift" */,
+				78013C6F2CB0BA9900F22E0A /* XCRemoteSwiftPackageReference "swift-custom-dump" */,
+				78013C722CB0BAA500F22E0A /* XCRemoteSwiftPackageReference "Inject" */,
 			);
 			productRefGroup = 565B655F2B1E17560072925A /* Products */;
 			projectDirPath = "";
@@ -145,6 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78013C7B2CB0BAB500F22E0A /* EmailAndPhoneView.swift in Sources */,
+				78013C7C2CB0BAB500F22E0A /* VerifyOTPView.swift in Sources */,
+				78013C7D2CB0BAB500F22E0A /* AuthTokenView.swift in Sources */,
+				78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */,
+				78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */,
 				565B65642B1E17560072925A /* ContentView.swift in Sources */,
 				565B65622B1E17560072925A /* mobile_swift_uiApp.swift in Sources */,
 			);
@@ -354,21 +390,47 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		78D5ADE62C79474F0098F2A4 /* XCRemoteSwiftPackageReference "footprint-swift" */ = {
+		78013C6C2CB0BA0900F22E0A /* XCRemoteSwiftPackageReference "footprint-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onefootprint/footprint-swift.git";
 			requirement = {
+				kind = exactVersion;
+				version = "2.0.0-alpha";
+			};
+		};
+		78013C6F2CB0BA9900F22E0A /* XCRemoteSwiftPackageReference "swift-custom-dump" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-custom-dump";
+			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.9;
+				minimumVersion = 1.3.3;
+			};
+		};
+		78013C722CB0BAA500F22E0A /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		78D5ADE72C79474F0098F2A4 /* FootprintSwift */ = {
+		78013C6D2CB0BA0900F22E0A /* FootprintSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 78D5ADE62C79474F0098F2A4 /* XCRemoteSwiftPackageReference "footprint-swift" */;
+			package = 78013C6C2CB0BA0900F22E0A /* XCRemoteSwiftPackageReference "footprint-swift" */;
 			productName = FootprintSwift;
+		};
+		78013C702CB0BA9900F22E0A /* CustomDump */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78013C6F2CB0BA9900F22E0A /* XCRemoteSwiftPackageReference "swift-custom-dump" */;
+			productName = CustomDump;
+		};
+		78013C732CB0BAA500F22E0A /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78013C722CB0BAA500F22E0A /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
