@@ -13,9 +13,11 @@ struct EmailAndPhoneView: View {
     var body: some View {
         NavigationView {
             VStack {
-                EmailInputField(email: $email, placeholder: "Enter your email", label: "Email")
+                TextField("Enter your email", text: $email)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                PhoneInputField(phoneNumber: $phoneNumber, placeholder: "Enter your phone number", label: "Phone")
+                TextField("Enter your phone number", text: $phoneNumber)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 Button(action: {
                     isLoading = true

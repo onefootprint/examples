@@ -10,10 +10,9 @@ struct AuthTokenView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                GenericInputField(
-                    text: $authToken,
-                    placeholder: "Auth token"
-                )
+                TextField("Auth token", text: $authToken)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 Button(action: {
                     isLoading = true
                     Task {
