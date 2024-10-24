@@ -1,0 +1,6 @@
+framework module FootprintSwift {
+  umbrella header "FootprintSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}

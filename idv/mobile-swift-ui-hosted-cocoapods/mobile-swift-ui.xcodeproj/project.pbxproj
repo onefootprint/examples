@@ -11,14 +11,7 @@
 		565B65642B1E17560072925A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565B65632B1E17560072925A /* ContentView.swift */; };
 		565B65662B1E17570072925A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565B65652B1E17570072925A /* Assets.xcassets */; };
 		565B65692B1E17570072925A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565B65682B1E17570072925A /* Preview Assets.xcassets */; };
-		78013C6E2CB0BA0900F22E0A /* FootprintSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78013C6D2CB0BA0900F22E0A /* FootprintSwift */; };
-		78013C712CB0BA9900F22E0A /* CustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 78013C702CB0BA9900F22E0A /* CustomDump */; };
-		78013C742CB0BAA500F22E0A /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 78013C732CB0BAA500F22E0A /* Inject */; };
-		78013C7B2CB0BAB500F22E0A /* EmailAndPhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C772CB0BAB500F22E0A /* EmailAndPhoneView.swift */; };
-		78013C7C2CB0BAB500F22E0A /* VerifyOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C792CB0BAB500F22E0A /* VerifyOTPView.swift */; };
-		78013C7D2CB0BAB500F22E0A /* AuthTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C752CB0BAB500F22E0A /* AuthTokenView.swift */; };
-		78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C782CB0BAB500F22E0A /* SuccessView.swift */; };
-		78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C762CB0BAB500F22E0A /* BasicInfoView.swift */; };
+		E65A8D3B0F35433DF5D8E2DC /* Pods_mobile_swift_ui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07E0FA22AA953608E898868 /* Pods_mobile_swift_ui.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,11 +20,9 @@
 		565B65632B1E17560072925A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		565B65652B1E17570072925A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		565B65682B1E17570072925A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		78013C752CB0BAB500F22E0A /* AuthTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenView.swift; sourceTree = "<group>"; };
-		78013C762CB0BAB500F22E0A /* BasicInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoView.swift; sourceTree = "<group>"; };
-		78013C772CB0BAB500F22E0A /* EmailAndPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAndPhoneView.swift; sourceTree = "<group>"; };
-		78013C782CB0BAB500F22E0A /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
-		78013C792CB0BAB500F22E0A /* VerifyOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPView.swift; sourceTree = "<group>"; };
+		A18393ADAF241B5229E78157 /* Pods-mobile-swift-ui.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile-swift-ui.release.xcconfig"; path = "Target Support Files/Pods-mobile-swift-ui/Pods-mobile-swift-ui.release.xcconfig"; sourceTree = "<group>"; };
+		E07E0FA22AA953608E898868 /* Pods_mobile_swift_ui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mobile_swift_ui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8FB49411DED5DB3D270223A /* Pods-mobile-swift-ui.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile-swift-ui.debug.xcconfig"; path = "Target Support Files/Pods-mobile-swift-ui/Pods-mobile-swift-ui.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,20 +30,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78013C6E2CB0BA0900F22E0A /* FootprintSwift in Frameworks */,
-				78013C712CB0BA9900F22E0A /* CustomDump in Frameworks */,
-				78013C742CB0BAA500F22E0A /* Inject in Frameworks */,
+				E65A8D3B0F35433DF5D8E2DC /* Pods_mobile_swift_ui.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16375A3000EDA1685E24D62B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E07E0FA22AA953608E898868 /* Pods_mobile_swift_ui.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1731254804B76434FA429A44 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E8FB49411DED5DB3D270223A /* Pods-mobile-swift-ui.debug.xcconfig */,
+				A18393ADAF241B5229E78157 /* Pods-mobile-swift-ui.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		565B65552B1E17560072925A = {
 			isa = PBXGroup;
 			children = (
 				565B65602B1E17560072925A /* mobile-swift-ui */,
 				565B655F2B1E17560072925A /* Products */,
+				1731254804B76434FA429A44 /* Pods */,
+				16375A3000EDA1685E24D62B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,7 +79,6 @@
 				565B65632B1E17560072925A /* ContentView.swift */,
 				565B65652B1E17570072925A /* Assets.xcassets */,
 				565B65672B1E17570072925A /* Preview Content */,
-				78013C7A2CB0BAB500F22E0A /* OnboardingComponents */,
 			);
 			path = "mobile-swift-ui";
 			sourceTree = "<group>";
@@ -84,18 +91,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		78013C7A2CB0BAB500F22E0A /* OnboardingComponents */ = {
-			isa = PBXGroup;
-			children = (
-				78013C752CB0BAB500F22E0A /* AuthTokenView.swift */,
-				78013C762CB0BAB500F22E0A /* BasicInfoView.swift */,
-				78013C772CB0BAB500F22E0A /* EmailAndPhoneView.swift */,
-				78013C782CB0BAB500F22E0A /* SuccessView.swift */,
-				78013C792CB0BAB500F22E0A /* VerifyOTPView.swift */,
-			);
-			path = OnboardingComponents;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 565B656C2B1E17570072925A /* Build configuration list for PBXNativeTarget "mobile-swift-ui" */;
 			buildPhases = (
+				F46613AD58369B20FEB56AFB /* [CP] Check Pods Manifest.lock */,
 				565B655A2B1E17560072925A /* Sources */,
 				565B655B2B1E17560072925A /* Frameworks */,
 				565B655C2B1E17560072925A /* Resources */,
+				E3C4E1A988459A12E40F4B9F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -113,9 +110,6 @@
 			);
 			name = "mobile-swift-ui";
 			packageProductDependencies = (
-				78013C6D2CB0BA0900F22E0A /* FootprintSwift */,
-				78013C702CB0BA9900F22E0A /* CustomDump */,
-				78013C732CB0BAA500F22E0A /* Inject */,
 			);
 			productName = "mobile-swift-ui";
 			productReference = 565B655E2B1E17560072925A /* mobile-swift-ui.app */;
@@ -146,9 +140,6 @@
 			);
 			mainGroup = 565B65552B1E17560072925A;
 			packageReferences = (
-				78013C6C2CB0BA0900F22E0A /* XCRemoteSwiftPackageReference "footprint-swift" */,
-				78013C6F2CB0BA9900F22E0A /* XCRemoteSwiftPackageReference "swift-custom-dump" */,
-				78013C722CB0BAA500F22E0A /* XCRemoteSwiftPackageReference "Inject" */,
 			);
 			productRefGroup = 565B655F2B1E17560072925A /* Products */;
 			projectDirPath = "";
@@ -171,16 +162,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E3C4E1A988459A12E40F4B9F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mobile-swift-ui/Pods-mobile-swift-ui-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mobile-swift-ui/Pods-mobile-swift-ui-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mobile-swift-ui/Pods-mobile-swift-ui-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F46613AD58369B20FEB56AFB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-mobile-swift-ui-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		565B655A2B1E17560072925A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78013C7B2CB0BAB500F22E0A /* EmailAndPhoneView.swift in Sources */,
-				78013C7C2CB0BAB500F22E0A /* VerifyOTPView.swift in Sources */,
-				78013C7D2CB0BAB500F22E0A /* AuthTokenView.swift in Sources */,
-				78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */,
-				78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */,
 				565B65642B1E17560072925A /* ContentView.swift in Sources */,
 				565B65622B1E17560072925A /* mobile_swift_uiApp.swift in Sources */,
 			);
@@ -310,6 +338,7 @@
 		};
 		565B656D2B1E17570072925A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8FB49411DED5DB3D270223A /* Pods-mobile-swift-ui.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -318,6 +347,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"mobile-swift-ui/Preview Content\"";
 				DEVELOPMENT_TEAM = 5F264K8AG4;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -339,6 +369,7 @@
 		};
 		565B656E2B1E17570072925A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A18393ADAF241B5229E78157 /* Pods-mobile-swift-ui.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -347,6 +378,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"mobile-swift-ui/Preview Content\"";
 				DEVELOPMENT_TEAM = 5F264K8AG4;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -388,51 +420,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		78013C6C2CB0BA0900F22E0A /* XCRemoteSwiftPackageReference "footprint-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onefootprint/footprint-swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = "2.0.0-alpha";
-			};
-		};
-		78013C6F2CB0BA9900F22E0A /* XCRemoteSwiftPackageReference "swift-custom-dump" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-custom-dump";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.3;
-			};
-		};
-		78013C722CB0BAA500F22E0A /* XCRemoteSwiftPackageReference "Inject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzysztofzablocki/Inject";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		78013C6D2CB0BA0900F22E0A /* FootprintSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 78013C6C2CB0BA0900F22E0A /* XCRemoteSwiftPackageReference "footprint-swift" */;
-			productName = FootprintSwift;
-		};
-		78013C702CB0BA9900F22E0A /* CustomDump */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 78013C6F2CB0BA9900F22E0A /* XCRemoteSwiftPackageReference "swift-custom-dump" */;
-			productName = CustomDump;
-		};
-		78013C732CB0BAA500F22E0A /* Inject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 78013C722CB0BAA500F22E0A /* XCRemoteSwiftPackageReference "Inject" */;
-			productName = Inject;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 565B65562B1E17560072925A /* Project object */;
 }

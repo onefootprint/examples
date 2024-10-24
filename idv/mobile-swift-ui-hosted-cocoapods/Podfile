@@ -1,0 +1,8 @@
+platform :ios, '14.0'
+
+target 'mobile-swift-ui' do
+  use_frameworks!
+
+  # Pods for mobile-swift-ui
+  pod 'FootprintSwift/Hosted', :git => 'https://github.com/onefootprint/footprint-swift.git'
+end
