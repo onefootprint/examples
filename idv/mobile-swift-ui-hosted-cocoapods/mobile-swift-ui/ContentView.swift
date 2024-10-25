@@ -1,6 +1,6 @@
 import SwiftUI
 import FootprintSwift
-import Inject
+
 
 struct ContentView: View {
     var body: some View {
@@ -71,11 +71,8 @@ struct ContentView: View {
                 Footprint.initialize(with: config)
             }
         }
-        .padding(50)        
-            NavigationLink("Onboarding components - signup", destination: EmailAndPhoneView()).padding(50)
-            NavigationLink("Onboarding components - authToken", destination: AuthTokenView()).padding(50)
-            
-        }.enableInjection()
+        .padding(50)
+        }
     }
     
 }

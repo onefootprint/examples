@@ -26,60 +26,40 @@ struct BasicInfoView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     
-                    GenericInputField(
-                        text: $firstName,
-                        placeholder: "First Name"
-                    )
+                    TextField("First Name", text: $firstName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    GenericInputField(
-                        text: $middleName,
-                        placeholder: "Middle Name"
-                    )
+                    TextField("Middle Name", text: $middleName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    GenericInputField(
-                        text: $lastName,
-                        placeholder: "Last Name"
-                    )
+                    TextField("Last Name", text: $lastName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
                     DatePicker("Date of Birth", selection: $dateOfBirth, displayedComponents: .date)
                         .datePickerStyle(DefaultDatePickerStyle())
                     
-                    GenericInputField(
-                        text: $addressLine1,
-                        placeholder: "Address Line 1"
-                    )
+                    TextField("Address Line 1", text: $addressLine1)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    GenericInputField(
-                        text: $addressLine2,
-                        placeholder: "Address Line 2 (Optional)"
-                    )
+                    TextField("Address Line 2 (Optional)", text: $addressLine2)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    GenericInputField(
-                        text: $city,
-                        placeholder: "City"
-                    )
+                    TextField("City", text: $city)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    GenericInputField(
-                        text: $state,
-                        placeholder: "State"
-                    )
+                    TextField("State", text: $state)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    GenericInputField(
-                        text: $zipCode,
-                        placeholder: "Zip Code",
-                        keyboardType: .numberPad
-                    )
+                    TextField("Zip Code", text: $zipCode)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(.numberPad)
                     
-                    GenericInputField(
-                        text: $country,
-                        placeholder: "Country"
-                    )
+                    TextField("Country", text: $country)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
-                    GenericInputField(
-                        text: $ssn,
-                        placeholder: "SSN",
-                        keyboardType: .numberPad                    
-                    )
+                    TextField("SSN", text: $ssn)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(.numberPad)
                     
                     Button(action: {
                         isLoading = true
@@ -106,31 +86,37 @@ struct BasicInfoView: View {
                                 
                                 try await FootprintProvider.shared.vault(vaultData: vaultData)
                                 print("Vault data submitted successfully")
-                               let response = try await FootprintProvider.shared.process()                               
+                                let response = try await FootprintProvider.shared.process()
                                 showSuccessView = true
                                 print("Process submitted successfully : \(showSuccessView)")
-                               
+                                
                             } catch {
-                                print("Error: \(error)")
-                                if let footprintError = error as? FootprintError,
-                                   footprintError.domain == FootprintErrorDomain.process.rawValue {
-                                    do {
-                                        try await FootprintProvider.shared.handoff(
-                                            onCancel: {
-                                                print("Handoff was canceled by the user")
-                                                errorMessage = "Verification was canceled. Please try again."
-                                            },
-                                            onComplete: { validationToken in
-                                                print("Handoff completed successfully with token: \(validationToken)")
-                                                // You can add additional logic here if needed
-                                                showSuccessView = true
-                                            },                                           
-                                            onError: { error in
-                                                print("Error occurred during handoff: \(error)")
-                                                errorMessage = "An error occurred during verification. Please try again."
-                                            }
-                                        )
+                                if let footprintError = error as? FootprintError {
+                                    switch footprintError.kind {
+                                    case .inlineProcessNotSupported:
+                                        do {
+                                            try await FootprintProvider.shared.handoff(
+                                                onCancel: {
+                                                    print("Handoff was canceled by the user")
+                                                    errorMessage = "Verification was canceled. Please try again."
+                                                },
+                                                onComplete: { validationToken in
+                                                    print("Handoff completed successfully with token: \(validationToken)")
+                                                    // You can add additional logic here if needed
+                                                    showSuccessView = true
+                                                },
+                                                onError: { error in
+                                                    print("Error occurred during handoff: \(error)")
+                                                    errorMessage = "An error occurred during verification. Please try again."
+                                                }
+                                            )
+                                        }
+                                    case .vaultingError(let context):
+                                        print("Vaulting error - context: \(context), message: \(footprintError.message)")
+                                    default:
+                                        print("Error occurred: \(error)")
                                     }
+                                    
                                 }
                             }
                             isLoading = false

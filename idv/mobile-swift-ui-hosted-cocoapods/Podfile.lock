@@ -1,0 +1,21 @@
+PODS:
+  - FootprintSwift/Hosted (2.0.3-alpha)
+
+DEPENDENCIES:
+  - FootprintSwift/Hosted (from `https://github.com/onefootprint/footprint-swift.git`)
+
+EXTERNAL SOURCES:
+  FootprintSwift:
+    :git: https://github.com/onefootprint/footprint-swift.git
+
+CHECKOUT OPTIONS:
+  FootprintSwift:
+    :commit: 5f69a2a4f9450b731c8684ca64f6ea42d77d8754
+    :git: https://github.com/onefootprint/footprint-swift.git
+
+SPEC CHECKSUMS:
+  FootprintSwift: 9749fa5dbeff813f9500af7ce588ef2229cc0e85
+
+PODFILE CHECKSUM: 801ecedf920f51bf0da7803ca6169454af4415f9
+
+COCOAPODS: 1.15.2
