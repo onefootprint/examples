@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onefootprint/footprint-swift.git",
       "state" : {
-        "revision" : "3eb9f6134d8ace47c8c7ad1fc4cde3e5be28d023",
-        "version" : "2.1.1-alpha"
+        "revision" : "c20736e866710fa69fbe80c4856474a7796d7b65",
+        "version" : "2.1.2-alpha"
       }
     },
     {
