@@ -106,7 +106,7 @@ struct EmailAndPhoneView: View {
                 do {
                     let sandboxOutcome = SandboxOutcome(overallOutcome: .pass, documentOutcome: .pass)
                     try await FootprintProvider.shared.initialize(
-                        configKey: "pb_test_OmuMuP68H00rL3vVxRWg6f",
+                        configKey: "pb_test_qGrzwX22Vu5IGRsjbBFS4s",
                         sandboxOutcome: sandboxOutcome
                     )
                 } catch {

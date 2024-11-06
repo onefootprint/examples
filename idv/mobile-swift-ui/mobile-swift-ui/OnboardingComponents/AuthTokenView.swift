@@ -24,7 +24,7 @@ struct AuthTokenView: View {
                     Task {
                         do {
                             try await onboardingComponents.initialize(
-                                configKey: "pb_test_OmuMuP68H00rL3vVxRWg6f",
+                                configKey: "pb_test_qGrzwX22Vu5IGRsjbBFS4s",
                                 authToken: authToken
                             )
                             
