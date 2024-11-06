@@ -51,7 +51,7 @@ struct ContentView: View {
                 )
                 
                 let config = FootprintConfiguration(
-                    publicKey: "pb_test_2i5Sl82d7NQOnToRYrD2dx", // KYB pb_key to test all bootstrap data
+                    publicKey: "pb_test_OmuMuP68H00rL3vVxRWg6f", // KYB pb_key to test all bootstrap data
                     scheme: "footprintapp-callback",
                     bootstrapData: bootstrapData,
                     options: options,

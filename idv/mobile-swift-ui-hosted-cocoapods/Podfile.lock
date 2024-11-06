@@ -1,5 +1,5 @@
 PODS:
-  - FootprintSwift/Hosted (2.0.3-alpha)
+  - FootprintSwift/Hosted (2.1.2-alpha)
 
 DEPENDENCIES:
   - FootprintSwift/Hosted (from `https://github.com/onefootprint/footprint-swift.git`)
@@ -10,11 +10,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FootprintSwift:
-    :commit: 5f69a2a4f9450b731c8684ca64f6ea42d77d8754
+    :commit: c20736e866710fa69fbe80c4856474a7796d7b65
     :git: https://github.com/onefootprint/footprint-swift.git
 
 SPEC CHECKSUMS:
-  FootprintSwift: 9749fa5dbeff813f9500af7ce588ef2229cc0e85
+  FootprintSwift: cdcb0c530cab02fb54c778ae5fa93a9c09bc7b7d
 
 PODFILE CHECKSUM: 801ecedf920f51bf0da7803ca6169454af4415f9
 

@@ -1,67 +1,152 @@
 import SwiftUI
 import FootprintSwift
-import Inject
-
 
 struct EmailAndPhoneView: View {
-    @ObserveInjection var inject
-    @State private var email: String = "sandbox@onefootprint.com"
-    @State private var phoneNumber: String = "+15555550100"
     @State private var shouldNavigateToNextView = false
     @State private var isLoading = false
+    @State private var challengeKind: String = ""
+    @State private var otpComplete: Bool = false
     
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Enter your email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                TextField("Enter your phone number", text: $phoneNumber)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                Button(action: {
-                    isLoading = true
-                    Task {
-                        do {
-                            try await FootprintProvider.shared.createEmailPhoneBasedChallenge(email: email, phoneNumber: phoneNumber)
-
-                            shouldNavigateToNextView = true
-                        } catch {                          
-                            shouldNavigateToNextView = false
-                        }
+        FpForm(
+            onSubmit: { vaultData in
+                isLoading = true
+                Task {
+                    do {
+                        let challengeKind = try await FootprintProvider.shared.createEmailPhoneBasedChallenge(email: vaultData.idEmail, phoneNumber: vaultData.idPhoneNumber)
+                        print("Pin code sent to: \(challengeKind)")
+                        self.challengeKind = challengeKind
+                        shouldNavigateToNextView = true
                         isLoading = false
-                    }
-                }) {
-                    if isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    } else {
-                        Text("Continue")
+                    } catch {
+                        if let footprintError = error as? FootprintError {
+                            switch footprintError.kind {
+                            case .inlineOtpNotSupported:
+                                try await FootprintProvider.shared.launchIdentify(
+                                    email: vaultData.idEmail,
+                                    phone: vaultData.idPhoneNumber,
+                                    onCancel: {
+                                        print("User cancelled hosted identity flow")
+                                    },
+                                    onAuthenticated: { response in
+                                        print("Hosted identity flow completed: \(response)")
+                                        shouldNavigateToNextView = true
+                                        isLoading = false
+                                        otpComplete = true
+                                    },
+                                    onError: { error in
+                                        print("Error occurred: \(error)")
+                                    }
+                                )
+                                
+                            default:
+                                print("Error occurred: \(error)")
+                                shouldNavigateToNextView = false
+                                isLoading = false
+                            }
+                        }
                     }
                 }
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(isLoading ? Color.gray : Color.blue)
-                .cornerRadius(8)
-                .disabled(isLoading)
-                .padding()               
-                NavigationLink(destination: VerifyOTPView(), isActive: $shouldNavigateToNextView) { EmptyView() }
+            },
+            builder: { formUtils in
+                VStack(spacing: 20) {
+                    FpField(
+                        name: .idEmail,
+                        content:{
+                            VStack(alignment: .leading){
+                                FpLabel("Email", font: .subheadline, color: .secondary)
+                                FpInput(placeholder: "Enter your email")
+                                    .padding()
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(10)
+                                FpFieldError()
+                            }
+                        }
+                    )
+                    
+                    FpField(
+                        name: .idPhoneNumber,
+                        content: {
+                            VStack(alignment: .leading){
+                                FpLabel("Phone Number", font: .subheadline, color: .secondary)
+                                FpInput(placeholder: "Enter your phone number")
+                                    .padding()
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(10)
+                                FpFieldError()
+                            }
+                        }
+                    )
+                    Button(action: formUtils.handleSubmit) {
+                        if isLoading {
+                            ProgressView() // Loading indicator
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .frame(width: 100, height: 50)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                
+                        } else {
+                            Text("Submit")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(width: 100, height: 50)
+                                .background(Color.blue)
+                                .cornerRadius(10)   
+                        }
+                    }
+                    .disabled(isLoading)
+                }
             }
-        }
+            
+        )
+        .padding(.horizontal, 20)
         .navigationTitle("Signup flow")
-        .onAppear(perform: {
+        .onAppear {
             Task {
                 do {
                     let sandboxOutcome = SandboxOutcome(overallOutcome: .pass, documentOutcome: .pass)
                     try await FootprintProvider.shared.initialize(
-                        configKey: "pb_test_QeSAeS8XHohiSpCOj2l4vd",
-//                        sandboxId: "gC2hvdsN06Q53",
+                        configKey: "pb_test_qGrzwX22Vu5IGRsjbBFS4s",
                         sandboxOutcome: sandboxOutcome
-                       )
+                    )
+                } catch {
+                    print("Error: \(error)")
                 }
             }
-        })
-        .enableInjection()
+        }
+        .navigate(to: destinationView(), when: $shouldNavigateToNextView)
+    }
+    
+    @ViewBuilder
+    private func destinationView() -> some View {
+        if otpComplete == false {
+            VerifyOTPView(challengeKind: challengeKind)
+        } else {
+            BasicInfoView()
+        }
+    }
+}
+
+
+
+extension View {
+    func navigate<NewView: View>(to view: NewView, when binding: Binding<Bool>) -> some View {
+        NavigationView {
+            ZStack {
+                self
+                    .navigationBarTitle("")
+                    .navigationBarHidden(true)
+                
+                NavigationLink(
+                    destination: view
+                        .navigationBarTitle("")
+                        .navigationBarHidden(true),
+                    isActive: binding
+                ) {
+                    EmptyView()
+                }
+            }
+        }
+        .navigationViewStyle(.stack)
     }
 }
