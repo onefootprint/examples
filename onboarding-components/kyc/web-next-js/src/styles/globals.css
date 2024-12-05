@@ -186,3 +186,8 @@ a {
   padding: 0;
   text-align: center;
 }
+
+.fp-pin-input-active {
+  border-color: rgb(74, 36, 219);
+  box-shadow: rgba(74, 36, 219, 0.12) 0px 0px 0px 4px;
+}

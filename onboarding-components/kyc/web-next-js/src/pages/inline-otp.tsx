@@ -1,19 +1,18 @@
-import "@onefootprint/footprint-js/dist/footprint-js.css";
 import {
+	type FormValues,
 	Fp,
-	FormValues,
-	useFootprint,
 	InlineOtpNotSupported,
 	InlineProcessError,
+	useFootprint,
 } from "@onefootprint/footprint-react";
-import React, { useState } from "react";
 import Image from "next/image";
+import React, { useState } from "react";
 
-import Layout from "@/components/layout";
-import Header from "@/components/header";
-import Title from "@/components/title";
-import Subtitle from "@/components/subtitle";
 import Divider from "@/components/divider";
+import Header from "@/components/header";
+import Layout from "@/components/layout";
+import Subtitle from "@/components/subtitle";
+import Title from "@/components/title";
 
 const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
 
@@ -47,7 +46,7 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 	const fp = useFootprint();
 	const [isBusy, setIsBusy] = useState(false);
 	const [showOtp, setShowOtp] = useState(false);
-
+	const [verificationCode, setVerificationCode] = useState<string>("");
 	const handleSubmitData = async (formValues: FormValues) => {
 		const email = formValues["id.email"];
 		const phoneNumber = formValues["id.phone_number"];
@@ -74,7 +73,7 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 		}
 	};
 
-	const handleSubmitPin = async (verificationCode: string) => {
+	const handleSubmitPin = async () => {
 		try {
 			setIsBusy(true);
 			const res = await fp.verify({ verificationCode });
@@ -103,7 +102,13 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 							Enter the 6-digit code sent to +1 (555) 555‑0100.
 						</Subtitle>
 					</div>
-					<Fp.PinInput onComplete={handleSubmitPin} autoFocus />
+					<Fp.PinInput
+						value={verificationCode}
+						onComplete={handleSubmitPin}
+						onChange={setVerificationCode}
+						autoFocus
+						pinActiveClassName="fp-pin-input-active"
+					/>
 					{isBusy ? (
 						<div style={{ marginTop: 20 }}>
 							<Image
@@ -149,7 +154,7 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 
 const BasicData = ({ onDone }: { onDone: () => void }) => {
 	const fp = useFootprint();
-	const { vaultData } = fp.data;
+	const { vaultData } = fp;
 
 	const handleSubmit = async (data: FormValues) => {
 		try {

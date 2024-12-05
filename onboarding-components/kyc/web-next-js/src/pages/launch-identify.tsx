@@ -1,12 +1,15 @@
-import "@onefootprint/footprint-js/dist/footprint-js.css";
-import { Fp, FormValues, useFootprint } from "@onefootprint/footprint-react";
+import {
+	type FormValues,
+	Fp,
+	useFootprint,
+} from "@onefootprint/footprint-react";
 import React, { useState } from "react";
 
-import Layout from "@/components/layout";
-import Header from "@/components/header";
-import Title from "@/components/title";
-import Subtitle from "@/components/subtitle";
 import Divider from "@/components/divider";
+import Header from "@/components/header";
+import Layout from "@/components/layout";
+import Subtitle from "@/components/subtitle";
+import Title from "@/components/title";
 
 const publicKey = "pb_test_CbzkvaXKvOVdTn3YLokEP0";
 
@@ -81,7 +84,7 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 	const fp = useFootprint();
 
 	const handleSubmit = async (data: FormValues) => {
-		await fp.save(data);
+		await fp.vault(data);
 		fp.handoff({
 			onComplete: (validationToken) => {
 				console.log(validationToken);
