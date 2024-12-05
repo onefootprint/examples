@@ -1,19 +1,18 @@
-import "@onefootprint/footprint-js/dist/footprint-js.css";
 import {
+	type FormValues,
 	Fp,
-	useFootprint,
 	InlineOtpNotSupported,
-  InlineProcessError,
-  FormValues
+	InlineProcessError,
+	useFootprint,
 } from "@onefootprint/footprint-react";
-import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import React, { useState, useEffect } from "react";
 
-import Layout from "@/components/layout";
-import Header from "@/components/header";
-import Title from "@/components/title";
-import Subtitle from "@/components/subtitle";
 import Divider from "@/components/divider";
+import Header from "@/components/header";
+import Layout from "@/components/layout";
+import Subtitle from "@/components/subtitle";
+import Title from "@/components/title";
 
 const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
 
@@ -44,42 +43,42 @@ const Demo = () => {
 };
 
 const Identify = ({ onDone }: { onDone: () => void }) => {
-  const fp = useFootprint();
-  const [isBusy, setIsBusy] = useState(false);
-  const [showOtp, setShowOtp] = useState(false);
-  const isReady = fp.isReady;
+	const fp = useFootprint();
+	const [isBusy, setIsBusy] = useState(false);
+	const [showOtp, setShowOtp] = useState(false);
+	const isReady = fp.isReady;
 
 	useEffect(() => {
-    if (isReady) {
-      console.log('create challenge')
-      createChallenge();
-    }
-  }, [isReady]);
-  
-  const createChallenge = async () => {
-    const email = "sandbox@onefootprint.com";
-    const phoneNumber = "+15555550100";
+		if (isReady) {
+			console.log("create challenge");
+			createChallenge();
+		}
+	}, [isReady]);
 
-    try {
-      setIsBusy(true);
-      await fp.createEmailPhoneBasedChallenge({
-        email,
-        phoneNumber,
-      });
-      setShowOtp(true);
-    } catch (error) {
-      if (error instanceof InlineOtpNotSupported) {
-        await fp.launchIdentify(
-          { email, phoneNumber },
-          {
-            onAuthenticated: onDone,
-          },
-        );
-      }
-    } finally {
-      setIsBusy(false);
-    }
-  };
+	const createChallenge = async () => {
+		const email = "sandbox@onefootprint.com";
+		const phoneNumber = "+15555550100";
+
+		try {
+			setIsBusy(true);
+			await fp.createEmailPhoneBasedChallenge({
+				email,
+				phoneNumber,
+			});
+			setShowOtp(true);
+		} catch (error) {
+			if (error instanceof InlineOtpNotSupported) {
+				await fp.launchIdentify(
+					{ email, phoneNumber },
+					{
+						onAuthenticated: onDone,
+					},
+				);
+			}
+		} finally {
+			setIsBusy(false);
+		}
+	};
 
 	const handleSubmitPin = async (verificationCode: string) => {
 		try {
@@ -110,7 +109,11 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 							Enter the 6-digit code sent to +1 (555) 555‑0100.
 						</Subtitle>
 					</div>
-					<Fp.PinInput onComplete={handleSubmitPin} autoFocus />
+					<Fp.PinInput
+						onComplete={handleSubmitPin}
+						autoFocus
+						pinActiveClassName="fp-pin-input-active"
+					/>
 					{isBusy ? (
 						<div style={{ marginTop: 20 }}>
 							<Image
@@ -126,7 +129,9 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 				<>
 					<div style={{ marginBottom: 24 }}>
 						<Title>Identification</Title>
-						<Subtitle>Please wait while we initialize the challenge...</Subtitle>
+						<Subtitle>
+							Please wait while we initialize the challenge...
+						</Subtitle>
 					</div>
 				</>
 			)}
@@ -136,7 +141,7 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 
 const BasicData = ({ onDone }: { onDone: () => void }) => {
 	const fp = useFootprint();
-	const { vaultData } = fp.data;
+	const { vaultData } = fp;
 
 	const handleSubmit = async (data: FormValues) => {
 		try {
