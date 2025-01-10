@@ -35,9 +35,10 @@ import com.onefootprint.native_onboarding_components.models.FootprintAuthMethods
 import com.onefootprint.native_onboarding_components.models.FootprintException
 import com.onefootprint.native_onboarding_components.models.OverallOutcome
 import com.onefootprint.native_onboarding_components.models.SandboxOutcome
-import com.onefootprint.native_onboarding_components.models.VaultData
+import com.onefootprint.native_onboarding_components.utils.FootprintUtils
 import kotlinx.coroutines.launch
 import org.openapitools.client.models.DataIdentifier
+import org.openapitools.client.models.VaultData
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,11 +149,11 @@ fun Init(
         Button(
             onClick = {
                 coroutineScope.launch {
-                    val authRequirement = Footprint.initialize(
+                    val authRequirement = Footprint.initializeWithPublicKey(
                         publicKey = "pb_test_Nza8oVYDBlrIqrQrNCbKRB",
-//                        authToken = "utok_MhyAZwlmbZVLaxH6Kr7aeBe564fi13buhp",
                         sandboxOutcome = SandboxOutcome(
-                            overallOutcome = OverallOutcome.FAIL
+//                            id = "sandboxhfv7824dcsdvcsd6bdf1",
+                            overallOutcome = OverallOutcome.fail
                         )
                     )
 
@@ -187,8 +188,8 @@ fun IdentifyEmailPhone(
     setNextStep: (step: Step) -> Unit,
     context: Activity
 ) {
-    var email by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("sandbox@onefootprint.com") }
+    var phone by remember { mutableStateOf("+15555550100") }
     var emailError by remember { mutableStateOf(false) }
     var phoneError by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -432,10 +433,10 @@ fun VerificationCode(
 fun BasicInfo(
     setNextStep: (step: Step) -> Unit
 ) {
-    var firstName by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf("John") }
     var middleName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
-    var dob by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("Doe") }
+    var dob by remember { mutableStateOf("10/10/1990") }
 
     var firstNameError by remember { mutableStateOf(false) }
     var lastNameError by remember { mutableStateOf(false) }
@@ -459,15 +460,15 @@ fun BasicInfo(
                     DataIdentifier.idLastName,
                     DataIdentifier.idDob
                 )
-            ).asMap()
-            firstName =
-                if (vaultData[DataIdentifier.idFirstName] is String) vaultData[DataIdentifier.idFirstName] as String else ""
-            middleName =
-                if (vaultData[DataIdentifier.idMiddleName] is String) vaultData[DataIdentifier.idMiddleName] as String else ""
-            lastName =
-                if (vaultData[DataIdentifier.idLastName] is String) vaultData[DataIdentifier.idLastName] as String else ""
-            dob =
-                if (vaultData[DataIdentifier.idDob] is String) vaultData[DataIdentifier.idDob] as String else ""
+            )
+            firstName = vaultData.idFirstName ?: firstName
+            middleName = vaultData.idMiddleName ?: middleName
+            lastName = vaultData.idLastName ?: lastName
+            dob = vaultData.idDob ?: dob
+
+            // This is an example of how to get <data identifiers, value> map from vault data
+            // Note this will only return non-null values for the fields that were requested and has vaulted data
+            println(FootprintUtils.dataIdentifiersFromVaultData(vaultData))
         } catch (e: Exception) {
             println("Error retrieving vault data: ${e.message}")
         }
@@ -634,12 +635,10 @@ fun BasicInfo(
                         try {
                             Footprint.vault(
                                 VaultData(
-                                    mapOf(
-                                        DataIdentifier.idFirstName to firstName,
-                                        DataIdentifier.idMiddleName to middleName,
-                                        DataIdentifier.idLastName to lastName,
-                                        DataIdentifier.idDob to dob
-                                    )
+                                    idFirstName = firstName.ifEmpty { null },
+                                    idMiddleName = middleName.ifEmpty { null },
+                                    idLastName = lastName.ifEmpty { null },
+                                    idDob = dob.ifEmpty { null },
                                 )
                             )
                             setNextStep(Step.ADDRESS)
@@ -672,6 +671,7 @@ fun BasicInfo(
 
                             // Fallback for other errors
                             if (fnError == null && lnError == null && mnError == null && birthdayError == null) {
+                                println("Error updating basic info: ${e.message}")
                                 generalErrorMessage =
                                     "An unexpected error occurred. Please try again later."
                             }
@@ -696,12 +696,12 @@ fun BasicInfo(
 fun Address(
     setNextStep: (step: Step) -> Unit
 ) {
-    var addressLine1 by remember { mutableStateOf("") }
+    var addressLine1 by remember { mutableStateOf("790 7th Ave") }
     var addressLine2 by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
-    var state by remember { mutableStateOf("") }
-    var zip by remember { mutableStateOf("") }
-    var country by remember { mutableStateOf("") }
+    var city by remember { mutableStateOf("New York") }
+    var state by remember { mutableStateOf("NY") }
+    var zip by remember { mutableStateOf("10019") }
+    var country by remember { mutableStateOf("US") }
 
     // Error states for fields
     var addressLine1Error by remember { mutableStateOf(false) }
@@ -732,19 +732,17 @@ fun Address(
                     DataIdentifier.idZip,
                     DataIdentifier.idCountry
                 )
-            ).asMap()
-            addressLine1 =
-                if (vaultData[DataIdentifier.idAddressLine1] is String) vaultData[DataIdentifier.idAddressLine1] as String else ""
-            addressLine2 =
-                if (vaultData[DataIdentifier.idAddressLine2] is String) vaultData[DataIdentifier.idAddressLine2] as String else ""
-            city =
-                if (vaultData[DataIdentifier.idCity] is String) vaultData[DataIdentifier.idCity] as String else ""
-            state =
-                if (vaultData[DataIdentifier.idState] is String) vaultData[DataIdentifier.idState] as String else ""
-            zip =
-                if (vaultData[DataIdentifier.idZip] is String) vaultData[DataIdentifier.idZip] as String else ""
-            country =
-                if (vaultData[DataIdentifier.idCountry] is String) vaultData[DataIdentifier.idCountry] as String else ""
+            )
+            addressLine1 = vaultData.idAddressLine1 ?: addressLine1
+            addressLine2 = vaultData.idAddressLine2 ?: addressLine2
+            city = vaultData.idCity ?: city
+            state = vaultData.idState ?: state
+            zip = vaultData.idZip ?: zip
+            country = vaultData.idCountry ?: country
+
+            // This is an example of how to get <data identifiers, value> map from vault data
+            // Note this will only return non-null values for the fields that were requested and has vaulted data
+            println(FootprintUtils.dataIdentifiersFromVaultData(vaultData))
         } catch (e: Exception) {
             println("Error retrieving vault data: ${e.message}")
         }
@@ -953,14 +951,12 @@ fun Address(
                         try {
                             Footprint.vault(
                                 VaultData(
-                                    mapOf(
-                                        DataIdentifier.idAddressLine1 to addressLine1,
-                                        DataIdentifier.idAddressLine2 to addressLine2,
-                                        DataIdentifier.idCity to city,
-                                        DataIdentifier.idState to state,
-                                        DataIdentifier.idZip to zip,
-                                        DataIdentifier.idCountry to country
-                                    )
+                                    idAddressLine1 = addressLine1.ifEmpty { null },
+                                    idAddressLine2 = addressLine2.ifEmpty { null },
+                                    idCity = city.ifEmpty { null },
+                                    idState = state.ifEmpty { null },
+                                    idZip = zip.ifEmpty { null },
+                                    idCountry = country.ifEmpty { null }
                                 )
                             )
                             setNextStep(Step.SSN)
@@ -999,6 +995,7 @@ fun Address(
 
                             // Fallback for other errors
                             if (addressLine1ErrorMsg == null && cityErrorMsg == null && stateErrorMsg == null && zipErrorMsg == null && countryErrorMsg == null) {
+                                println("Error updating basic info: ${e.message}")
                                 generalErrorMessage =
                                     "An unexpected error occurred. Please try again later."
                             }
@@ -1022,7 +1019,7 @@ fun Address(
 fun SSN(
     setNextStep: (step: Step) -> Unit
 ) {
-    var ssn by remember { mutableStateOf("") }
+    var ssn by remember { mutableStateOf("123456789") }
     var ssnError by remember { mutableStateOf(false) }
     var ssnErrorMessage by remember { mutableStateOf("") }
 
@@ -1084,9 +1081,7 @@ fun SSN(
                             // You can use the SSN in the vaulting process, like in other screens
                             Footprint.vault(
                                 VaultData(
-                                    mapOf(
-                                        DataIdentifier.idSsn9 to ssn
-                                    )
+                                    idSsn9 = ssn.ifEmpty { null }
                                 )
                             )
                             setNextStep(Step.COMPLETE)
@@ -1125,6 +1120,8 @@ fun Complete(
             isOnboardingSuccess = true
             isLoading = false
         } catch (e: FootprintException) {
+
+            println("> process FootprintException" + e)
             when (e.kind) {
                 FootprintException.ErrorKind.INLINE_PROCESS_NOT_SUPPORTED -> {
                     // If inline process is not supported, launch hosted handoff
@@ -1156,6 +1153,7 @@ fun Complete(
                 }
             }
         } catch (e: Exception) {
+            println("> process unknown Exception" + e)
             isOnboardingSuccess = false
             failureMessage = e.message ?: "An unexpected error occurred."
             isLoading = false
