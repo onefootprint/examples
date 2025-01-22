@@ -89,14 +89,8 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 	return (
 		<Layout>
 			{showOtp ? (
-				<div
-					style={{
-						display: "flex",
-						flexDirection: "column",
-						textAlign: "center",
-					}}
-				>
-					<div style={{ marginBottom: 24 }}>
+				<div className="flex flex-col text-center">
+					<div className="mb-6">
 						<Title>Verify your phone number</Title>
 						<Subtitle>
 							Enter the 6-digit code sent to +1 (555) 555‑0100.
@@ -107,10 +101,11 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 						onComplete={handleSubmitPin}
 						onChange={setVerificationCode}
 						autoFocus
-						pinActiveClassName="fp-pin-input-active"
+						pinActiveClassName="border-[rgb(74,36,219)] border"
 					/>
+
 					{isBusy ? (
-						<div style={{ marginTop: 20 }}>
+						<div className="mt-5">
 							<Image
 								src="/loading.svg"
 								height={32}
@@ -122,23 +117,29 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 				</div>
 			) : (
 				<>
-					<div style={{ marginBottom: 24 }}>
+					<div className="mb-6">
 						<Title>Identification</Title>
 						<Subtitle>Please provide your email and phone number</Subtitle>
 					</div>
 					<Fp.Form onSubmit={handleSubmitData}>
-						<div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
+						<div className="flex flex-col gap-4">
 							<Fp.Field name="id.email">
 								<Fp.Label>Your email</Fp.Label>
-								<Fp.Input placeholder="jane@acme.com" />
+								<Fp.Input
+									placeholder="jane@acme.com"
+									defaultValue="sandbox@onefootprint.com"
+								/>
 								<Fp.FieldErrors />
 							</Fp.Field>
 							<Fp.Field name="id.phone_number">
 								<Fp.Label>Phone</Fp.Label>
-								<Fp.Input placeholder="(123) 456-7890" />
+								<Fp.Input
+									placeholder="(123) 456-7890"
+									defaultValue="+15555550100"
+								/>
 								<Fp.FieldErrors />
 							</Fp.Field>
-							<div style={{ marginBottom: 8 }}>
+							<div className="mb-2">
 								<Divider />
 							</div>
 							<button type="submit" className="fp-button">
@@ -170,7 +171,7 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 
 	return (
 		<Layout>
-			<div style={{ marginBottom: 24 }}>
+			<div className="mb-6">
 				<Title>Basic information</Title>
 				<Subtitle>Please provide some basic personal information</Subtitle>
 			</div>
@@ -189,7 +190,7 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 					"id.zip": vaultData?.["id.zip"],
 				}}
 			>
-				<div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+				<div className="flex flex-col gap-3">
 					<Fp.Field name="id.first_name">
 						<Fp.Label>First name</Fp.Label>
 						<Fp.Input placeholder="Jane" />
@@ -210,7 +211,7 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 						<Fp.Input placeholder="MM/DD/YYYY" />
 						<Fp.FieldErrors />
 					</Fp.Field>
-					<div style={{ marginBottom: 8 }}>
+					<div className="mb-2">
 						<Divider />
 					</div>
 					<Fp.Field name="id.country">
@@ -241,7 +242,7 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 						<Fp.Input placeholder="11206" />
 						<Fp.FieldErrors />
 					</Fp.Field>
-					<div style={{ marginBottom: 8 }}>
+					<div className="mb-2">
 						<Divider />
 					</div>
 					<Fp.Field name="id.ssn9">
@@ -249,7 +250,7 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 						<Fp.Input placeholder="XXX-XX-XXXX" />
 						<Fp.FieldErrors />
 					</Fp.Field>
-					<div style={{ marginBottom: 8 }}>
+					<div className="mb-2">
 						<Divider />
 					</div>
 					<button type="submit" className="fp-button">
@@ -263,7 +264,7 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 
 const Success = () => (
 	<Layout>
-		<div style={{ marginBottom: 24 }}>
+		<div className="mb-6">
 			<Title>Success</Title>
 			<Subtitle>You are all set!</Subtitle>
 		</div>
