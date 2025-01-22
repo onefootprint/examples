@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"@onefootprint/footprint-js": "3.15.3",
-		"@onefootprint/footprint-react": "8.0.0",
+		"@onefootprint/footprint-react": "9.0.1",
 		"next": "14.2.3",
 		"react": "^18",
 		"react-dom": "^18"
@@ -19,6 +19,9 @@
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
+		"autoprefixer": "^10.4.20",
+		"postcss": "^8.5.1",
+		"tailwindcss": "^3.4.17",
 		"typescript": "^5"
 	}
 }
