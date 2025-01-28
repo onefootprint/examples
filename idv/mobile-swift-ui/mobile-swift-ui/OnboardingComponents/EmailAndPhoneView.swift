@@ -1,5 +1,5 @@
 import SwiftUI
-import FootprintSwift
+import Footprint
 
 struct EmailAndPhoneView: View {
     @State private var shouldNavigateToNextView = false
@@ -13,38 +13,40 @@ struct EmailAndPhoneView: View {
                 isLoading = true
                 Task {
                     do {
-                        let challengeKind = try await FootprintProvider.shared.createEmailPhoneBasedChallenge(email: vaultData.idEmail, phoneNumber: vaultData.idPhoneNumber)
+                        let challengeKind = try await Footprint.shared.createChallenge(email: vaultData.idEmail, phoneNumber: vaultData.idPhoneNumber)
                         print("Pin code sent to: \(challengeKind)")
                         self.challengeKind = challengeKind
                         shouldNavigateToNextView = true
                         isLoading = false
                     } catch {
-                        if let footprintError = error as? FootprintError {
-                            switch footprintError.kind {
+                        print("Error creating challenge: \(error)")
+                        print("is FootprintException \(isFootprintException(error))")
+                        if isFootprintException(error), let fpException = extractFootprintException(error) {
+                            switch fpException.kind {
                             case .inlineOtpNotSupported:
-                                try await FootprintProvider.shared.launchIdentify(
+                                try await FootprintHosted.shared.launchIdentify(
                                     email: vaultData.idEmail,
                                     phone: vaultData.idPhoneNumber,
-                                    onCancel: {
-                                        print("User cancelled hosted identity flow")
-                                    },
                                     onAuthenticated: { response in
                                         print("Hosted identity flow completed: \(response)")
                                         shouldNavigateToNextView = true
                                         isLoading = false
                                         otpComplete = true
                                     },
+                                    onCancel: {
+                                        print("User cancelled hosted identity flow")
+                                    },
                                     onError: { error in
                                         print("Error occurred: \(error)")
                                     }
                                 )
-                                
                             default:
                                 print("Error occurred: \(error)")
                                 shouldNavigateToNextView = false
                                 isLoading = false
                             }
                         }
+                        
                     }
                 }
             },
@@ -84,14 +86,14 @@ struct EmailAndPhoneView: View {
                                 .frame(width: 100, height: 50)
                                 .background(Color.blue)
                                 .cornerRadius(10)
-                                
+                            
                         } else {
                             Text("Submit")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .frame(width: 100, height: 50)
                                 .background(Color.blue)
-                                .cornerRadius(10)   
+                                .cornerRadius(10)
                         }
                     }
                     .disabled(isLoading)
@@ -104,9 +106,9 @@ struct EmailAndPhoneView: View {
         .onAppear {
             Task {
                 do {
-                    let sandboxOutcome = SandboxOutcome(overallOutcome: .pass, documentOutcome: .pass)
-                    try await FootprintProvider.shared.initialize(
-                        configKey: "pb_test_qGrzwX22Vu5IGRsjbBFS4s",
+                    let sandboxOutcome = SandboxOutcome(id: nil, overallOutcome: .pass, documentOutcome: .pass)
+                    try await Footprint.shared.initializeWithPublicKey(
+                        publicKey: "pb_test_qGrzwX22Vu5IGRsjbBFS4s",
                         sandboxOutcome: sandboxOutcome
                     )
                 } catch {
