@@ -1,15 +1,11 @@
 import SwiftUI
-import FootprintSwift
-import Inject
+import Footprint
 
 struct VerifyOTPView: View {
-    @ObserveInjection var inject
-    private var onboardingComponents = FootprintProvider.shared
     let challengeKind: String
     @State private var isLoading: Bool = false
     @State private var errorMessage: String?
     @State private var navigateToBasicInfo: Bool = false
-    @State private var vaultData: VaultData?
     
     init(challengeKind: String) {
         self.challengeKind = challengeKind
@@ -39,7 +35,6 @@ struct VerifyOTPView: View {
                         .padding()
                 }
             }
-            .enableInjection()
             .background(
                 NavigationLink(destination: BasicInfoView(), isActive: $navigateToBasicInfo) {
                     EmptyView()
@@ -55,9 +50,8 @@ struct VerifyOTPView: View {
         
         Task {
             do {
-                let response = try await FootprintProvider.shared.verify(verificationCode: pin)
-                print("Verification response: \(response)")
-                self.vaultData = response.vaultData
+                let response = try await Footprint.shared.verify(verificationCode: pin)
+                print("Verification response: \(response)")                                                
                 // Set navigate to true on the main thread
                 DispatchQueue.main.async {
                     self.navigateToBasicInfo = true

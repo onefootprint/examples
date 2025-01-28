@@ -1,9 +1,8 @@
 import SwiftUI
-import FootprintSwift
+import Footprint
 
 struct AuthTokenView: View {
     @State private var authToken: String = ""
-    private var onboardingComponents = FootprintProvider.shared
     @State private var shouldNavigateToNextView = false
     @State private var isLoading = false
     @State private var challengeKind: String = ""
@@ -23,15 +22,13 @@ struct AuthTokenView: View {
                     isLoading = true
                     Task {
                         do {
-                            try await onboardingComponents.initialize(
-                                configKey: "pb_test_qGrzwX22Vu5IGRsjbBFS4s",
+                            let requiresAuthResponse = try await Footprint.shared.initializeWithAuthToken(
                                 authToken: authToken
                             )
                             
-                            let requiresAuthResponse = try await onboardingComponents.requiresAuth()
                             print("Requires auth response: \(requiresAuthResponse.requiresAuth)")
                             if requiresAuthResponse.requiresAuth {
-                                let challengeKind = try await onboardingComponents.createAuthTokenBasedChallenge()
+                                let challengeKind = try await Footprint.shared.createChallenge()
                                 self.challengeKind = challengeKind
                                 shouldNavigateToNextView = true
                                 self.requiresAuth = true
@@ -40,24 +37,23 @@ struct AuthTokenView: View {
                                 self.requiresAuth = false
                             }
                         } catch {
-                            if let footprintError = error as? FootprintError {
-                                switch footprintError.kind {
+                            if isFootprintException(error), let fpException = extractFootprintException(error) {
+                                switch fpException.kind {
                                 case .inlineOtpNotSupported:
-                                    try await FootprintProvider.shared.launchIdentify(
-                                        onCancel: {
-                                            print("User cancelled hosted identity flow")
-                                        },
+                                    try await FootprintHosted.shared.launchIdentify(
                                         onAuthenticated: { response in
                                             print("Hosted identity flow completed: \(response)")
                                             shouldNavigateToNextView = true
                                             isLoading = false
                                             self.requiresAuth = false
                                         },
+                                        onCancel: {
+                                            print("User cancelled hosted identity flow")
+                                        },
                                         onError: { error in
                                             print("Error occurred: \(error)")
                                         }
                                     )
-                                    
                                 default:
                                     print("Error occurred: \(error)")
                                     shouldNavigateToNextView = false
@@ -65,7 +61,6 @@ struct AuthTokenView: View {
                                 }
                             }
                         }
-                        isLoading = false
                     }
                 }) {
                     if isLoading {

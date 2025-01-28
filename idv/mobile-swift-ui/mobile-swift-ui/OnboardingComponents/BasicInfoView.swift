@@ -1,5 +1,5 @@
 import SwiftUI
-import FootprintSwift
+import Footprint
 
 struct BasicInfoView: View {
     @State private var isLoading: Bool = false
@@ -7,7 +7,7 @@ struct BasicInfoView: View {
     @State private var showSuccessView: Bool = false
     @State private var vaultData: VaultData?
     @State private var isDataReady: Bool = false // State variable to track data readiness
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -54,7 +54,18 @@ struct BasicInfoView: View {
     private func fetchVaultData() {
         Task {
             do {
-                let fetchedVaultData = try await FootprintProvider.shared.getVaultData()
+                let fetchedVaultData = try await Footprint.shared.getVaultData(fields: [DataIdentifier.idFirstName,
+                                                                                        DataIdentifier.idMiddleName,
+                                                                                        DataIdentifier.idLastName,
+                                                                                        DataIdentifier.idDob,
+                                                                                        DataIdentifier.idAddressLine1,
+                                                                                        DataIdentifier.idAddressLine2,
+                                                                                        DataIdentifier.idCity,
+                                                                                        DataIdentifier.idState,
+                                                                                        DataIdentifier.idZip,
+                                                                                        DataIdentifier.idCountry
+                                                                                        // SSN can't be decrypted
+                                                                                       ])
                 DispatchQueue.main.async {
                     self.vaultData = fetchedVaultData
                     self.isDataReady = true // Set to true after fetching data
@@ -72,7 +83,7 @@ struct BasicInfoView: View {
         // For example you can only show the input fields that are missing in the requirements
         Task {
             do {
-                let requirementAttributes = try await FootprintProvider.shared.getRequirements()
+                let requirementAttributes = try await Footprint.shared.getRequirements()
                 let collected = requirementAttributes.fields.collected
                 let missing = requirementAttributes.fields.missing
                 let optional = requirementAttributes.fields.optional
@@ -85,49 +96,47 @@ struct BasicInfoView: View {
             }
         }
     }
-
+    
     private func submitVaultData(_ vaultData: VaultData) {
         isLoading = true
         errorMessage = nil
         
         Task {
             do {
-                try await FootprintProvider.shared.vault(vaultData: vaultData)
+                try await Footprint.shared.vault(data: vaultData)
                 print("Vault data submitted successfully")
-                let response = try await FootprintProvider.shared.process()
+                let validationToken = try await Footprint.shared.process()
                 showSuccessView = true
-                print("Process submitted successfully: \(response.validationToken)")
+                print("Process submitted successfully: \(validationToken)")
             } catch {
                 handleVaultError(error)
             }
             isLoading = false
         }
     }
-
+    
     private func handleVaultError(_ error: Error) {
-        if let footprintError = error as? FootprintError {
-            switch footprintError.kind {
+        if isFootprintException(error), let fpException = extractFootprintException(error) {
+            switch fpException.kind {
             case .inlineProcessNotSupported:
                 handleHandoff()
-            case .vaultingError(let context):
-                print("Vaulting error - context: \(context), message: \(footprintError.message)")
             default:
                 print("Error occurred: \(error)")
             }
         }
     }
-
+    
     private func handleHandoff() {
         Task {
             do {
-                try await FootprintProvider.shared.handoff(
-                    onCancel: {
-                        print("Handoff was canceled by the user")
-                        errorMessage = "Verification was canceled. Please try again."
-                    },
+                try await FootprintHosted.shared.handoff(
                     onComplete: { validationToken in
                         print("Handoff completed successfully with token: \(validationToken)")
                         showSuccessView = true // Navigate to success view on completion
+                    },
+                    onCancel: {
+                        print("Handoff was canceled by the user")
+                        errorMessage = "Verification was canceled. Please try again."
                     },
                     onError: { error in
                         print("Error occurred during handoff: \(error)")
@@ -140,7 +149,7 @@ struct BasicInfoView: View {
             }
         }
     }
-
+    
     private func formContent(formUtils: FormUtils) -> some View {
         VStack(spacing: 20) {
             FpField(name: .idFirstName, content: {
@@ -193,7 +202,7 @@ struct BasicInfoView: View {
         }
         .padding()
     }
-
+    
     private func inputField(label: String, placeholder: String) -> some View {
         VStack(alignment: .leading) {
             FpLabel(label, font: .subheadline, color: .secondary)
@@ -204,7 +213,7 @@ struct BasicInfoView: View {
             FpFieldError()
         }
     }
-
+    
     private func submitButton(formUtils: FormUtils) -> some View {
         Button(action: formUtils.handleSubmit) {
             if isLoading {
