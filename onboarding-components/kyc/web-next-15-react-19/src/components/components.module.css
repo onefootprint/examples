@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  align-items: center;
+  border: 1px solid #E5E5E5;
+  justify-content: center;
+  height: 48px;
+  position: sticky;
+  background-color: rgb(255, 255, 255);
+  top: 0px;
+  z-index: 1;
+}
+
+.divider {
+  border-color: rgb(226, 226, 226);
+  border-image: initial;
+  border-style: solid;
+  border-width: 0px 0px 1px;
+  opacity: 1;
+  width: 100%;
+}
+
+.layout {
+  position: relative;
+  width: 460px;
+  margin: 48px auto;
+}
+
+.title {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.1875rem;
+  line-height: 152%;
+}
+
+.subtitle {
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 150%;
+  color: rgb(45, 45, 45);
+}
