@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     );
                   },
-                  child: const Text("Footprint Verification"),
+                  child: const Text("Footprint Hosted Verification"),
                 ),
                 const SizedBox(height: 8),
                 ElevatedButton(
