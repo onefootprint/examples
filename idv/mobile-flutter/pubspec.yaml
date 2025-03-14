@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  footprint_flutter: ^2.0.0-beta.3.8
+  footprint_flutter: ^2.0.0
   cupertino_icons: ^1.0.2
   mask_text_input_formatter: ^2.9.0
 
