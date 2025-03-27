@@ -8,24 +8,29 @@ struct BasicInfoView: View {
     @State private var vaultData: VaultData?
     @State private var isDataReady: Bool = false // State variable to track data readiness
     
+    
+    private var defaultFormValues: [FpFieldName : String?] {
+        [
+            .idFirstName: vaultData?.idFirstName ?? "John",
+            .idMiddleName: vaultData?.idMiddleName ?? "",
+            .idLastName: vaultData?.idLastName ?? "Doe",
+            .idDob: vaultData?.idDob ?? "01/01/1990",
+            .idAddressLine1: vaultData?.idAddressLine1 ?? "123 Main St",
+            .idAddressLine2: vaultData?.idAddressLine2 ?? "Apt 4B",
+            .idCity: vaultData?.idCity ?? "New York",
+            .idState: vaultData?.idState ?? "NY",
+            .idZip: vaultData?.idZip ?? "10001",
+            .idCountry: vaultData?.idCountry ?? "US",
+            .idSsn9: vaultData?.idSsn9 ?? "123-45-6789"
+        ]
+    }
+
     var body: some View {
         NavigationView {
             ScrollView {
                 if isDataReady {
                     FpForm(
-                        defaultValues: [
-                            .idFirstName: vaultData?.idFirstName,
-                            .idMiddleName: vaultData?.idMiddleName,
-                            .idLastName: vaultData?.idLastName,
-                            .idDob: vaultData?.idDob,
-                            .idAddressLine1: vaultData?.idAddressLine1,
-                            .idAddressLine2: vaultData?.idAddressLine2,
-                            .idCity: vaultData?.idCity,
-                            .idState: vaultData?.idState,
-                            .idZip: vaultData?.idZip,
-                            .idCountry: vaultData?.idCountry,
-                            .idSsn9: vaultData?.idSsn9
-                        ],
+                        defaultValues: defaultFormValues,
                         onSubmit: { vaultData in
                             submitVaultData(vaultData)
                         },
@@ -54,18 +59,19 @@ struct BasicInfoView: View {
     private func fetchVaultData() {
         Task {
             do {
-                let fetchedVaultData = try await Footprint.shared.getVaultData(fields: [DataIdentifier.idFirstName,
-                                                                                        DataIdentifier.idMiddleName,
-                                                                                        DataIdentifier.idLastName,
-                                                                                        DataIdentifier.idDob,
-                                                                                        DataIdentifier.idAddressLine1,
-                                                                                        DataIdentifier.idAddressLine2,
-                                                                                        DataIdentifier.idCity,
-                                                                                        DataIdentifier.idState,
-                                                                                        DataIdentifier.idZip,
-                                                                                        DataIdentifier.idCountry
-                                                                                        // SSN can't be decrypted
-                                                                                       ])
+                let fetchedVaultData = try await Footprint.shared.getVaultData(fields:
+                    [DataIdentifier.idFirstName,
+                    DataIdentifier.idMiddleName,
+                    DataIdentifier.idLastName,
+                    DataIdentifier.idDob,
+                     DataIdentifier.idAddressLine1,
+                     DataIdentifier.idAddressLine2,
+                     DataIdentifier.idCity,
+                     DataIdentifier.idState,
+                     DataIdentifier.idZip,
+                     DataIdentifier.idCountry
+                     // SSN can't be decrypted
+                ])
                 DispatchQueue.main.async {
                     self.vaultData = fetchedVaultData
                     self.isDataReady = true // Set to true after fetching data
@@ -96,7 +102,7 @@ struct BasicInfoView: View {
             }
         }
     }
-    
+
     private func submitVaultData(_ vaultData: VaultData) {
         isLoading = true
         errorMessage = nil
@@ -108,24 +114,31 @@ struct BasicInfoView: View {
                 let validationToken = try await Footprint.shared.process()
                 showSuccessView = true
                 print("Process submitted successfully: \(validationToken)")
-            } catch {
+            } catch  let error as FootprintException {
+                // TODO: improve error handling
                 handleVaultError(error)
+            }
+            catch {
+                print("Generic Error!: \(error)")
+                handleHandoff()
             }
             isLoading = false
         }
     }
-    
-    private func handleVaultError(_ error: Error) {
-        if isFootprintException(error), let fpException = extractFootprintException(error) {
-            switch fpException.kind {
+
+    private func handleVaultError(_ error: FootprintException) {
+            switch error.kind {
             case .inlineProcessNotSupported:
+                print("Inline process not supported error, message: \(error.message)")
                 handleHandoff()
+            case .vaultingError:
+                print("Vaulting error, message: \(error.message)")
             default:
                 print("Error occurred: \(error)")
             }
-        }
+        
     }
-    
+
     private func handleHandoff() {
         Task {
             do {
@@ -141,7 +154,7 @@ struct BasicInfoView: View {
                     onError: { error in
                         print("Error occurred during handoff: \(error)")
                         errorMessage = "An error occurred during verification. Please try again."
-                    }
+                    }                    
                 )
             } catch {
                 print("Error during handoff: \(error)")
@@ -149,7 +162,7 @@ struct BasicInfoView: View {
             }
         }
     }
-    
+
     private func formContent(formUtils: FormUtils) -> some View {
         VStack(spacing: 20) {
             FpField(name: .idFirstName, content: {
@@ -202,7 +215,7 @@ struct BasicInfoView: View {
         }
         .padding()
     }
-    
+
     private func inputField(label: String, placeholder: String) -> some View {
         VStack(alignment: .leading) {
             FpLabel(label, font: .subheadline, color: .secondary)
@@ -213,7 +226,7 @@ struct BasicInfoView: View {
             FpFieldError()
         }
     }
-    
+
     private func submitButton(formUtils: FormUtils) -> some View {
         Button(action: formUtils.handleSubmit) {
             if isLoading {

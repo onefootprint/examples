@@ -2,12 +2,21 @@
   "originHash" : "3adbb1aacc358d8a3d718581388c691d35158658e850f3e39a0b7883d6e96664",
   "pins" : [
     {
+      "identity" : "fingerprintjs-pro-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fingerprintjs/fingerprintjs-pro-ios",
+      "state" : {
+        "revision" : "51df49f935af022ceafbee34855500a37e0f35d3",
+        "version" : "2.7.0"
+      }
+    },
+    {
       "identity" : "swift-onboarding-components",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onefootprint/Swift-Onboarding-Components.git",
       "state" : {
-        "revision" : "3ad256bd6b758af053d4cb9d6a4c22ca71edc14b",
-        "version" : "1.0.0-alpha"
+        "revision" : "4fdab2d6538e79b5fe250e8cd9f79dc17ca15b6c",
+        "version" : "1.0.1-beta"
       }
     }
   ],
