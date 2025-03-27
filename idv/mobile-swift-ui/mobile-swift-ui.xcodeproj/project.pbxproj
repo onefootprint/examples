@@ -16,6 +16,7 @@
 		78013C7D2CB0BAB500F22E0A /* AuthTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C752CB0BAB500F22E0A /* AuthTokenView.swift */; };
 		78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C782CB0BAB500F22E0A /* SuccessView.swift */; };
 		78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C762CB0BAB500F22E0A /* BasicInfoView.swift */; };
+		7C80D8D02D95E14B00234C91 /* HostedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80D8CF2D95E14800234C91 /* HostedView.swift */; };
 		7CD550262D49409900F16171 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 7CD550252D49409900F16171 /* Footprint */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		78013C772CB0BAB500F22E0A /* EmailAndPhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAndPhoneView.swift; sourceTree = "<group>"; };
 		78013C782CB0BAB500F22E0A /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		78013C792CB0BAB500F22E0A /* VerifyOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyOTPView.swift; sourceTree = "<group>"; };
+		7C80D8CF2D95E14800234C91 /* HostedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 		565B65602B1E17560072925A /* mobile-swift-ui */ = {
 			isa = PBXGroup;
 			children = (
+				7C80D8CF2D95E14800234C91 /* HostedView.swift */,
 				565B65612B1E17560072925A /* mobile_swift_uiApp.swift */,
 				565B65632B1E17560072925A /* ContentView.swift */,
 				565B65652B1E17570072925A /* Assets.xcassets */,
@@ -173,6 +176,7 @@
 				78013C7D2CB0BAB500F22E0A /* AuthTokenView.swift in Sources */,
 				78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */,
 				78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */,
+				7C80D8D02D95E14B00234C91 /* HostedView.swift in Sources */,
 				565B65642B1E17560072925A /* ContentView.swift in Sources */,
 				565B65622B1E17560072925A /* mobile_swift_uiApp.swift in Sources */,
 			);
@@ -387,7 +391,7 @@
 			repositoryURL = "https://github.com/onefootprint/Swift-Onboarding-Components.git";
 			requirement = {
 				kind = exactVersion;
-				version = "1.0.0-alpha";
+				version = "1.0.1-beta";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

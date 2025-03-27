@@ -1,11 +1,13 @@
 import SwiftUI
 import Footprint
 
+
 struct VerifyOTPView: View {
+    private var onboardingComponents = Footprint.shared
     let challengeKind: String
     @State private var isLoading: Bool = false
     @State private var errorMessage: String?
-    @State private var navigateToBasicInfo: Bool = false
+    @State private var navigateToBasicInfo: Bool = false    
     
     init(challengeKind: String) {
         self.challengeKind = challengeKind
@@ -34,7 +36,7 @@ struct VerifyOTPView: View {
                         .foregroundColor(.red)
                         .padding()
                 }
-            }
+            }           
             .background(
                 NavigationLink(destination: BasicInfoView(), isActive: $navigateToBasicInfo) {
                     EmptyView()
@@ -51,7 +53,8 @@ struct VerifyOTPView: View {
         Task {
             do {
                 let response = try await Footprint.shared.verify(verificationCode: pin)
-                print("Verification response: \(response)")                                                
+                print("Verification response: \(response)")
+                                
                 // Set navigate to true on the main thread
                 DispatchQueue.main.async {
                     self.navigateToBasicInfo = true
