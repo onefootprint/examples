@@ -39,6 +39,15 @@ import com.onefootprint.native_onboarding_components.utils.FootprintUtils
 import kotlinx.coroutines.launch
 import org.openapitools.client.models.DataIdentifier
 import org.openapitools.client.models.VaultData
+import com.onefootprint.native_onboarding_components.hosted.FootprintAppearance
+import com.onefootprint.native_onboarding_components.hosted.FootprintAppearanceRules
+import com.onefootprint.native_onboarding_components.hosted.FootprintAppearanceVariables
+import com.onefootprint.native_onboarding_components.hosted.FootprintBootstrapData
+import com.onefootprint.native_onboarding_components.hosted.FootprintOptions
+import com.onefootprint.native_onboarding_components.models.FootprintL10n
+import com.onefootprint.native_onboarding_components.models.FootprintSupportedLanguage
+import com.onefootprint.native_onboarding_components.models.FootprintSupportedLocale
+import org.openapitools.client.models.Iso3166TwoDigitCountryCode
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,9 +83,12 @@ fun OnboardingComponents(context: Activity) {
     ) {
         when (currentStep) {
             Step.INIT -> {
-                Init { newStep ->
-                    currentStep = newStep
-                }
+                Init(
+                    setNextStep = { newStep ->
+                        currentStep = newStep
+                    },
+                    context = context
+                )
             }
 
             Step.IDENTIFY_EMAIL_PHONE -> {
@@ -98,9 +110,12 @@ fun OnboardingComponents(context: Activity) {
             }
 
             Step.IDENTIFY_VERIFY -> {
-                VerificationCode { newStep ->
-                    currentStep = newStep
-                }
+                VerificationCode(
+                    setNextStep = { newStep ->
+                        currentStep = newStep
+                    },
+                    context = context
+                )
             }
 
             Step.BASIC_INFO -> {
@@ -137,48 +152,122 @@ fun OnboardingComponents(context: Activity) {
 
 @Composable
 fun Init(
-    setNextStep: (step: Step) -> Unit
+    setNextStep: (step: Step) -> Unit,
+    context: Activity
 ) {
     val coroutineScope = rememberCoroutineScope() // Creates a coroutine scope for this composable
+    val isDeprecatedSdk = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
-            onClick = {
-                coroutineScope.launch {
-                    val authRequirement = Footprint.initializeWithPublicKey(
-                        publicKey = "pb_test_Nza8oVYDBlrIqrQrNCbKRB",
-                        sandboxOutcome = SandboxOutcome(
-//                            id = "sandboxhfv7824dcsdvcsd6bdf1",
-                            overallOutcome = OverallOutcome.fail
-                        )
-                    )
+        if (isDeprecatedSdk.value) {
+            DeprecatedSdkFallback(context = context)
+        } else {
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        try {
+                            // ================== Initialize Footprint SDK with public key ==================
+                            // Comment out this part and comment in the next part to test initializeWithAuthToken
+                            Footprint.initializeWithPublicKey(
+                                publicKey = "pb_test_Nza8oVYDBlrIqrQrNCbKRB",
+                                sandboxOutcome = SandboxOutcome(
+                                    // id = "sandboxhfv7824dcsdvcsd6bdf1",
+                                    overallOutcome = OverallOutcome.fail
+                                ),
+                                l10n = FootprintL10n(
+                                    locale = FootprintSupportedLocale.es_MX,
+                                    language = FootprintSupportedLanguage.es
+                                ),
+                                context = context
+                            )
+                            setNextStep(Step.IDENTIFY_EMAIL_PHONE)
+                            // ================== Initialize Footprint SDK with public key ==================
 
-                    if (authRequirement.requiresAuth) {
-                        when (authRequirement.authMethod) {
-                            FootprintAuthMethods.EMAIL_PHONE -> {
-                                setNextStep(Step.IDENTIFY_EMAIL_PHONE)
-                            }
 
-                            FootprintAuthMethods.AUTH_TOKEN -> {
-                                setNextStep(Step.IDENTIFY_AUTH_TOKEN)
-                            }
-
-                            else -> {
-                                // Should never happen
-                                setNextStep(Step.ERROR)
-                            }
+                            // ================== Initialize Footprint SDK with auth token ==================
+                            // Uncomment the below line to test initializeWithAuthToken
+//                            val requiresAuth = Footprint.initializeWithAuthToken(
+//                                authToken = "<USE YOUR AUTH TOKEN>",
+//                                sandboxOutcome = SandboxOutcome(
+//                                    overallOutcome = OverallOutcome.fail
+//                                ),
+//                                context = context
+//                            ).requiresAuth
+//                            if (requiresAuth) {
+//                                setNextStep(Step.IDENTIFY_AUTH_TOKEN)
+//                            } else {
+//                                setNextStep(Step.BASIC_INFO)
+//                            }
+                            // ================== Initialize Footprint SDK with auth token ==================
+                        } catch (e: FootprintException) {
+                            println("Error initializing Footprint SDK: ${e.message}")
+                            isDeprecatedSdk.value =
+                                e.kind == FootprintException.ErrorKind.DEPRECATED_SDK_VERSION_ERROR
                         }
-                    } else {
-                        setNextStep(Step.BASIC_INFO)
                     }
                 }
+            ) {
+                Text("Start Onboarding Components Demo")
             }
-        ) {
-            Text("Start Onboarding Components Demo")
+            Button(onClick = {
+                coroutineScope.launch {
+                    try {
+                        Footprint.initializeWithPublicKey(
+                            publicKey = "pb_test_Nza8oVYDBlrIqrQrNCbKRB",
+                            context = context
+                        )
+                        FootprintHosted.launchHosted(
+                            context = context,
+                            onComplete = { token: String ->
+                                println("VerificationResult: The flow has completed. The validation token is $token")
+                            },
+                            onCancel = {
+                                println("VerificationResult: The flow was canceled")
+                            },
+                            onError = { error ->
+                                println("Footprint error: $error")
+                            },
+                            appearance = FootprintAppearance(
+                                rules = FootprintAppearanceRules(button = mapOf("transition" to "all .2s linear")),
+                                variables = FootprintAppearanceVariables(
+                                    colorError = "#E33D19",
+                                    linkColor = "#101010",
+                                    fontFamily = "\"Inter\"",
+                                    labelColor = "#101010",
+                                    labelFont = "600 15px/18px \"Inter\"",
+                                    inputBorderRadius = "8px",
+                                    inputBorderWidth = "1px",
+                                    inputFont = "500 15px/21.42px \"Inter\"",
+                                    inputHeight = "50px",
+                                    inputPlaceholderColor = "#B5B5B5",
+                                    inputColor = "#101010",
+                                    inputBg = "#FFFFFF",
+                                    inputBorderColor = "#B5B5B5",
+                                    inputHoverBorderColor = "#707070",
+                                    inputFocusBorderColor = "#707070",
+                                    inputFocusElevation = "none",
+                                    inputErrorFocusElevation = "none",
+                                    hintColor = "#101010",
+                                    hintFont = "400 13px/20px \"Inter\"",
+                                    linkButtonColor = "#315E4C",
+                                    buttonBorderRadius = "70px",
+                                    buttonPrimaryBg = "#315E4C",
+                                    buttonPrimaryColor = "#FFF",
+                                    buttonPrimaryHoverBg = "#46866c"
+                                )
+                            )
+                        )
+                    } catch (e: FootprintException) {
+                        println("Error initializing Footprint SDK: ${e.message}")
+                    }
+                }
+            }) {
+                Text("Start Hosted Flow Demo")
+            }
         }
     }
 }
@@ -358,7 +447,8 @@ fun IdentifyAuthToken(
 
 @Composable
 fun VerificationCode(
-    setNextStep: (step: Step) -> Unit
+    setNextStep: (step: Step) -> Unit,
+    context: Activity
 ) {
     var code by remember { mutableStateOf("") }
     var isFailed by remember { mutableStateOf(false) }
@@ -409,7 +499,7 @@ fun VerificationCode(
                     if (code.isNotBlank()) {
                         try {
                             // Attempt verification
-                            Footprint.verify(code)
+                            Footprint.verify(code, context)
                             setNextStep(Step.BASIC_INFO)
                         } catch (e: Exception) {
                             // Mark as failed if verification fails
@@ -1105,6 +1195,30 @@ fun SSN(
 
 
 @Composable
+fun CompleteUi(
+    isLoading: Boolean,
+    isOnboardingSuccess: Boolean,
+    validationToken: String = "",
+    failureMessage: String = ""
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            if (isOnboardingSuccess) {
+                Text("Onboarding Components Demo Completed. Validation Token: $validationToken")
+            } else {
+                Text("Could not complete onboarding. $failureMessage")
+            }
+        }
+    }
+}
+
+@Composable
 fun Complete(
     context: Activity
 ) {
@@ -1120,7 +1234,6 @@ fun Complete(
             isOnboardingSuccess = true
             isLoading = false
         } catch (e: FootprintException) {
-
             println("> process FootprintException" + e)
             when (e.kind) {
                 FootprintException.ErrorKind.INLINE_PROCESS_NOT_SUPPORTED -> {
@@ -1160,19 +1273,99 @@ fun Complete(
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (isLoading) {
-            CircularProgressIndicator()
-        } else {
-            if (isOnboardingSuccess) {
-                Text("Onboarding Components Demo Completed. Validation Token: $validationToken")
-            } else {
-                Text("Could not complete onboarding. $failureMessage")
+    CompleteUi(
+        isLoading = isLoading,
+        isOnboardingSuccess = isOnboardingSuccess,
+        validationToken = validationToken,
+        failureMessage = failureMessage
+    )
+}
+
+@Composable
+fun DeprecatedSdkFallback(
+    context: Activity
+) {
+    var validationToken by remember { mutableStateOf("") }
+    var isOnboardingSuccess by remember { mutableStateOf(false) }
+    var failureMessage by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(true) }
+
+
+    LaunchedEffect(Unit) {
+        FootprintHosted.launchHosted(
+            context = context,
+            bootstrapData = FootprintBootstrapData(
+                idAddressLine1 = "456 Personal St",
+                idAddressLine2 = "Apt 200",
+                idCitizenships = listOf(Iso3166TwoDigitCountryCode.US),
+                idCity = "San Francisco",
+                idCountry = "US",
+                idDob = "01/01/1990",
+                idEmail = "user@example.com",
+                idFirstName = "John",
+                idLastName = "Doe",
+                idNationality = "US",
+                idPhoneNumber = "+15555550100",
+                idSsn9 = "123456789",
+                idState = "CA",
+                idUsLegalStatus = "citizen",
+                idZip = "94105"
+            ),
+            appearance = FootprintAppearance(
+                rules = FootprintAppearanceRules(button = mapOf("transition" to "all .2s linear")),
+                variables = FootprintAppearanceVariables(
+                    colorError = "#E33D19",
+                    linkColor = "#101010",
+                    fontFamily = "\"Inter\"",
+                    labelColor = "#101010",
+                    labelFont = "600 15px/18px \"Inter\"",
+                    inputBorderRadius = "8px",
+                    inputBorderWidth = "1px",
+                    inputFont = "500 15px/21.42px \"Inter\"",
+                    inputHeight = "50px",
+                    inputPlaceholderColor = "#B5B5B5",
+                    inputColor = "#101010",
+                    inputBg = "#FFFFFF",
+                    inputBorderColor = "#B5B5B5",
+                    inputHoverBorderColor = "#707070",
+                    inputFocusBorderColor = "#707070",
+                    inputFocusElevation = "none",
+                    inputErrorFocusElevation = "none",
+                    hintColor = "#101010",
+                    hintFont = "400 13px/20px \"Inter\"",
+                    linkButtonColor = "#315E4C",
+                    buttonBorderRadius = "70px",
+                    buttonPrimaryBg = "#315E4C",
+                    buttonPrimaryColor = "#FFF",
+                    buttonPrimaryHoverBg = "#46866c"
+                )
+            ),
+            options = FootprintOptions(
+                showLogo = true,
+                showCompletionPage = true
+            ),
+            onComplete = { token ->
+                validationToken = token
+                isOnboardingSuccess = true
+                isLoading = false
+            },
+            onError = { error ->
+                isOnboardingSuccess = false
+                failureMessage = error
+                isLoading = false
+            },
+            onCancel = {
+                isOnboardingSuccess = false
+                failureMessage = "User canceled hosted flow"
+                isLoading = false
             }
-        }
+        )
     }
+
+    CompleteUi(
+        isLoading = isLoading,
+        isOnboardingSuccess = isOnboardingSuccess,
+        validationToken = validationToken,
+        failureMessage = failureMessage
+    )
 }
