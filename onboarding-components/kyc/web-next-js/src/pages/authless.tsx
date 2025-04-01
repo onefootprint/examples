@@ -4,9 +4,7 @@ import {
 	InlineProcessError,
 	useFootprint,
 } from "@onefootprint/footprint-react";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-
+import React, { useCallback, useEffect, useState } from "react";
 import Divider from "@/components/divider";
 import Header from "@/components/header";
 import Layout from "@/components/layout";
@@ -15,12 +13,22 @@ import Title from "@/components/title";
 import LoadingSpinner from "@/components/loading-spinner";
 
 // Step 1:
-// You need to provide a fully verified auth token
-// A fully verified auth token doesn't need to re-authenticate i.e. doesn't need OTP again
-// Some auth tokens are not fully verified i.e. they need OTP again (which is conducted using fp.createAuthTokenBasedChallenge and fp.verify)
-// This flow is only for the case where the auth token is fully verified.
-const authToken = "YOUR_AUTH_TOKEN"; // TODO: Replace with your auth token
-const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
+// You need to provide an authless token here
+// 1. Create an authless playbook
+// 2. Create an an auth token, passing your authless playbook key and email and phone numbers. Don't forget the user_external_id
+// curl -X POST https://api.onefootprint.com/onboarding/session \
+//   -u sk_test_123: \
+//   -d '{
+//     "kind": "onboard",
+//     "key": "pb_test_oOCYD7ATmtGFnxXv1b2Z4A",
+//     "user_external_id": "8c942342-987Dd-452-84f7-012324ab66899",
+//     "bootstrap_data": {
+//       "id.email": "rafaelmotta021@gmail.com",
+//       "id.phone_number": "+15555550100"
+//     }
+//   }'
+const authToken = "obtok_h9C9xZwNilv7HRQrklL5qiFGgNmJq2BD1o"; // TODO: Replace with your auth token
+const publicKey = "pb_test_oOCYD7ATmtGFnxXv1b2Z4A";
 
 const Demo = () => {
 	const [option, setOption] = useState("identify");
@@ -55,26 +63,20 @@ const Demo = () => {
 const Identify = ({ onDone }: { onDone: () => void }) => {
 	const fp = useFootprint();
 
+	// Step 3: Initialize the authless flow
+	// This will also get any data in the vault, so you can pre-fill the form
+	// you'll also get a response with the missing fields to collect
+	const start = useCallback(async () => {
+		const response = await fp.startAuthlessFlow();
+		console.log(response);
+		onDone();
+	}, [fp, onDone]);
+
 	useEffect(() => {
 		if (fp.isReady) {
-			fp.requiresAuth()
-				.then((shouldReAuth) => {
-					// Step 3:
-					// you MUST call fp.requiresAuth() to validate the auth token
-					// The response from fp.requiresAuth() indicates whether you need to re-authenticate using OTP
-					// The response from fp.requiresAuth() will be false if the auth token is fully verified
-					// That means you don't need to do anything else for the auth part of the flow, our SDK is ready to vault, process, etc.
-					if (!shouldReAuth) {
-						onDone();
-						return;
-					}
-					console.error("The provided auth token is not fully verified");
-				})
-				.catch((error) => {
-					console.error("Error validating auth token: ", error);
-				});
+			start();
 		}
-	}, [fp, onDone]);
+	}, [fp.isReady]);
 
 	return (
 		<div className="flex h-screen w-screen items-center justify-center">
@@ -89,30 +91,32 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 
 	const handleSubmit = async (data: FormValues) => {
 		try {
-			// Step 5:
+			// Step 4:
 			// Vault the data collected from the form by calling fp.vault
 			await fp.vault(data);
-			// Step 6.1:
+			// Step 5
 			// Process the data by calling fp.process and get a validation token
 			// A process success means user onboarding is complete
 			// You can use the validation token to get the fp_id of the onboarded user from our API https://docs.onefootprint.com/api-reference#post-onboarding-session-validate
 			const { validationToken } = await fp.process();
 			onDone();
 		} catch (error) {
-			// Step 6.2:
+			// Step 6
 			// For some onboarding, the requirement may include items that aren't supported in this SDK yet
 			// When that happens, fp.process will throw an InlineProcessError
 			// You can use the handoff function to handle the error
 			// fp.handoff will launch the rest of the flow on an iframe modal
 			// The handoff function will return the same validation token in the callback
+			// This will happen in a few cases:
+			// 1. You forgot to collect some required field
+			// 2. Your playbook requires to collect a document
+			// 3. Your playbook has a step-up, that will collect a document
 			if (error instanceof InlineProcessError) {
 				fp.handoff({ onComplete: (validationToken: string) => {} });
 			}
 		}
 	};
 
-	// Step 4:
-	// Use our flexible UI components to create data collection forms
 	return (
 		<Layout>
 			<div className="mb-6">
