@@ -14,14 +14,13 @@ import Subtitle from "@/components/subtitle";
 import Title from "@/components/title";
 import LoadingSpinner from "@/components/loading-spinner";
 
-const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
-
-// Step 1 for fully verified auth token flow:
+// Step 1:
 // You need to provide a fully verified auth token
 // A fully verified auth token doesn't need to re-authenticate i.e. doesn't need OTP again
 // Some auth tokens are not fully verified i.e. they need OTP again (which is conducted using fp.createAuthTokenBasedChallenge and fp.verify)
 // This flow is only for the case where the auth token is fully verified.
 const authToken = "YOUR_AUTH_TOKEN"; // TODO: Replace with your auth token
+const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
 
 const Demo = () => {
 	const [option, setOption] = useState("identify");
@@ -37,14 +36,12 @@ const Demo = () => {
 		setOption("success");
 	};
 
+	// Step 2:
+	// Pass the auth token to the provider
+	// Also make sure that the auth token is associated with the public key that you are passing
+	// That is when you created the auth token, you used this public key
 	return (
 		<>
-			{/* 
-            Step 2 for fully verified auth token flow:
-            Pass the auth token to the provider
-            Also make sure that the auth token is associated with the public key that you are passing
-            That is when you created the auth token, you used this public key
-        */}
 			<Fp.Provider publicKey={publicKey} authToken={authToken}>
 				<Header>Onboarding</Header>
 				{isIdentify && <Identify onDone={handleIdentifyDone} />}
@@ -62,7 +59,8 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 		if (fp.isReady) {
 			fp.requiresAuth()
 				.then((shouldReAuth) => {
-					// Step 3 for fully verified auth token flow:
+					// Step 3:
+					// you MUST call fp.requiresAuth() to validate the auth token
 					// The response from fp.requiresAuth() indicates whether you need to re-authenticate using OTP
 					// The response from fp.requiresAuth() will be false if the auth token is fully verified
 					// That means you don't need to do anything else for the auth part of the flow, our SDK is ready to vault, process, etc.
@@ -91,16 +89,30 @@ const BasicData = ({ onDone }: { onDone: () => void }) => {
 
 	const handleSubmit = async (data: FormValues) => {
 		try {
+			// Step 5:
+			// Vault the data collected from the form by calling fp.vault
 			await fp.vault(data);
+			// Step 6.1:
+			// Process the data by calling fp.process and get a validation token
+			// A process success means user onboarding is complete
+			// You can use the validation token to get the fp_id of the onboarded user from our API https://docs.onefootprint.com/api-reference#post-onboarding-session-validate
 			const { validationToken } = await fp.process();
 			onDone();
 		} catch (error) {
+			// Step 6.2:
+			// For some onboarding, the requirement may include items that aren't supported in this SDK yet
+			// When that happens, fp.process will throw an InlineProcessError
+			// You can use the handoff function to handle the error
+			// fp.handoff will launch the rest of the flow on an iframe modal
+			// The handoff function will return the same validation token in the callback
 			if (error instanceof InlineProcessError) {
 				fp.handoff({ onComplete: (validationToken: string) => {} });
 			}
 		}
 	};
 
+	// Step 4:
+	// Use our flexible UI components to create data collection forms
 	return (
 		<Layout>
 			<div className="mb-6">
