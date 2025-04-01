@@ -13,8 +13,15 @@ import Layout from "@/components/layout";
 import Subtitle from "@/components/subtitle";
 import Title from "@/components/title";
 import LoadingSpinner from "@/components/loading-spinner";
+
 const publicKey = "pb_test_evrrjghzYMD6QSPDGleggt";
-const authToken = "DEMO_AUTH_TOKEN"; // TODO: Replace with your auth token
+
+// Step 1 for fully verified auth token flow:
+// You need to provide a fully verified auth token
+// A fully verified auth token doesn't need to re-authenticate i.e. doesn't need OTP again
+// Some auth tokens are not fully verified i.e. they need OTP again (which is conducted using fp.createAuthTokenBasedChallenge and fp.verify)
+// This flow is only for the case where the auth token is fully verified.
+const authToken = "YOUR_AUTH_TOKEN"; // TODO: Replace with your auth token
 
 const Demo = () => {
 	const [option, setOption] = useState("identify");
@@ -32,11 +39,13 @@ const Demo = () => {
 
 	return (
 		<>
-			<Fp.Provider
-				publicKey={publicKey}
-				authToken={authToken}
-				sandboxId="92378532323283578532"
-			>
+			{/* 
+            Step 2 for fully verified auth token flow:
+            Pass the auth token to the provider
+            Also make sure that the auth token is associated with the public key that you are passing
+            That is when you created the auth token, you used this public key
+        */}
+			<Fp.Provider publicKey={publicKey} authToken={authToken}>
 				<Header>Onboarding</Header>
 				{isIdentify && <Identify onDone={handleIdentifyDone} />}
 				{isBasicData && <BasicData onDone={handleBasicDataDone} />}
@@ -53,8 +62,10 @@ const Identify = ({ onDone }: { onDone: () => void }) => {
 		if (fp.isReady) {
 			fp.requiresAuth()
 				.then((shouldReAuth) => {
-					// This flow is only for the case where the auth token is fully verified.
-					// a fully verified auth token doesn't need to re-authenticate i.e. doesn't need OTP again
+					// Step 3 for fully verified auth token flow:
+					// The response from fp.requiresAuth() indicates whether you need to re-authenticate using OTP
+					// The response from fp.requiresAuth() will be false if the auth token is fully verified
+					// That means you don't need to do anything else for the auth part of the flow, our SDK is ready to vault, process, etc.
 					if (!shouldReAuth) {
 						onDone();
 						return;
