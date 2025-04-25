@@ -11,12 +11,21 @@
       }
     },
     {
+      "identity" : "moneykit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/moneykit/moneykit-ios",
+      "state" : {
+        "revision" : "714555cdc181a1cb41f7610a146f2cb79ee7cdd7",
+        "version" : "1.9.4"
+      }
+    },
+    {
       "identity" : "swift-onboarding-components",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onefootprint/Swift-Onboarding-Components.git",
       "state" : {
-        "revision" : "4fdab2d6538e79b5fe250e8cd9f79dc17ca15b6c",
-        "version" : "1.0.1-beta"
+        "revision" : "67f46ebcf8b8d4f533ea606b500f91f19ede69b0",
+        "version" : "1.0.3-beta"
       }
     }
   ],

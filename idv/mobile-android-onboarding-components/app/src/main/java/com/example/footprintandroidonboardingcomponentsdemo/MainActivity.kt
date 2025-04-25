@@ -30,6 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.onefootprint.native_onboarding_components.Footprint
+import com.onefootprint.native_onboarding_components.bank_linking.FootprintBankLinking
+import com.onefootprint.native_onboarding_components.client.models.DataIdentifier
+import com.onefootprint.native_onboarding_components.client.models.Iso3166TwoDigitCountryCode
+import com.onefootprint.native_onboarding_components.client.models.VaultData
 import com.onefootprint.native_onboarding_components.hosted.FootprintHosted
 import com.onefootprint.native_onboarding_components.models.FootprintAuthMethods
 import com.onefootprint.native_onboarding_components.models.FootprintException
@@ -37,8 +41,6 @@ import com.onefootprint.native_onboarding_components.models.OverallOutcome
 import com.onefootprint.native_onboarding_components.models.SandboxOutcome
 import com.onefootprint.native_onboarding_components.utils.FootprintUtils
 import kotlinx.coroutines.launch
-import org.openapitools.client.models.DataIdentifier
-import org.openapitools.client.models.VaultData
 import com.onefootprint.native_onboarding_components.hosted.FootprintAppearance
 import com.onefootprint.native_onboarding_components.hosted.FootprintAppearanceRules
 import com.onefootprint.native_onboarding_components.hosted.FootprintAppearanceVariables
@@ -47,7 +49,6 @@ import com.onefootprint.native_onboarding_components.hosted.FootprintOptions
 import com.onefootprint.native_onboarding_components.models.FootprintL10n
 import com.onefootprint.native_onboarding_components.models.FootprintSupportedLanguage
 import com.onefootprint.native_onboarding_components.models.FootprintSupportedLocale
-import org.openapitools.client.models.Iso3166TwoDigitCountryCode
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -267,6 +268,32 @@ fun Init(
                 }
             }) {
                 Text("Start Hosted Flow Demo")
+            }
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        try {
+                            FootprintBankLinking.launchWithAuthToken(
+                                authToken = "obtok_Ez9bVnEkThCBuYGLF91gV3ZkXIxq5UUpYW", // Use your auth token here
+                                context = context,
+                                onSuccess = {
+                                    val linkId = it.linkId
+                                    println(if(linkId == null) "Bank relinked" else "Bank linked. Link id is: $linkId")
+                                },
+                                onError = { error ->
+                                    println("Error linking bank: ${error.message}")
+                                },
+                                onClose = {
+                                    println("User exited bank linking")
+                                }
+                            )
+                        } catch (e: FootprintException) {
+                            println("Error initializing Footprint SDK: ${e.message}")
+                        }
+                    }
+                }
+            ) {
+                Text("Start standalone bank linking demo")
             }
         }
     }
