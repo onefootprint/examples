@@ -54,20 +54,28 @@ struct BankLinkingViewWithAuthToken: View {
     let onError: (String) -> Void
 
     @State private var showBalSheet: Bool = false
+    @State private var isLoading: Bool = false
 
     var body: some View {
         Button(action: {
+            isLoading = true
             showBalSheet = true
         }) {
             HStack {
-                Text("Link Bank Account")
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                } else {
+                    Text("Link Bank Account")
+                }
             }
             .frame(maxWidth: .infinity)
             .padding()
-            .background(Color.blue)
+            .background(isLoading ? Color.blue.opacity(0.7) : Color.blue)
             .foregroundColor(.white)
             .cornerRadius(8)
         }
+        .disabled(isLoading)
         .padding(.horizontal)
         .sheet(isPresented: $showBalSheet) {
             bankLinkingSheet
@@ -85,16 +93,19 @@ struct BankLinkingViewWithAuthToken: View {
                     print("Bank linking completed successfully \(response.linkId!)")
                 }
                 showBalSheet = false
+                isLoading = false
                 onSuccess()
             },
             onError: { error in
                 print("Error occurred during bank linking: \(error)")
                 showBalSheet = false
+                isLoading = false
                 onError("Bank linking failed: \(error.message)")
             },
             onClose: {
                 print("Bank linking exited")
                 showBalSheet = false
+                isLoading = false
             }
         )
     }
