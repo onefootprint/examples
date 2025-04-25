@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.footprintandroidonboardingcomponentsdemo"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -56,5 +56,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("com.onefootprint.native_onboarding_components:onboarding_components-android:1.0.0-beta-6")
+    implementation("com.onefootprint.native_onboarding_components:onboarding_components-android:1.0.0-beta-7")
 }
