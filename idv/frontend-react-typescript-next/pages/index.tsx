@@ -9,11 +9,102 @@ const Home: NextPage = () => {
 	const handleOpen = () => {
 		const component = footprint.init({
 			kind: "verify",
-			variant: "inline",
-			containerId: "footprint-container",
-			publicKey: "pb_test_5OJt1d7gDASCzgv7pZpLuB",
+			publicKey: "pb_test_tjifWCVzh1tTuH1qXCUNWh",
 			onComplete: (validationToken: string) => {
 				console.log(validationToken);
+			},
+			appearance: {
+				variables: {
+					borderRadius: "5px",
+					buttonBorderRadius: "20px",
+					buttonPrimaryBg: "#666666",
+					buttonPrimaryHoverBg: "#333333",
+					buttonPrimaryColor: "#FFF",
+					linkButtonColor: "#007BFF",
+
+					radioSelectColor: "#666666",
+					radioSelectSelectedColor: "#000000",
+
+					radioSelectBg: "#FFFFFF",
+					radioSelectHoverBg: "#F9F9F9",
+					radioSelectSelectedBg: "#FFF",
+
+					radioSelectBorderColor: "#CCCCCC",
+					radioSelectHoverBorderColor: "#999999",
+					radioSelectSelectedBorderColor: "#666666",
+
+					radioSelectComponentsIconBg: "#ccc",
+
+					radioSelectComponentsIconSelectedBg: "#999",
+					radioSelectComponentsIconColor: "#666666",
+					radioSelectComponentsIconSelectedColor: "#fff",
+				},
+				rules: {
+					button: {
+						transition: "all .2s linear",
+						backgroundColor: "#666666",
+						color: "#FFF",
+						borderRadius: "20px",
+					},
+					"button:hover": {
+						backgroundColor: "#333333",
+						color: "#FFF",
+					},
+					"button:focus": {
+						outline: "2px solid #999999",
+						outlineOffset: "2px",
+					},
+					"button:active": {
+						backgroundColor: "#333333",
+						transform: "scale(0.98)",
+					},
+					input: {
+						border: "1px solid #CCCCCC",
+						borderRadius: "5px",
+						padding: "8px",
+					},
+					"input:hover": {
+						borderColor: "#999999",
+					},
+					"input:focus": {
+						borderColor: "#666666",
+						outline: "none",
+						boxShadow: "0 0 0 2px rgba(0, 0, 0, 0.1)",
+					},
+					"input:active": {
+						borderColor: "#333333",
+					},
+					"pinInput:hover": {
+						borderColor: "#999999",
+					},
+					"pinInput:focus": {
+						borderColor: "#666666",
+						outline: "none",
+						boxShadow: "0 0 0 2px rgba(0, 0, 0, 0.1)",
+					},
+					"pinInput:active": {
+						borderColor: "#333333",
+					},
+					label: {
+						color: "#666666",
+						fontSize: "14px",
+					},
+					hint: {
+						color: "#999999",
+						fontSize: "12px",
+					},
+					link: {
+						color: "#007BFF",
+						textDecoration: "none",
+					},
+					"link:hover": {
+						color: "#0056b3",
+						textDecoration: "underline",
+					},
+					"link:active": {
+						color: "#004085",
+					},
+				},
 			},
 		});
 		component.render();
