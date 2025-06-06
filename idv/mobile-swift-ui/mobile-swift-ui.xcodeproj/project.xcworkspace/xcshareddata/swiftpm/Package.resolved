@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onefootprint/Swift-Onboarding-Components.git",
       "state" : {
-        "revision" : "67f46ebcf8b8d4f533ea606b500f91f19ede69b0",
-        "version" : "1.0.3-beta"
+        "revision" : "c068900978cbf78fa8c0734167c883d7d60f5424",
+        "version" : "1.0.3"
       }
     }
   ],

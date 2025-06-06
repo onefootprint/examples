@@ -173,7 +173,25 @@ struct EmailAndPhoneView: View {
                             onError: { error in
                                 errorMessage = error
                                 showErrorScreen = true
-                            }
+                            },
+                            appearance: Appearance(
+                                variables: AppearanceVariables(
+                                    buttonPrimaryBg: "#007aff"
+                                )
+                            ).data,
+                            bootstrapData: FootprintBootstrapData(
+                                idAddressLine1: "123 Main St",
+                                idCity: "Anytown",
+                                idCountry: "US",
+                                idDob: "1990-01-01",
+                                idEmail: "example@example.com",
+                                idFirstName: "John",
+                                idLastName: "Doe",
+                                idPhoneNumber: "+15555550100",
+                                idSsn9: "123456789",
+                                idState: "CA",
+                                idZip: "90210"
+                            ).data
                         )
                     } catch {
                         errorMessage = error.localizedDescription

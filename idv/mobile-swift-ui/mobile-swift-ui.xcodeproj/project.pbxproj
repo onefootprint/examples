@@ -16,8 +16,8 @@
 		78013C7D2CB0BAB500F22E0A /* AuthTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C752CB0BAB500F22E0A /* AuthTokenView.swift */; };
 		78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C782CB0BAB500F22E0A /* SuccessView.swift */; };
 		78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C762CB0BAB500F22E0A /* BasicInfoView.swift */; };
-		786E9D4A2DBC13E2005C2DC4 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 786E9D492DBC13E2005C2DC4 /* Footprint */; };
 		786E9D5A2DBC1444005C2DC4 /* StandaloneBankLinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786E9D592DBC1439005C2DC4 /* StandaloneBankLinkingView.swift */; };
+		78EEEDCC2DF39A49008C5336 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 78EEEDCB2DF39A49008C5336 /* Footprint */; };
 		7C80D8D02D95E14B00234C91 /* HostedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80D8CF2D95E14800234C91 /* HostedView.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				786E9D4A2DBC13E2005C2DC4 /* Footprint in Frameworks */,
+				78EEEDCC2DF39A49008C5336 /* Footprint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			);
 			name = "mobile-swift-ui";
 			packageProductDependencies = (
-				786E9D492DBC13E2005C2DC4 /* Footprint */,
+				78EEEDCB2DF39A49008C5336 /* Footprint */,
 			);
 			productName = "mobile-swift-ui";
 			productReference = 565B655E2B1E17560072925A /* mobile-swift-ui.app */;
@@ -148,7 +148,7 @@
 			);
 			mainGroup = 565B65552B1E17560072925A;
 			packageReferences = (
-				786E9D482DBC13E2005C2DC4 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */,
+				78EEEDCA2DF39A49008C5336 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */,
 			);
 			productRefGroup = 565B655F2B1E17560072925A /* Products */;
 			projectDirPath = "";
@@ -394,20 +394,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		786E9D482DBC13E2005C2DC4 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */ = {
+		78EEEDCA2DF39A49008C5336 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onefootprint/Swift-Onboarding-Components.git";
 			requirement = {
-				kind = exactVersion;
-				version = "1.0.3-beta";
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		786E9D492DBC13E2005C2DC4 /* Footprint */ = {
+		78EEEDCB2DF39A49008C5336 /* Footprint */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 786E9D482DBC13E2005C2DC4 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */;
+			package = 78EEEDCA2DF39A49008C5336 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */;
 			productName = Footprint;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -11,20 +11,20 @@ import Footprint
 struct StandaloneBankLinkingView: View {
     @State private var authToken: String = ""
     @State private var isBankLinkingComplete: Bool = false
-
+    
     var body: some View {
         VStack(spacing: 20) {
             Text("Bank Linking with Auth Token")
                 .font(.title)
                 .padding()
-
+            
             TextField(
                 "Auth token",
                 text: $authToken
             )
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding(.horizontal)
-
+            
             BankLinkingViewWithAuthToken(
                 authToken: authToken,
                 onSuccess: {
@@ -35,7 +35,7 @@ struct StandaloneBankLinkingView: View {
                     isBankLinkingComplete = false
                 }
             )
-
+            
             if isBankLinkingComplete {
                 Text("Bank linking completed successfully!")
                     .foregroundColor(.green)
@@ -52,10 +52,10 @@ struct BankLinkingViewWithAuthToken: View {
     let authToken: String
     let onSuccess: () -> Void
     let onError: (String) -> Void
-
+    
     @State private var showBalSheet: Bool = false
     @State private var isLoading: Bool = false
-
+    
     var body: some View {
         Button(action: {
             isLoading = true
@@ -81,17 +81,13 @@ struct BankLinkingViewWithAuthToken: View {
             bankLinkingSheet
         }
     }
-
+    
     private var bankLinkingSheet: some View {
         FootprintBankLinkingWithAuthToken(
             authToken: authToken,
             redirectUri: "footprintcomponentsdemo://banklinking",
             onSuccess: { response in
-                if(response.linkId == nil){
-                    print("Bank relinked successfully")
-                }else{
-                    print("Bank linking completed successfully \(response.linkId!)")
-                }
+                print("Bank linking completed successfully, validation token: \(response.validationToken)")
                 showBalSheet = false
                 isLoading = false
                 onSuccess()
