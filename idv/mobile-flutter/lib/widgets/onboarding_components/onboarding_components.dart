@@ -3,6 +3,7 @@ import 'package:footprint_flutter/footprint_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 // Example of how to use the Footprint Flutter Onboarding Components to create an onboarding flow
+// Example of how to use the Footprint Flutter Onboarding Components to create an onboarding flow
 enum Steps {
   identify,
   basicInfo,
@@ -34,6 +35,8 @@ class OnboardingComponents extends StatefulWidget {
 }
 
 class _OnboardingComponentsState extends State<OnboardingComponents> {
+  FootprintError? initError;
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -49,7 +52,13 @@ class _OnboardingComponentsState extends State<OnboardingComponents> {
           ),
           // sandboxId: "3jmlksncdsvbvsbevdsaww",
           // authToken: "utok_0DcG15SEkP4YAuMwOoEsBGrjrFK0OTuUei",
-          child: const Kyc(), // Use Auth() for Auth Playbook
+          child: Kyc(initError: initError), // Use Auth() for Auth Playbook
+          onInitializationError: (error) {
+            print("Error: $error");
+            setState(() {
+              initError = error;
+            });
+          },
         ),
       ),
     );
@@ -93,26 +102,7 @@ class _AuthState extends State<Auth> {
                 useAuthToken: false,
               ),
             if (verificationResult?.validationToken.isNotEmpty == true)
-              Container(
-                padding: const EdgeInsets.all(20),
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    const Text("Auth Complete"),
-                    const SizedBox(height: 12),
-                    const Text("Validation Token:"),
-                    const SizedBox(height: 8),
-                    Text(verificationResult?.validationToken ?? ''),
-                    const SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Close demo'),
-                    ),
-                  ],
-                ),
-              )
+              Success(validationToken: verificationResult!.validationToken),
           ],
         ),
       ),
@@ -121,7 +111,12 @@ class _AuthState extends State<Auth> {
 }
 
 class Kyc extends StatefulWidget {
-  const Kyc({super.key});
+  const Kyc({
+    super.key,
+    required this.initError,
+  });
+
+  final FootprintError? initError;
 
   @override
   State<Kyc> createState() => _KycState();
@@ -146,6 +141,10 @@ class _KycState extends State<Kyc> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.initError != null) {
+      return InitErrorPage(error: widget.initError!);
+    }
+
     if (!footprintUtils(context).isReady) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -707,6 +706,107 @@ class Ssn extends StatelessWidget {
       onSubmit: (formData) {
         handleComplete(context, formData);
       },
+    );
+  }
+}
+
+class InitErrorPage extends StatefulWidget {
+  const InitErrorPage({super.key, required this.error});
+
+  final FootprintError error;
+
+  @override
+  State<InitErrorPage> createState() => _InitErrorPageState();
+}
+
+class _InitErrorPageState extends State<InitErrorPage> {
+  String? validationToken;
+  bool hostedFlowCancelled = false;
+  bool hostedFlowErrored = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      footprintUtils(context).launchHosted(
+        onComplete: (token) {
+          setState(() {
+            validationToken = token;
+          });
+        },
+        onCancel: () {
+          setState(() {
+            hostedFlowCancelled = true;
+          });
+        },
+        onError: (err) {
+          setState(() {
+            hostedFlowErrored = true;
+          });
+        },
+        bootstrapData: FormData(
+          // Add bootstrap data to the hosted flow if you want to prefill the forms on the hosted flow
+          email: "test@test.com",
+          phoneNumber: "+15555550100",
+          firstName: "John",
+          lastName: "Doe",
+          dob: "1990-01-01",
+          addressLine1: "123 Main St",
+          city: "Anytown",
+          state: "CA",
+          zip: "12345",
+          country: "US",
+          ssn9: "123456789",
+          addressLine2: "Apt 1",
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.error.kind == ErrorKind.deprecatedSdkVersion) {
+      if (hostedFlowCancelled) {
+        return const Center(child: Text("Hosted flow cancelled"));
+      } else if (hostedFlowErrored) {
+        return const Center(child: Text("Hosted flow errored"));
+      } else if (validationToken == null) {
+        return const Center(child: CircularProgressIndicator());
+      } else {
+        return Success(validationToken: validationToken!);
+      }
+    } else {
+      return Center(child: Text(widget.error.message));
+    }
+  }
+}
+
+class Success extends StatelessWidget {
+  const Success({super.key, required this.validationToken});
+
+  final String validationToken;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      alignment: Alignment.center,
+      child: Column(
+        children: [
+          const Text("KYC Complete"),
+          const SizedBox(height: 12),
+          const Text("Validation Token:"),
+          const SizedBox(height: 8),
+          Text(validationToken),
+          const SizedBox(height: 12),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close demo'),
+          ),
+        ],
+      ),
     );
   }
 }
