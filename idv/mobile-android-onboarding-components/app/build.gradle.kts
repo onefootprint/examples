@@ -56,5 +56,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("com.onefootprint.native_onboarding_components:onboarding_components-android:1.0.0-beta-7")
+    implementation("com.onefootprint.native_onboarding_components:onboarding_components-android:1.0.0-beta-9")
 }
