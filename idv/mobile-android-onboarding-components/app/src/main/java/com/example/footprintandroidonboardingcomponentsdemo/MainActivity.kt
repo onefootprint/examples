@@ -274,11 +274,11 @@ fun Init(
                     coroutineScope.launch {
                         try {
                             FootprintBankLinking.launchWithAuthToken(
-                                authToken = "obtok_Ez9bVnEkThCBuYGLF91gV3ZkXIxq5UUpYW", // Use your auth token here
+                                authToken = "obtok_hsTyU1rEp7MIfnqxU2l7jSfgYHuLR6LAGO", // Use your auth token here
                                 context = context,
                                 onSuccess = {
-                                    val linkId = it.linkId
-                                    println(if(linkId == null) "Bank relinked" else "Bank linked. Link id is: $linkId")
+                                    val validationToken = it.validationToken
+                                    println("Bank linked. Validation Token: $validationToken")
                                 },
                                 onError = { error ->
                                     println("Error linking bank: ${error.message}")
