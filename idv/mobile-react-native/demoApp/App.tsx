@@ -82,15 +82,9 @@ const IdentifyWithAuthToken = ({
 	const [challengeKind, setChallengeKind] = useState<string>();
 	const [isAuthRequired, setIsAuthRequired] = useState<boolean | null>(null);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		// if (fp.isReady) {
-		// fp.requiresAuth().then(isRequired => {
-		console.log("requiresAuth", fp.requiresAuth);
 		setIsAuthRequired(fp.requiresAuth);
-		// }
-		// });
-	}, []);
+	}, [fp]);
 
 	useEffect(() => {
 		if (isAuthRequired && !challengeKind) {
