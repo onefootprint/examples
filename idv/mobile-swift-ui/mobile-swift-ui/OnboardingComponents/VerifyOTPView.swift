@@ -7,7 +7,7 @@ struct VerifyOTPView: View {
     let challengeKind: String
     @State private var isLoading: Bool = false
     @State private var errorMessage: String?
-    @State private var navigateToBasicInfo: Bool = false    
+    @State private var navigateToBankLinking: Bool = false
     
     init(challengeKind: String) {
         self.challengeKind = challengeKind
@@ -38,7 +38,7 @@ struct VerifyOTPView: View {
                 }
             }           
             .background(
-                NavigationLink(destination: BasicInfoView(), isActive: $navigateToBasicInfo) {
+                NavigationLink(destination: BasicInfoView(), isActive: $navigateToBankLinking) {
                     EmptyView()
                 }
             )
@@ -57,7 +57,7 @@ struct VerifyOTPView: View {
                                 
                 // Set navigate to true on the main thread
                 DispatchQueue.main.async {
-                    self.navigateToBasicInfo = true
+                    self.navigateToBankLinking = true
                 }
             } catch {
                 DispatchQueue.main.async {
