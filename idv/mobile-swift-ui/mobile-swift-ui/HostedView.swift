@@ -1,3 +1,10 @@
+//
+//  HostedView.swift
+//  iosApp
+//
+//  Created by Rodrigo on 26/03/25.
+//  Copyright © 2025 orgName. All rights reserved.
+//
 import SwiftUI
 import Footprint
 

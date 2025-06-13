@@ -7,7 +7,7 @@ struct BasicInfoView: View {
     @State private var showSuccessView: Bool = false
     @State private var vaultData: VaultData?
     @State private var isDataReady: Bool = false // State variable to track data readiness
-    
+    @State private var customField: String = ""
     
     private var defaultFormValues: [FpFieldName : String?] {
         [
@@ -24,7 +24,7 @@ struct BasicInfoView: View {
             .idSsn9: vaultData?.idSsn9 ?? "123-45-6789"
         ]
     }
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -60,19 +60,24 @@ struct BasicInfoView: View {
         Task {
             do {
                 let fetchedVaultData = try await Footprint.shared.getVaultData(fields:
-                    [DataIdentifier.idFirstName,
-                    DataIdentifier.idMiddleName,
-                    DataIdentifier.idLastName,
-                    DataIdentifier.idDob,
-                     DataIdentifier.idAddressLine1,
-                     DataIdentifier.idAddressLine2,
-                     DataIdentifier.idCity,
-                     DataIdentifier.idState,
-                     DataIdentifier.idZip,
-                     DataIdentifier.idCountry
-                     // SSN can't be decrypted
-                ])
+                                                                                [
+                                                                                    DataIdentifier.idFirstName,
+                                                                                    DataIdentifier.idMiddleName,
+                                                                                    DataIdentifier.idLastName,
+                                                                                    DataIdentifier.idDob,
+                                                                                    DataIdentifier.idAddressLine1,
+                                                                                    DataIdentifier.idAddressLine2,
+                                                                                    DataIdentifier.idCity,
+                                                                                    DataIdentifier.idState,
+                                                                                    DataIdentifier.idZip,
+                                                                                    DataIdentifier.idCountry,
+                                                                                    DataIdentifier.custom(fieldName: "lorem")
+                                                                                    // SSN can't be decrypted
+                                                                                ])
+                print("Fetched vault data: \(fetchedVaultData)")
+                
                 DispatchQueue.main.async {
+                    customField = fetchedVaultData.getCustomField(fieldName: "lorem") ?? ""
                     self.vaultData = fetchedVaultData
                     self.isDataReady = true // Set to true after fetching data
                 }
@@ -102,14 +107,28 @@ struct BasicInfoView: View {
             }
         }
     }
-
+    
     private func submitVaultData(_ vaultData: VaultData) {
         isLoading = true
         errorMessage = nil
         
         Task {
             do {
-                try await Footprint.shared.vault(data: vaultData)
+                try await Footprint.shared.vault(data: VaultData.createVault(
+                    idAddressLine1: vaultData.idAddressLine1,
+                    idAddressLine2: vaultData.idAddressLine2,
+                    idCity: vaultData.idCity,
+                    idCountry: vaultData.idCountry,
+                    idDob: vaultData.idDob,
+                    idFirstName: vaultData.idFirstName,
+                    idLastName: vaultData.idLastName ,
+                    idMiddleName: vaultData.idMiddleName,
+                    idSsn9: vaultData.idSsn9,
+                    idState: vaultData.idState,
+                    idZip: vaultData.idZip,
+                    customFields: [
+                        "lorem": customField
+                    ]) )
                 print("Vault data submitted successfully")
                 let validationToken = try await Footprint.shared.process()
                 showSuccessView = true
@@ -125,20 +144,20 @@ struct BasicInfoView: View {
             isLoading = false
         }
     }
-
+    
     private func handleVaultError(_ error: FootprintException) {
-            switch error.kind {
-            case .inlineProcessNotSupported:
-                print("Inline process not supported error, message: \(error.message)")
-                handleHandoff()
-            case .vaultingError:
-                print("Vaulting error, message: \(error.message)")
-            default:
-                print("Error occurred: \(error)")
-            }
+        switch error.kind {
+        case .inlineProcessNotSupported:
+            print("Inline process not supported error, message: \(error.message)")
+            handleHandoff()
+        case .vaultingError:
+            print("Vaulting error, message: \(error.message)")
+        default:
+            print("Error occurred: \(error)")
+        }
         
     }
-
+    
     private func handleHandoff() {
         Task {
             do {
@@ -154,7 +173,7 @@ struct BasicInfoView: View {
                     onError: { error in
                         print("Error occurred during handoff: \(error)")
                         errorMessage = "An error occurred during verification. Please try again."
-                    }                    
+                    }
                 )
             } catch {
                 print("Error during handoff: \(error)")
@@ -162,7 +181,7 @@ struct BasicInfoView: View {
             }
         }
     }
-
+    
     private func formContent(formUtils: FormUtils) -> some View {
         VStack(spacing: 20) {
             FpField(name: .idFirstName, content: {
@@ -195,6 +214,16 @@ struct BasicInfoView: View {
             FpField(name: .idCountry, content: {
                 inputField(label: "Country", placeholder: "Enter your country")
             })
+            VStack(alignment: .leading) {
+                Text("Custom field")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                TextField("Enter the custom field", text: $customField)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+            }
+            
             FpField(name: .idSsn9, content: {
                 VStack(alignment: .leading) {
                     FpLabel("SSN", font: .subheadline, color: .secondary)
@@ -215,7 +244,7 @@ struct BasicInfoView: View {
         }
         .padding()
     }
-
+    
     private func inputField(label: String, placeholder: String) -> some View {
         VStack(alignment: .leading) {
             FpLabel(label, font: .subheadline, color: .secondary)
@@ -226,7 +255,7 @@ struct BasicInfoView: View {
             FpFieldError()
         }
     }
-
+    
     private func submitButton(formUtils: FormUtils) -> some View {
         Button(action: formUtils.handleSubmit) {
             if isLoading {

@@ -109,8 +109,8 @@ struct EmailAndPhoneView: View {
         .onAppear {
             Task {
                 do {
-                    let sandboxOutcome = SandboxOutcome(id: nil, overallOutcome: .pass, documentOutcome: .pass)
-                    try await Footprint.shared.initializeWithPublicKey(publicKey: "pb_test_Nza8oVYDBlrIqrQrNCbKRB", sandboxOutcome: sandboxOutcome)
+                    let sandboxOutcome = SandboxOutcome(id: "sandboxhfv7824dcsdvc4151242", overallOutcome: .pass, documentOutcome: .pass)
+                    try await Footprint.shared.initializeWithPublicKey(publicKey: "pb_test_vgflk9kNxmRRM83yHszGlE", sandboxOutcome: sandboxOutcome)
                     isInitialized = true
                 } catch {
                     handleInitializationError(error: error)
