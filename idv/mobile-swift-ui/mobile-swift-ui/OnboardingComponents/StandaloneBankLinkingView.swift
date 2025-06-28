@@ -93,6 +93,9 @@ struct BankLinkingViewWithAuthToken: View {
             onClose: { // Called when user closes the flow or the flow closes due to an error. If the flow closes due to an error, it will also call the onError callback
                 print("Bank linking exited")
                 showBalSheet = false
+            },
+            onEvent: {event in // Provides additional information about the events for logging purpose
+                print("Bank Linking Event: \(event)")
             }
         )
     }
