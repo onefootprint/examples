@@ -274,11 +274,34 @@ fun Init(
                     coroutineScope.launch {
                         try {
                             FootprintBankLinking.launchWithAuthToken(
-                                authToken = "obtok_hsTyU1rEp7MIfnqxU2l7jSfgYHuLR6LAGO", // Use your auth token here
+                                authToken = "obtok_Vpakqn2zgOW4kdAwUg3IaUVpA7wt2mC5Gc", // Use your auth token here
                                 context = context,
                                 onSuccess = {
                                     val validationToken = it.validationToken
-                                    println("Bank linked. Validation Token: $validationToken")
+                                    println("Bank linked. Validation token: $validationToken")
+                                    val balSuccessMeta = it.meta
+                                    balSuccessMeta.accounts.map { account ->
+                                        println(
+                                            "Account ID: ${account.id}, " +
+                                                    "Account Name: ${account.name}, " +
+                                                    "Account Type: ${account.type}, " +
+                                                    "Mask: ${account.mask}"
+                                        )
+                                    }
+                                    balSuccessMeta.trackedScreens.map { trackedScreen ->
+                                        println(
+                                            "Tracked Screen: ${trackedScreen.name}, " +
+                                                    "Tag: ${trackedScreen.tag}, " +
+                                                    "Duration: ${trackedScreen.duration}, " +
+                                                    "Game Time: ${trackedScreen.gameTime}, " +
+                                                    "Request Time: ${trackedScreen.requestTime}"
+                                        )
+                                    }
+                                    println(
+                                        "Institution ID: ${balSuccessMeta.institution.id}, " +
+                                                "Institution Name: ${balSuccessMeta.institution.name}, " +
+                                                "Institution Domain: ${balSuccessMeta.institution.domain}"
+                                    )
                                 },
                                 onError = { error ->
                                     println("Error linking bank: ${error.message}")
