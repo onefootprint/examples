@@ -7,6 +7,7 @@ struct ContentView: View {
             NavigationLink("Onboarding components - signup", destination: EmailAndPhoneView()).padding(16)
             NavigationLink("Onboarding components - authToken", destination: AuthTokenView()).padding(16)
             NavigationLink("Hosted flow", destination: HostedView()).padding(16)
+            NavigationLink("Onboard in background", destination: OnboardInBackgroundView()).padding(16)
             NavigationLink("Bank linking with auth token", destination: StandaloneBankLinkingView()).padding(16)
         }
     }
