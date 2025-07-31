@@ -31,7 +31,9 @@ struct OnboardInBackgroundView: View {
                             isLoading = false
                             print("Error occurred \(error.message)")
                         },
-                        options: OnboardingOptions(runInBackground: true)
+                        options: OnboardingOptions(
+                            runInBackground: true // it will still open webview if you have unmet requirements before start the flow
+                        )
                     )
                 }) {
                     if isLoading {
