@@ -21,7 +21,7 @@ struct BasicInfoView: View {
             .idState: vaultData?.idState ?? "NY",
             .idZip: vaultData?.idZip ?? "10001",
             .idCountry: vaultData?.idCountry ?? "US",
-            .idSsn9: vaultData?.idSsn9 ?? "123-45-6789"
+            .idSsn9: vaultData?.idSsn9 ?? "123-45-6789",
         ]
     }
     
@@ -77,7 +77,7 @@ struct BasicInfoView: View {
                 print("Fetched vault data: \(fetchedVaultData)")
                 
                 DispatchQueue.main.async {
-                    customField = fetchedVaultData.getCustomField(fieldName: "lorem") ?? ""
+                    customField = fetchedVaultData.getCustomField(fieldName: "lorem") ?? "test custom data"
                     self.vaultData = fetchedVaultData
                     self.isDataReady = true // Set to true after fetching data
                 }
