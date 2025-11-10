@@ -1,6 +1,7 @@
 package com.example.footprintandroidonboardingcomponentsdemo
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.onefootprint.native_onboarding_components.Footprint
 import com.onefootprint.native_onboarding_components.bank_linking.FootprintBankLinking
+import com.onefootprint.native_onboarding_components.bank_linking.FootprintBankLinkingFlowStatus
 import com.onefootprint.native_onboarding_components.client.models.DataIdentifier
 import com.onefootprint.native_onboarding_components.client.models.Iso3166TwoDigitCountryCode
 import com.onefootprint.native_onboarding_components.client.models.VaultData
@@ -57,6 +59,65 @@ class MainActivity : ComponentActivity() {
         setContent {
             OnboardingComponents(context = this)
         }
+    }
+
+    private fun handleResumeFootprintBAL(intent: Intent){
+        val balStatus = intent.getStringExtra("FOOTPRINT_BANK_LINKING_STATUS")
+        println("Received new intent with BAL status: $balStatus")
+        if(balStatus != null && balStatus == FootprintBankLinkingFlowStatus.PENDING.value) {
+            FootprintBankLinking.resumePendingLinking(
+                context = this,
+                onSuccess = {
+                    val validationToken = it.validationToken
+                    println("Bank linked. Validation token: $validationToken")
+                    val balSuccessMeta = it.meta
+                    balSuccessMeta.accounts.map { account ->
+                        println(
+                            "Account ID: ${account.id}, " +
+                                    "Account Name: ${account.name}, " +
+                                    "Account Type: ${account.type}, " +
+                                    "Mask: ${account.mask}"
+                        )
+                    }
+                    balSuccessMeta.trackedScreens.map { trackedScreen ->
+                        println(
+                            "Tracked Screen: ${trackedScreen.name}, " +
+                                    "Tag: ${trackedScreen.tag}, " +
+                                    "Duration: ${trackedScreen.duration}, " +
+                                    "Game Time: ${trackedScreen.gameTime}, " +
+                                    "Request Time: ${trackedScreen.requestTime}"
+                        )
+                    }
+                    println(
+                        "Institution ID: ${balSuccessMeta.institution.id}, " +
+                                "Institution Name: ${balSuccessMeta.institution.name}, " +
+                                "Institution Domain: ${balSuccessMeta.institution.domain}"
+                    )
+                },
+                onError = { error -> // Called when an error occurs
+                    println("Error linking bank: ${error.message}")
+                },
+                onClose = { // Called when user closes the flow or the flow closes due to an error. If the flow closes due to an error, it will also call the onError callback
+                    println("User exited bank linking")
+                },
+                onEvent = { event -> // Called when an event occurs in the bank linking flow
+                    println(
+                        "Bank linking event: " +
+                                "name: ${event.name}, " +
+                                "link type: ${event.meta.linkType}, " +
+                                "institution name: ${event.meta.institutionName}, " +
+                                "institution id: ${event.meta.institutionId}, " +
+                                "timestamp: ${event.meta.timestamp}, " +
+                                "properties: ${event.properties} "
+                    )
+                }
+            )
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleResumeFootprintBAL(intent)
     }
 }
 
@@ -273,8 +334,8 @@ fun Init(
                 onClick = {
                     coroutineScope.launch {
                         try {
-                            FootprintBankLinking.launchWithAuthToken(
-                                authToken = "obtok_Vpakqn2zgOW4kdAwUg3IaUVpA7wt2mC5Gc", // Use your auth token here
+                            FootprintBankLinking.launch(
+                                obSessionToken = "obtok_wuZPUfxW7wTyeLv3mThb7LlBxGBdpLPYdI", // Use your auth token here
                                 context = context,
                                 onSuccess = {
                                     val validationToken = it.validationToken
@@ -1344,23 +1405,6 @@ fun DeprecatedSdkFallback(
     LaunchedEffect(Unit) {
         FootprintHosted.launchHosted(
             context = context,
-            bootstrapData = FootprintBootstrapData(
-                idAddressLine1 = "456 Personal St",
-                idAddressLine2 = "Apt 200",
-                idCitizenships = listOf(Iso3166TwoDigitCountryCode.US),
-                idCity = "San Francisco",
-                idCountry = "US",
-                idDob = "01/01/1990",
-                idEmail = "user@example.com",
-                idFirstName = "John",
-                idLastName = "Doe",
-                idNationality = "US",
-                idPhoneNumber = "+15555550100",
-                idSsn9 = "123456789",
-                idState = "CA",
-                idUsLegalStatus = "citizen",
-                idZip = "94105"
-            ),
             appearance = FootprintAppearance(
                 rules = FootprintAppearanceRules(button = mapOf("transition" to "all .2s linear")),
                 variables = FootprintAppearanceVariables(
