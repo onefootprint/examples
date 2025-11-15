@@ -109,7 +109,7 @@ struct EmailAndPhoneView: View {
         .onAppear {
             Task {
                 do {
-                    let sandboxOutcome = SandboxOutcome(id: "sandboxhfv7824dcsdvc4151242", overallOutcome: .pass, documentOutcome: .pass)
+                    let sandboxOutcome = SandboxOutcome(id: nil, overallOutcome: .pass, documentOutcome: .pass)
                     try await Footprint.shared.initializeWithPublicKey(publicKey: "pb_test_vgflk9kNxmRRM83yHszGlE", sandboxOutcome: sandboxOutcome)
                     isInitialized = true
                 } catch {
@@ -174,24 +174,11 @@ struct EmailAndPhoneView: View {
                                 errorMessage = error
                                 showErrorScreen = true
                             },
-                            appearance: Appearance(
-                                variables: AppearanceVariables(
+                            appearance: FootprintAppearance.createAppearance(
+                                variables: FootprintAppearanceVariables.createAppearanceVariables(
                                     buttonPrimaryBg: "#007aff"
                                 )
-                            ).data,
-                            bootstrapData: FootprintBootstrapData(
-                                idAddressLine1: "123 Main St",
-                                idCity: "Anytown",
-                                idCountry: "US",
-                                idDob: "1990-01-01",
-                                idEmail: "example@example.com",
-                                idFirstName: "John",
-                                idLastName: "Doe",
-                                idPhoneNumber: "+15555550100",
-                                idSsn9: "123456789",
-                                idState: "CA",
-                                idZip: "90210"
-                            ).data
+                            )
                         )
                     } catch {
                         errorMessage = error.localizedDescription
