@@ -11,7 +11,7 @@ import SwiftUI
 import Footprint
 
 struct StandaloneBankLinkingView: View {
-    @State private var authToken: String = "obtok_6XhbvUbiamxAsRJ0WR3dlkpRIJlilhGSlf"
+    @State private var authToken: String = ""
     @State private var isBankLinkingComplete: Bool = false
     
     var body: some View {
