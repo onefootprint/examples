@@ -27,23 +27,6 @@ struct HostedView: View {
                 else {
                     Button(action: {
                         Task {
-                            let bootstrapData = BootstrapDataV1.createBootstrapData(
-                                idAddressLine1: "456 Personal St",
-                                idAddressLine2: "Apt 200",
-                                idCitizenships: [Iso3166TwoDigitCountryCode.us],
-                                idCity: "San Francisco",
-                                idCountry: "US",
-                                idDob: "01/01/1990",
-                                idEmail: "sandbox@onefootprint.com",
-                                idFirstName: "John",
-                                idLastName: "Doe",
-                                idNationality: "US",
-                                idPhoneNumber: "+15555550100",
-                                idSsn9: "123456789",
-                                idState: "CA",
-                                idUsLegalStatus: "citizen",
-                                idZip: "94105"
-                            )
                             
                             let appearance = FootprintAppearance.createAppearance(
                                 rules: FootprintAppearanceRules.createAppearanceRules(button: ["transition": "all .2s linear"]),
@@ -78,6 +61,7 @@ struct HostedView: View {
                             print("Called launchHosted")
                             
                             try await FootprintHosted.shared.launchHosted(
+                                publicKey: "pb_test_Xdxp3bkgiwlw3X8Ts7vk9X",
                                 onComplete: { validationToken in
                                     print("launchHosted completed successfully with token: \(validationToken)")
                                 },
@@ -88,8 +72,7 @@ struct HostedView: View {
                                     print("Error occurred during handoff: \(error)")
                                 },
                                 appearance: appearance,
-                                options: FootprintOptions(showCompletionPage: true, showLogo: true),
-                                bootstrapData:bootstrapData
+                                options: FootprintOptions(showCompletionPage: true, showLogo: true)
                                 
                             )
                             

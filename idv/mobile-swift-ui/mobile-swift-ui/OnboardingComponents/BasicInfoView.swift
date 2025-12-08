@@ -161,6 +161,7 @@ struct BasicInfoView: View {
     private func handleHandoff() {
         Task {
             do {
+                print("Launching handoff")
                 try await FootprintHosted.shared.handoff(
                     onComplete: { validationToken in
                         print("Handoff completed successfully with token: \(validationToken)")
