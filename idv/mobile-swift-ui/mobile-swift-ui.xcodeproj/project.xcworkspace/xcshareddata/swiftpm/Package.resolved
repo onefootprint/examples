@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/fingerprintjs/fingerprintjs-pro-ios",
       "state" : {
-        "revision" : "881f81d5869e0a236595f5c73d64a6f101bd4a49",
-        "version" : "2.11.0"
+        "revision" : "eede285b015595a74c9f5cc0429f778c82e1838e",
+        "version" : "2.12.0"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/moneykit/moneykit-ios",
       "state" : {
-        "revision" : "bf2e9e9827817e98cfcadb6b5c6f5d9e897108df",
-        "version" : "1.10.3"
+        "revision" : "7edffc647cfbe21179385c08c092ad90c3ec78e3",
+        "version" : "1.10.4"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/plaid/plaid-link-ios",
       "state" : {
-        "revision" : "24a692f9dba3a933cd1703d328e4f3cf174663ea",
-        "version" : "6.4.2"
+        "revision" : "0b283e965b60b911744f662e8e203ae0f3de37ea",
+        "version" : "6.4.3"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onefootprint/Swift-Onboarding-Components",
       "state" : {
-        "revision" : "7de33130572046a831bc9a22a09465864258c55f",
-        "version" : "1.4.0"
+        "revision" : "01446001e56cf71eec3a7addbbd0139629904f8e",
+        "version" : "1.5.0"
       }
     }
   ],

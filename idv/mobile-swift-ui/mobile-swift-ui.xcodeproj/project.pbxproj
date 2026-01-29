@@ -17,10 +17,12 @@
 		78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C782CB0BAB500F22E0A /* SuccessView.swift */; };
 		78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78013C762CB0BAB500F22E0A /* BasicInfoView.swift */; };
 		782DA71F2E3BDE6900A1857D /* OnboardInBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782DA71E2E3BDE5800A1857D /* OnboardInBackgroundView.swift */; };
+		7846B2542EE5F9C9004A2208 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 7846B2532EE5F9C9004A2208 /* Footprint */; };
 		784A1F3E2EE3C37500C606A0 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 784A1F3D2EE3C37500C606A0 /* Footprint */; };
 		784A1F412EE3E37400C606A0 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 784A1F402EE3E37400C606A0 /* Footprint */; };
-		784A1F472EE3E7F000C606A0 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 784A1F462EE3E7F000C606A0 /* Footprint */; };
 		786E9D5A2DBC1444005C2DC4 /* StandaloneBankLinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786E9D592DBC1439005C2DC4 /* StandaloneBankLinkingView.swift */; };
+		787591B32F2A9CC4004A5466 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 787591B22F2A9CC4004A5466 /* Footprint */; };
+		788FF2A92F2C182A0048EDAA /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 788FF2A82F2C182A0048EDAA /* Footprint */; };
 		78CF3ABE2EBE8C4D00B2DEA1 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 78CF3ABD2EBE8C4D00B2DEA1 /* Footprint */; };
 		7C80D8D02D95E14B00234C91 /* HostedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80D8CF2D95E14800234C91 /* HostedView.swift */; };
 /* End PBXBuildFile section */
@@ -48,8 +50,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				784A1F3E2EE3C37500C606A0 /* Footprint in Frameworks */,
+				787591B32F2A9CC4004A5466 /* Footprint in Frameworks */,
 				784A1F412EE3E37400C606A0 /* Footprint in Frameworks */,
-				784A1F472EE3E7F000C606A0 /* Footprint in Frameworks */,
+				7846B2542EE5F9C9004A2208 /* Footprint in Frameworks */,
+				788FF2A92F2C182A0048EDAA /* Footprint in Frameworks */,
 				78CF3ABE2EBE8C4D00B2DEA1 /* Footprint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,7 +133,9 @@
 				78CF3ABD2EBE8C4D00B2DEA1 /* Footprint */,
 				784A1F3D2EE3C37500C606A0 /* Footprint */,
 				784A1F402EE3E37400C606A0 /* Footprint */,
-				784A1F462EE3E7F000C606A0 /* Footprint */,
+				7846B2532EE5F9C9004A2208 /* Footprint */,
+				787591B22F2A9CC4004A5466 /* Footprint */,
+				788FF2A82F2C182A0048EDAA /* Footprint */,
 			);
 			productName = "mobile-swift-ui";
 			productReference = 565B655E2B1E17560072925A /* mobile-swift-ui.app */;
@@ -160,7 +166,7 @@
 			);
 			mainGroup = 565B65552B1E17560072925A;
 			packageReferences = (
-				784A1F452EE3E7F000C606A0 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */,
+				788FF2A72F2C182A0048EDAA /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */,
 			);
 			productRefGroup = 565B655F2B1E17560072925A /* Products */;
 			projectDirPath = "";
@@ -407,17 +413,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		784A1F452EE3E7F000C606A0 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */ = {
+		788FF2A72F2C182A0048EDAA /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onefootprint/Swift-Onboarding-Components";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.0;
+				minimumVersion = 1.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7846B2532EE5F9C9004A2208 /* Footprint */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Footprint;
+		};
 		784A1F3D2EE3C37500C606A0 /* Footprint */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Footprint;
@@ -426,9 +436,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Footprint;
 		};
-		784A1F462EE3E7F000C606A0 /* Footprint */ = {
+		787591B22F2A9CC4004A5466 /* Footprint */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 784A1F452EE3E7F000C606A0 /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */;
+			productName = Footprint;
+		};
+		788FF2A82F2C182A0048EDAA /* Footprint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 788FF2A72F2C182A0048EDAA /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */;
 			productName = Footprint;
 		};
 		78CF3ABD2EBE8C4D00B2DEA1 /* Footprint */ = {
