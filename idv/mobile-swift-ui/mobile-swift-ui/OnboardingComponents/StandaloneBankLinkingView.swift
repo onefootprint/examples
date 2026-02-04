@@ -1,18 +1,10 @@
-//
-//  SandaloneBankLinking.swift
-//  iosApp
-//
-//  Created by D M Raisul Ahsan on 4/19/25.
-//  Copyright © 2025 orgName. All rights reserved.
-//
-
-
 import SwiftUI
 import Footprint
 
 struct StandaloneBankLinkingView: View {
-    @State private var authToken: String = ""
+    @State private var authToken: String = "obtok_tSKbGNuAa8F3f7i3SUZNogGwtbYThMfjkg"
     @State private var isBankLinkingComplete: Bool = false
+    @State private var showBankLinking: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -20,23 +12,21 @@ struct StandaloneBankLinkingView: View {
                 .font(.title)
                 .padding()
             
-            TextField(
-                "Auth token",
-                text: $authToken
-            )
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding(.horizontal)
+            TextField("Auth token", text: $authToken)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
             
-            BankLinkingViewWithAuthToken(
-                authToken: authToken,
-                onSuccess: {
-                    isBankLinkingComplete = true
-                },
-                onError: { message in
-                    print(message)
-                    isBankLinkingComplete = false
-                }
-            )
+            Button(action: {
+                showBankLinking = true
+            }) {
+                Text("Link Bank Account")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .padding(.horizontal)
             
             if isBankLinkingComplete {
                 Text("Bank linking completed successfully!")
@@ -44,82 +34,55 @@ struct StandaloneBankLinkingView: View {
                     .padding()
                     .transition(.opacity)
             }
+            
             Spacer()
         }
         .animation(.easeInOut, value: isBankLinkingComplete)
-    }
-}
-
-struct BankLinkingViewWithAuthToken: View {
-    let authToken: String
-    let onSuccess: () -> Void
-    let onError: (String) -> Void
-    
-    @State private var showBalSheet: Bool = false
-    
-    var body: some View {
-        Button(action: {
-            showBalSheet = true
-        }) {
-            HStack {
-                Text("Link Bank Account")
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-        }
-        .padding(.horizontal)
-        .sheet(isPresented: $showBalSheet) {
-            bankLinkingSheet
+        .sheet(isPresented: $showBankLinking) {
+            FootprintBankLinking(
+                authToken: authToken,
+                redirectUri: "footprintcomponentsdemo://banklinking",
+                onSuccess: { response in
+                    handleSuccess(response)
+                    showBankLinking = false
+                    isBankLinkingComplete = true
+                },
+                onError: { error in
+                    print("Error occurred during bank linking: \(error)")
+                    showBankLinking = false
+                    isBankLinkingComplete = false
+                },
+                onClose: {
+                    print("Bank linking exited")
+                    showBankLinking = false
+                },
+                onEvent: { event in
+                    print("Bank Linking Event: \(event)")
+                }
+            )
         }
     }
     
-    private var bankLinkingSheet: some View {
-        FootprintBankLinkingWithAuthToken(
-            authToken: authToken,
-            redirectUri: "footprintcomponentsdemo://banklinking",
-            onSuccess: { response in
-                print("Bank linking completed successfully, validation token: \(response.validationToken)")
-                
-                let accounts = response.meta.accounts
-                let trackedScreens = response.meta.trackedScreens
-                let institution = response.meta.institution
-                
-                accounts.forEach { account in
-                    print("Account ID: \(account.id), " +
-                          "Account Name: \(account.name), " +
-                          "Account Type: \(account.type), " +
-                          "Mask: \(account.mask ?? "none")")
-                }
-                
-                trackedScreens.forEach { screen in
-                    print("Tracked Screen: \(screen.name), " +
-                          "Duration: \(screen.duration), " +
-                          "Game Time: \(screen.gameTime ?? -1), " +
-                          "Request Time: \(screen.requestTime ?? -1)")
-                }
-                
-                print("Institution ID: \(institution.id), " +
-                      "Institution Name: \(institution.name), " +
-                      "Institution Domain: \(institution.domain ?? "none")")
-                showBalSheet = false
-                onSuccess()
-            },
-            onError: { error in // Called when an error occurs
-                print("Error occurred during bank linking: \(error)")
-                showBalSheet = false
-                onError("Bank linking failed: \(error.message)")
-            },
-            onClose: { // Called when user closes the flow or the flow closes due to an error. If the flow closes due to an error, it will also call the onError callback
-                print("Bank linking exited")
-                showBalSheet = false
-            },
-            onEvent: {event in // Provides additional information about the events for logging purpose
-                print("Bank Linking Event: \(event)")
-            }
-        )
+    private func handleSuccess(_ response: BankLinkingCompletionResponse) {
+        print("Bank linking completed successfully, validation token: \(response.validationToken)")
+        
+        response.meta.accounts.forEach { account in
+            print("Account ID: \(account.id), " +
+                  "Account Name: \(account.name), " +
+                  "Account Type: \(account.type), " +
+                  "Mask: \(account.mask ?? "none")")
+        }
+        
+        response.meta.trackedScreens.forEach { screen in
+            print("Tracked Screen: \(screen.name), " +
+                  "Duration: \(screen.duration), " +
+                  "Game Time: \(screen.gameTime ?? -1), " +
+                  "Request Time: \(screen.requestTime ?? -1)")
+        }
+        
+        let institution = response.meta.institution
+        print("Institution ID: \(institution.id), " +
+              "Institution Name: \(institution.name), " +
+              "Institution Domain: \(institution.domain ?? "none")")
     }
 }
-
