@@ -2,19 +2,11 @@ import SwiftUI
 import Footprint
 
 struct StandaloneBankLinkingView: View {
-    @State private var authToken: String = ""
+    @State private var authToken: String = "obtok_tSKbGNuAa8F3f7i3SUZNogGwtbYThMfjkg"
     @State private var isBankLinkingComplete: Bool = false
     @State private var showBankLinking: Bool = false
     
     var body: some View {
-        if showBankLinking {
-            bankLinkingView
-        } else {
-            mainView
-        }
-    }
-    
-    private var mainView: some View {
         VStack(spacing: 20) {
             Text("Bank Linking with Auth Token")
                 .font(.title)
@@ -46,30 +38,29 @@ struct StandaloneBankLinkingView: View {
             Spacer()
         }
         .animation(.easeInOut, value: isBankLinkingComplete)
-    }
-    
-    private var bankLinkingView: some View {
-        FootprintBankLinking(
-            authToken: authToken,
-            redirectUri: "footprintcomponentsdemo://banklinking",
-            onSuccess: { response in
-                handleSuccess(response)
-                showBankLinking = false
-                isBankLinkingComplete = true
-            },
-            onError: { error in
-                print("Error occurred during bank linking: \(error)")
-                showBankLinking = false
-                isBankLinkingComplete = false
-            },
-            onClose: {
-                print("Bank linking exited")
-                showBankLinking = false
-            },
-            onEvent: { event in
-                print("Bank Linking Event: \(event)")
-            }
-        )
+        .sheet(isPresented: $showBankLinking) {
+            FootprintBankLinking(
+                authToken: authToken,
+                redirectUri: "footprintcomponentsdemo://banklinking",
+                onSuccess: { response in
+                    handleSuccess(response)
+                    showBankLinking = false
+                    isBankLinkingComplete = true
+                },
+                onError: { error in
+                    print("Error occurred during bank linking: \(error)")
+                    showBankLinking = false
+                    isBankLinkingComplete = false
+                },
+                onClose: {
+                    print("Bank linking exited")
+                    showBankLinking = false
+                },
+                onEvent: { event in
+                    print("Bank Linking Event: \(event)")
+                }
+            )
+        }
     }
     
     private func handleSuccess(_ response: BankLinkingCompletionResponse) {
