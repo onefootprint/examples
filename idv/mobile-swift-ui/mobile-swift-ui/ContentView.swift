@@ -9,6 +9,7 @@ struct ContentView: View {
             NavigationLink("Hosted flow", destination: HostedView()).padding(16)
             NavigationLink("Onboard in background", destination: OnboardInBackgroundView()).padding(16)
             NavigationLink("Bank linking with auth token", destination: StandaloneBankLinkingView()).padding(16)
+            NavigationLink("Vault with client token", destination: VaultWithClientToken()).padding(16)
         }
     }
     
