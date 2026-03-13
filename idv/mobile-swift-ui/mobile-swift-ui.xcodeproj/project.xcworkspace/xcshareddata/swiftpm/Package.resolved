@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/moneykit/moneykit-ios",
       "state" : {
-        "revision" : "65138a50aa257cacbb31627c5a3cfdca599f8502",
-        "version" : "1.10.7"
+        "revision" : "112fb07f1296605e1dfc91d7bdc5af76786520f0",
+        "version" : "1.11.2"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onefootprint/Swift-Onboarding-Components",
       "state" : {
-        "revision" : "066a398f082f38c26bc79bd4c53cb278368bbe74",
-        "version" : "1.5.1"
+        "revision" : "55a87857ca5b3f85e4103876e51bfc7e3d461aba",
+        "version" : "1.5.4"
       }
     }
   ],

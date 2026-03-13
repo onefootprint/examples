@@ -23,8 +23,9 @@
 		784A1F412EE3E37400C606A0 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 784A1F402EE3E37400C606A0 /* Footprint */; };
 		786E9D5A2DBC1444005C2DC4 /* StandaloneBankLinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786E9D592DBC1439005C2DC4 /* StandaloneBankLinkingView.swift */; };
 		787591B32F2A9CC4004A5466 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 787591B22F2A9CC4004A5466 /* Footprint */; };
+		78BEEC7D2F639EB000BB0AF3 /* VaultWithClientToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BEEC7C2F639EA400BB0AF3 /* VaultWithClientToken.swift */; };
 		78CF3ABE2EBE8C4D00B2DEA1 /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 78CF3ABD2EBE8C4D00B2DEA1 /* Footprint */; };
-		78E9A0092F32DF7D0091591A /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 78E9A0082F32DF7D0091591A /* Footprint */; };
+		78EEDD8F2F63880600F9C47D /* Footprint in Frameworks */ = {isa = PBXBuildFile; productRef = 78EEDD8E2F63880600F9C47D /* Footprint */; };
 		7C80D8D02D95E14B00234C91 /* HostedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C80D8CF2D95E14800234C91 /* HostedView.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		782DA71E2E3BDE5800A1857D /* OnboardInBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardInBackgroundView.swift; sourceTree = "<group>"; };
 		786E9D592DBC1439005C2DC4 /* StandaloneBankLinkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneBankLinkingView.swift; sourceTree = "<group>"; };
 		786E9D5B2DBC165A005C2DC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		78BEEC7C2F639EA400BB0AF3 /* VaultWithClientToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultWithClientToken.swift; sourceTree = "<group>"; };
 		7C80D8CF2D95E14800234C91 /* HostedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,7 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				784A1F3E2EE3C37500C606A0 /* Footprint in Frameworks */,
-				78E9A0092F32DF7D0091591A /* Footprint in Frameworks */,
+				78EEDD8F2F63880600F9C47D /* Footprint in Frameworks */,
 				787591B32F2A9CC4004A5466 /* Footprint in Frameworks */,
 				784A1F412EE3E37400C606A0 /* Footprint in Frameworks */,
 				7846B2542EE5F9C9004A2208 /* Footprint in Frameworks */,
@@ -82,6 +84,7 @@
 		565B65602B1E17560072925A /* mobile-swift-ui */ = {
 			isa = PBXGroup;
 			children = (
+				78BEEC7C2F639EA400BB0AF3 /* VaultWithClientToken.swift */,
 				782DA71E2E3BDE5800A1857D /* OnboardInBackgroundView.swift */,
 				786E9D5B2DBC165A005C2DC4 /* Info.plist */,
 				7C80D8CF2D95E14800234C91 /* HostedView.swift */,
@@ -138,7 +141,7 @@
 				7846B2532EE5F9C9004A2208 /* Footprint */,
 				787591B22F2A9CC4004A5466 /* Footprint */,
 				7833476A2F32CF64003A4ACA /* Footprint */,
-				78E9A0082F32DF7D0091591A /* Footprint */,
+				78EEDD8E2F63880600F9C47D /* Footprint */,
 			);
 			productName = "mobile-swift-ui";
 			productReference = 565B655E2B1E17560072925A /* mobile-swift-ui.app */;
@@ -169,7 +172,7 @@
 			);
 			mainGroup = 565B65552B1E17560072925A;
 			packageReferences = (
-				78E9A0072F32DF7D0091591A /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */,
+				78EEDD8D2F63880600F9C47D /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */,
 			);
 			productRefGroup = 565B655F2B1E17560072925A /* Products */;
 			projectDirPath = "";
@@ -203,6 +206,7 @@
 				782DA71F2E3BDE6900A1857D /* OnboardInBackgroundView.swift in Sources */,
 				78013C7E2CB0BAB500F22E0A /* SuccessView.swift in Sources */,
 				78013C7F2CB0BAB500F22E0A /* BasicInfoView.swift in Sources */,
+				78BEEC7D2F639EB000BB0AF3 /* VaultWithClientToken.swift in Sources */,
 				7C80D8D02D95E14B00234C91 /* HostedView.swift in Sources */,
 				786E9D5A2DBC1444005C2DC4 /* StandaloneBankLinkingView.swift in Sources */,
 				565B65642B1E17560072925A /* ContentView.swift in Sources */,
@@ -416,12 +420,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		78E9A0072F32DF7D0091591A /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */ = {
+		78EEDD8D2F63880600F9C47D /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onefootprint/Swift-Onboarding-Components";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.1;
+				minimumVersion = 1.5.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -451,9 +455,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Footprint;
 		};
-		78E9A0082F32DF7D0091591A /* Footprint */ = {
+		78EEDD8E2F63880600F9C47D /* Footprint */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 78E9A0072F32DF7D0091591A /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */;
+			package = 78EEDD8D2F63880600F9C47D /* XCRemoteSwiftPackageReference "Swift-Onboarding-Components" */;
 			productName = Footprint;
 		};
 /* End XCSwiftPackageProductDependency section */
