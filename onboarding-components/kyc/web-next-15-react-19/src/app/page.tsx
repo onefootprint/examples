@@ -227,7 +227,7 @@ const DirectAuthFlow = () => {
 			}
 		};
 		initChallenge();
-	}, [fp.createChallenge, fp.launchIdentify]);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	if (error) {
 		return (
