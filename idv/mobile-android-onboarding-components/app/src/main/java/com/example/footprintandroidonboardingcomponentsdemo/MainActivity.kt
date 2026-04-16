@@ -284,6 +284,7 @@ fun Init(
                         )
                         FootprintHosted.launchHosted(
                             context = context,
+                            publicKey = "pb_test_Nza8oVYDBlrIqrQrNCbKRB",
                             onComplete = { token: String ->
                                 println("VerificationResult: The flow has completed. The validation token is $token")
                             },
