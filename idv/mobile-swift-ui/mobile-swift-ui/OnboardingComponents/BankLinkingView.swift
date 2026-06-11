@@ -1,5 +1,6 @@
 import SwiftUI
 import Footprint
+import FootprintBankLinking
 
 
 struct BankLinkingView: View {

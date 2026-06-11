@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/fingerprintjs/fingerprintjs-pro-ios",
       "state" : {
-        "revision" : "eede285b015595a74c9f5cc0429f778c82e1838e",
-        "version" : "2.12.0"
+        "revision" : "4987131dc1a062c983eabadc90cc68da5160578d",
+        "version" : "2.16.0"
       }
     },
     {
@@ -20,21 +20,12 @@
       }
     },
     {
-      "identity" : "plaid-link-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/plaid/plaid-link-ios",
-      "state" : {
-        "revision" : "0b283e965b60b911744f662e8e203ae0f3de37ea",
-        "version" : "6.4.3"
-      }
-    },
-    {
       "identity" : "swift-onboarding-components",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onefootprint/Swift-Onboarding-Components",
       "state" : {
-        "revision" : "55a87857ca5b3f85e4103876e51bfc7e3d461aba",
-        "version" : "1.5.4"
+        "revision" : "2a8ba30ab6d43c71c9169dfd6bb544b317255184",
+        "version" : "2.0.0"
       }
     }
   ],
