@@ -1,5 +1,6 @@
 import SwiftUI
 import Footprint
+import FootprintBankLinking
 
 struct StandaloneBankLinkingView: View {
     @State private var authToken: String = "obtok_tSKbGNuAa8F3f7i3SUZNogGwtbYThMfjkg"
